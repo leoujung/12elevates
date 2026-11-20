@@ -1,0 +1,22 @@
+services:
+  elevate-api:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    image: elevate-api:phase1
+    restart: unless-stopped
+    # Host networking, same as Traefik: lets the API reach Postgres on 127.0.0.1.
+    # Trade-off: the container shares the host network namespace. The API listens on
+    # 127.0.0.1:8088 only, so it is reached through Traefik, not directly from the internet.
+    network_mode: host
+    command: ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8088", "--proxy-headers"]
+    env_file:
+      - .env
+    environment:
+      - APP_DASHBOARD_FILE=/app/dashboard/index.html
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.elevate-app.rule=Host(`elevate-app.srv1964287.hstgr.cloud`)
+      - traefik.http.routers.elevate-app.entrypoints=websecure
+      - traefik.http.routers.elevate-app.tls.certresolver=letsencrypt
+      - traefik.http.services.elevate-app.loadbalancer.server.port=8088
