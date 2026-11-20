@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Member Intelligence Dashboard (Phase 1)</title>
+  <style>
+    :root { --ink:#0F172A; --muted:#64748B; --line:#E2E8F0; --blue:#0060DF; --bg:#F8FAFC; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); background:var(--bg); }
+    header { background:#fff; border-bottom:1px solid var(--line); padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+    header strong { font-size:1rem; }
+    nav { display:flex; gap:6px; flex-wrap:wrap; padding:10px 20px; background:#fff; border-bottom:1px solid var(--line); }
+    nav button { border:1px solid var(--line); background:#fff; padding:8px 14px; border-radius:8px; cursor:pointer; font-weight:600; color:var(--ink); }
+    nav button.active { background:var(--blue); color:#fff; border-color:var(--blue); }
+    main { padding:20px; max-width:900px; margin:0 auto; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:14px; }
+    .card h2 { margin:0 0 6px; font-size:1.05rem; }
+    .muted { color:var(--muted); font-size:.9rem; }
+    .empty { text-align:center; padding:28px 12px; color:var(--muted); }
+    input { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; margin:6px 0; font-size:1rem; }
+    button.primary { background:var(--blue); color:#fff; border:0; padding:10px 16px; border-radius:8px; font-weight:700; cursor:pointer; }
+    table { width:100%; border-collapse:collapse; font-size:.92rem; }
+    th, td { text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); }
+    .hidden { display:none; }
+    .status { font-size:.85rem; color:var(--muted); margin-top:8px; }
+    @media (max-width:600px) { nav button { flex:1 1 45%; } }
+  </style>
+</head>
+<body>
+<header>
+  <strong>Member Intelligence Dashboard</strong>
+  <span class="muted" id="who">Belum login</span>
+</header>
+
+<section id="login-view" class="card" style="max-width:420px;margin:40px auto;">
+  <h2>Masuk</h2>
+  <p class="muted">Gunakan email dan password member kamu.</p>
+  <form id="login-form">
+    <input id="email" type="email" autocomplete="username" placeholder="Email" required>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+    <button class="primary" type="submit">Masuk</button>
+  </form>
+  <div class="status" id="login-status"></div>
+</section>
+
+<div id="app" class="hidden">
+  <nav>
+    <button data-view="home" class="active">Home</button>
+    <button data-view="prospects">Prospects</button>
+    <button data-view="assistant">AI Assistant</button>
+    <button data-view="business">My Business</button>
+    <button data-view="academy">Academy</button>
+  </nav>
+
+  <main>
+    <section data-panel="home">
+      <div class="card">
+        <h2>Siapa yang harus dihubungi hari ini?</h2>
+        <div class="empty" id="home-q1">Belum ada prospek. Data akan muncul saat sumber masuk tersambung.</div>
+      </div>
+      <div class="card">
+        <h2>Apa yang perlu dilakukan?</h2>
+        <div class="empty" id="home-q2">Belum ada tindakan. Rekomendasi tampil setelah ada prospek dengan consent.</div>
+      </div>
+      <div class="card">
+        <h2>Bagaimana progresnya?</h2>
+        <div class="empty" id="home-q3">Belum ada data progres untuk dihitung.</div>
+      </div>
+    </section>
+
+    <section data-panel="prospects" class="hidden">
+      <div class="card">
+        <h2>Prospek kamu</h2>
+        <div id="prospect-list" class="muted">Memuat...</div>
+      </div>
+    </section>
+
+    <section data-panel="assistant" class="hidden">
+      <div class="card empty">AI Assistant belum aktif. Fitur ini masuk Phase 2 dan akan selalu meminta persetujuan kamu sebelum ada pesan dikirim.</div>
+    </section>
+
+    <section data-panel="business" class="hidden">
+      <div class="card empty">Ringkasan bisnis akan tampil setelah metrik disepakati. Belum ada angka yang ditampilkan.</div>
+    </section>
+
+    <section data-panel="academy" class="hidden">
+      <div class="card empty">Materi belajar belum tersedia di dashboard ini.</div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // API base: same origin in production; set window.API_BASE to override in dev.
+  // API base is read at call time (not at script load), so window.API_BASE can be set any time.
+  function apiBase() { return (window.API_BASE || '').replace(/\/$/, ''); }
+  let token = null;
+
+  function show(id, on) { document.getElementById(id).classList.toggle('hidden', !on); }
+
+  async function api(path, opts = {}) {
+    const headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    const r = await fetch(apiBase() + path, Object.assign({}, opts, { headers }));
+    if (r.status === 401) { logout(); throw new Error('session expired'); }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('login-status');
+    status.textContent = 'Memeriksa...';
+    const body = { email: document.getElementById('email').value, password: document.getElementById('password').value };
+    let r;
+    try {
+      r = await fetch(apiBase() + '/v1/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    } catch (err) {
+      status.textContent = 'Tidak bisa terhubung ke server. Coba lagi nanti.';
+      return;
+    }
+    if (r.status === 401) { status.textContent = 'Email atau password tidak sesuai.'; return; }
+    if (!r.ok) { status.textContent = 'Server sedang bermasalah (kode ' + r.status + '). Coba lagi nanti.'; return; }
+    const data = await r.json();
+    status.textContent = '';
+    token = data.access_token;
+    document.getElementById('password').value = '';
+    show('login-view', false); show('app', true);
+    document.getElementById('who').textContent = 'Masuk';
+    loadProspects();
+  });
+
+  function logout() {
+    token = null;
+    show('app', false); show('login-view', true);
+    document.getElementById('who').textContent = 'Belum login';
+  }
+
+  async function loadProspects() {
+    const box = document.getElementById('prospect-list');
+    try {
+      const rows = await api('/v1/prospects');
+      if (!rows.length) { box.innerHTML = '<div class="empty">Belum ada prospek.</div>'; return; }
+      const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      box.innerHTML = '<table><tr><th>Nama</th><th>Sumber</th><th>Status</th></tr>' +
+        rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.source)}</td><td>${esc(r.status)}</td></tr>`).join('') + '</table>';
+    } catch (err) {
+      box.textContent = 'Gagal memuat prospek.';
+    }
+  }
+
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const view = btn.dataset.view;
+      document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.panel !== view));
+      if (view === 'prospects') loadProspects();  // refresh on open; a 401 here triggers logout()
+    });
+  });
+</script>
+</body>
+</html>
