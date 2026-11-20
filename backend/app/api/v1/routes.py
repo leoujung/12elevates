@@ -1,0 +1,83 @@
+"""Phase 1 API: login and member-scoped prospect endpoints.
+
+Every prospect route derives the member from the JWT only. The client never
+supplies owner_member_id, so a caller cannot ask for another member's data.
+"""
+from fastapi import Depends, FastAPI, Header, HTTPException, status
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from app.core.security import hash_password, issue_token, member_id_from_token, verify_password
+from app.models.core import Member
+from app.services.prospects import (
+    ConsentRequired,
+    get_prospect_for_member,
+    ingest_prospect,
+    list_prospects_for_member,
+)
+
+
+class LoginIn(BaseModel):
+    email: str
+    password: str
+
+
+class ProspectIn(BaseModel):
+    name: str
+    source: str
+    consent_purpose: str | None = None
+    consent_granted: bool = False
+    whatsapp: str | None = None
+    email: str | None = None
+
+
+def create_app(session_factory) -> FastAPI:
+    app = FastAPI(title="12ELEVATE AI Network Building Intelligence (Phase 1)")
+
+    def get_db():
+        db: Session = session_factory()
+        try:
+            yield db
+        finally:
+            db.close()
+
+    def current_member_id(authorization: str | None = Header(default=None)) -> str:
+        if not authorization or not authorization.lower().startswith("bearer "):
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, "missing bearer token")
+        try:
+            return member_id_from_token(authorization.split(" ", 1)[1])
+        except Exception:
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid or expired token")
+
+    @app.post("/v1/auth/login")
+    def login(body: LoginIn, db: Session = Depends(get_db)):
+        member = db.query(Member).filter(Member.email == body.email.lower()).one_or_none()
+        # Same error for unknown email and wrong password (no account enumeration)
+        if member is None or not member.password_hash or not verify_password(body.password, member.password_hash):
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid credentials")
+        return {"access_token": issue_token(member.id), "token_type": "bearer"}
+
+    @app.get("/v1/prospects")
+    def list_mine(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        return [{"id": p.id, "name": p.name, "source": p.source, "status": p.status}
+                for p in list_prospects_for_member(db, member_id=member_id)]
+
+    @app.post("/v1/prospects", status_code=201)
+    def create_mine(body: ProspectIn, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        try:
+            p = ingest_prospect(db, owner_member_id=member_id, name=body.name, source=body.source,
+                                consent_purpose=body.consent_purpose, consent_granted=body.consent_granted,
+                                whatsapp=body.whatsapp, email=body.email)
+        except ConsentRequired:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "consent is required to store a prospect")
+        return {"id": p.id, "name": p.name, "status": p.status}
+
+    @app.get("/v1/prospects/{prospect_id}")
+    def get_mine(prospect_id: str, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        p = get_prospect_for_member(db, member_id=member_id, prospect_id=prospect_id)
+        if p is None:
+            # Same response whether it does not exist or belongs to someone else
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "not found")
+        return {"id": p.id, "name": p.name, "source": p.source, "status": p.status}
+
+    return app
