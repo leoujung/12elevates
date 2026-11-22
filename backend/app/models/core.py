@@ -97,3 +97,18 @@ class HabitDay(Base):
     completed_items: Mapped[str] = mapped_column(String(100), default="")
     is_rest_day: Mapped[bool] = mapped_column(Boolean, default=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now, onupdate=_now)
+
+
+class VideoProgress(Base):
+    """Tracks whether a member finished watching a given video (by YouTube video id).
+
+    Completion is set only by the frontend's YouTube IFrame API onStateChange -> ENDED
+    event (see app/services/video_courses.py for the catalog and the honesty note about
+    what 'completed' can and cannot guarantee). Not modelled per-category: category is
+    looked up from the static catalog via youtube_video_id.
+    """
+    __tablename__ = "video_progress"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    owner_member_id: Mapped[str] = mapped_column(ForeignKey("members.id"), index=True)
+    youtube_video_id: Mapped[str] = mapped_column(String(32), index=True)
+    completed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)

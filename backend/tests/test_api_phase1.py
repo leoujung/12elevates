@@ -213,3 +213,97 @@ def test_academy_overview_requires_auth_and_has_16_placeholder_modules(client):
     assert data["percent"] == 0
     # honesty check: no module claims real content or a completed state
     assert all(m["status"] == "coming_soon" and m["title"] == "Segera Hadir" for m in data["modules"])
+
+
+def test_course_overview_unknown_category_is_404(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    assert client.get("/v1/courses/does-not-exist", headers=andi).status_code == 404
+
+
+def test_course_overview_reports_the_8_supplied_edukasi_produk_videos(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.get("/v1/courses/edukasi_produk", headers=andi)
+    assert r.status_code == 200
+    data = r.json()
+    assert data["total"] == 24
+    assert data["total_ready"] == 8
+    ready = [v for v in data["videos"] if v["ready"]]
+    assert [v["youtube_id"] for v in ready] == [
+        "mTkq8hK6FLQ", "ir-DR-TtqFc", "6U7WvHJFeCk", "mgWIJuCt1gk",
+        "1DYdHcABUyA", "_gwKmJZn1kY", "u1ZB8HcyHiY", "DQqTCQiYbus",
+    ]
+    assert all(v["watched"] is False for v in ready)
+    # the remaining 16 catalog entries still have no link and must honestly say so
+    assert all(v["ready"] is False and v["youtube_id"] is None for v in data["videos"][8:])
+
+
+def test_course_percent_counts_only_watchable_videos(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.post("/v1/courses/edukasi_produk/watched", headers=andi, json={"youtube_video_id": "mTkq8hK6FLQ"})
+    assert r.status_code == 201
+    data = client.get("/v1/courses/edukasi_produk", headers=andi).json()
+    assert data["completed"] == 1
+    # 1 of 8 watchable videos, not 1 of 24 catalog slots; half-up so it matches the dashboard
+    assert data["percent"] == 13
+    first = data["videos"][0]
+    assert first["watched"] is True
+
+
+def test_mark_watched_rejects_video_with_no_configured_youtube_id(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.post("/v1/courses/edukasi_produk/watched", headers=andi, json={"youtube_video_id": "fakeId123"})
+    assert r.status_code == 422
+
+
+def test_mark_watched_and_gep_eligibility_with_a_configured_video(client, monkeypatch):
+    from app.services import video_courses as vc
+    # Inject one configured (ready) required video so we can test the real path
+    # without inventing a fake catalog of 8 videos.
+    fake_catalog = [{"order": 0, "title": "Test Video", "youtube_id": "abc123XYZ", "required_for_pool": True}]
+    monkeypatch.setitem(vc.CATALOGS, "keuntungan_mitra", fake_catalog)
+
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    before = client.get("/v1/gep/eligibility", headers=andi).json()
+    assert before["eligible"] is False
+    assert before["required_total"] == 1
+    assert before["required_watched"] == 0
+
+    r = client.post("/v1/courses/keuntungan_mitra/watched", headers=andi, json={"youtube_video_id": "abc123XYZ"})
+    assert r.status_code == 201
+
+    after = client.get("/v1/gep/eligibility", headers=andi).json()
+    assert after["eligible"] is True
+    assert after["required_watched"] == 1
+
+    # idempotent: marking the same video watched again does not error or duplicate
+    r2 = client.post("/v1/courses/keuntungan_mitra/watched", headers=andi, json={"youtube_video_id": "abc123XYZ"})
+    assert r2.status_code == 201
+    course = client.get("/v1/courses/keuntungan_mitra", headers=andi).json()
+    assert course["completed"] == 1
+
+
+def test_video_watch_progress_is_isolated_between_members(monkeypatch):
+    from app.services import video_courses as vc
+    fake_catalog = [{"order": 0, "title": "Test Video", "youtube_id": "abc123XYZ", "required_for_pool": True}]
+    monkeypatch.setitem(vc.CATALOGS, "keuntungan_mitra", fake_catalog)
+
+    engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    s = Session()
+    org = Organization(name="test org 2")
+    s.add(org); s.flush()
+    s.add_all([
+        Member(id="m-andi2", organization_id=org.id, email="andi2@example.test",
+               display_name="Andi2", password_hash=hash_password("pw-andi2")),
+        Member(id="m-budi2", organization_id=org.id, email="budi2@example.test",
+               display_name="Budi2", password_hash=hash_password("pw-budi2")),
+    ])
+    s.commit(); s.close()
+    local_client = TestClient(create_app(Session))
+
+    andi = login(local_client, "andi2@example.test", "pw-andi2")
+    budi = login(local_client, "budi2@example.test", "pw-budi2")
+    local_client.post("/v1/courses/keuntungan_mitra/watched", headers=andi, json={"youtube_video_id": "abc123XYZ"})
+    assert local_client.get("/v1/gep/eligibility", headers=andi).json()["eligible"] is True
+    assert local_client.get("/v1/gep/eligibility", headers=budi).json()["eligible"] is False

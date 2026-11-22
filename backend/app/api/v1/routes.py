@@ -23,6 +23,7 @@ from app.services.prospects import (
     ingest_prospect,
     list_prospects_for_member,
 )
+from app.services.video_courses import course_overview, gep_eligible, mark_watched
 
 
 class LoginIn(BaseModel):
@@ -47,6 +48,10 @@ class LpEntryIn(BaseModel):
 class HabitToggleIn(BaseModel):
     item_id: int
     done: bool
+
+
+class VideoWatchedIn(BaseModel):
+    youtube_video_id: str
 
 
 def create_app(session_factory) -> FastAPI:
@@ -145,5 +150,25 @@ def create_app(session_factory) -> FastAPI:
     def get_academy(member_id: str = Depends(current_member_id)):
         # member_id required for auth only; academy content is not yet member-specific
         return academy_overview()
+
+    @app.get("/v1/courses/{category}")
+    def get_course(category: str, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        try:
+            return course_overview(db, member_id=member_id, category=category)
+        except ValueError as e:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, str(e))
+
+    @app.post("/v1/courses/{category}/watched", status_code=201)
+    def post_watched(category: str, body: VideoWatchedIn, member_id: str = Depends(current_member_id),
+                      db: Session = Depends(get_db)):
+        try:
+            mark_watched(db, owner_member_id=member_id, category=category, youtube_video_id=body.youtube_video_id)
+        except ValueError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        return {"ok": True}
+
+    @app.get("/v1/gep/eligibility")
+    def get_gep_eligibility(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        return gep_eligible(db, member_id=member_id)
 
     return app

@@ -204,6 +204,45 @@
     .module-order { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; }
     .module-title { font-size: .85rem; font-weight: 700; color: var(--muted); }
 
+    /* ---------- Academy: video courses ---------- */
+    .course-tabs { display: flex; gap: 6px; margin: 16px 0 10px; flex-wrap: wrap; }
+    .course-tabs button {
+      background: var(--bg); border: 1px solid var(--line); border-radius: 999px;
+      padding: 7px 14px; font-size: .8rem; font-weight: 700; color: var(--muted); cursor: pointer;
+    }
+    .course-tabs button.active { background: var(--gold-wash); color: var(--gold-deep); border-color: var(--gold-warm); }
+    .course-note { font-size: .78rem; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
+    .course-list { display: flex; flex-direction: column; gap: 8px; }
+    .course-row {
+      display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      padding: 8px 12px; cursor: pointer; font-family: inherit;
+    }
+    .course-row:hover:not(:disabled) { border-color: var(--gold-warm); background: var(--gold-wash); }
+    .course-row.is-disabled { opacity: .55; cursor: not-allowed; }
+    .course-num { font-size: .78rem; font-weight: 800; color: var(--gold-deep); min-width: 18px; }
+    .course-thumb { width: 84px; height: 48px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #0F172A; }
+    .course-thumb--empty { display: flex; align-items: center; justify-content: center; font-size: .9rem; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); }
+    .course-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .course-title { font-size: .88rem; font-weight: 700; color: var(--ink); }
+    .chip { font-size: .68rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; align-self: flex-start; }
+    .chip--done { background: #ECFDF5; color: #047857; }
+    .chip--todo, .chip--soon { background: var(--bg); color: var(--muted); }
+    .course-play { font-size: .9rem; color: var(--gold-deep); }
+
+    .player-modal { position: fixed; inset: 0; background: rgba(15, 23, 42, .72); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 60; }
+    .player-modal.hidden { display: none; }
+    .player-shell { background: var(--surface); border-radius: 16px; width: min(920px, 100%); max-height: 92vh; overflow: auto; }
+    .player-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 16px; }
+    .player-close { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; width: 32px; height: 32px; cursor: pointer; font-size: .9rem; color: var(--muted); flex-shrink: 0; }
+    .player-frame { aspect-ratio: 16 / 9; background: #0F172A; }
+    .player-frame iframe, .player-frame > div { width: 100%; height: 100%; border: 0; display: block; }
+    .player-foot { font-size: .78rem; color: var(--muted); padding: 10px 16px 14px; line-height: 1.5; }
+    @media (max-width: 600px) {
+      .course-thumb { width: 64px; height: 40px; }
+      .player-frame { aspect-ratio: 9 / 16; max-height: 68vh; }
+    }
+
     .hidden { display: none; }
   </style>
 </head>
@@ -361,13 +400,39 @@
               <h2 style="margin:0;">ONE Academy</h2>
               <p class="card-sub" id="academy-progress-text" style="margin:2px 0 0;">Memuat...</p>
             </div>
+            <span class="chip chip--todo" id="course-ready-badge">—</span>
           </div>
           <div class="progress-track"><div class="progress-fill gold" id="academy-bar" style="width:0%"></div></div>
-          <div class="muted" style="font-size:.85rem;margin-top:10px;" id="academy-message"></div>
+
+          <div class="course-tabs" id="course-tabs">
+            <button type="button" data-cat="edukasi_produk" class="active">Edukasi Produk</button>
+            <button type="button" data-cat="keuntungan_mitra">Keuntungan Mitra</button>
+          </div>
+          <div class="course-note" id="course-note"></div>
+          <div class="course-list" id="course-list"></div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 4px;">Modul Terstruktur</h2>
+          <div class="muted" style="font-size:.85rem;" id="academy-message"></div>
           <div class="academy-grid" id="academy-grid"></div>
         </div>
       </section>
     </main>
+  </div>
+</div>
+
+<div class="player-modal hidden" id="player-modal" role="dialog" aria-modal="true" aria-labelledby="player-title">
+  <div class="player-shell">
+    <div class="player-head">
+      <div>
+        <div class="module-order" id="player-cat"></div>
+        <strong id="player-title"></strong>
+      </div>
+      <button class="player-close" id="player-close" type="button" aria-label="Tutup pemutar">✕</button>
+    </div>
+    <div class="player-frame" id="player-frame"></div>
+    <div class="player-foot" id="player-foot"></div>
   </div>
 </div>
 
@@ -427,6 +492,7 @@
   });
 
   function logout() {
+    closePlayer();
     token = null;
     document.getElementById('app').classList.add('hidden');
     document.getElementById('bottom-nav').classList.add('hidden');
@@ -623,29 +689,183 @@
     } catch (err) { /* silently ignore; KPI stays at last known value */ }
   });
 
-  function renderAcademy(data) {
+  /* ---------- ONE Academy: video courses (Edukasi Produk / Keuntungan Mitra) ---------- */
+  var COURSE_LABELS = { edukasi_produk: 'Edukasi Produk', keuntungan_mitra: 'Keuntungan Mitra' };
+  var courseCat = 'edukasi_produk';
+  var courseCache = {};
+  var ytApiPromise = null, ytPlayer = null, ytCurrent = null;
+
+  function loadYouTubeApi() {
+    if (window.YT && window.YT.Player) return Promise.resolve();
+    if (ytApiPromise) return ytApiPromise;
+    ytApiPromise = new Promise(function (resolve) {
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () { if (prev) prev(); resolve(); };
+      var s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.onerror = function () { ytApiPromise = null; };
+      document.head.appendChild(s);
+    });
+    return ytApiPromise;
+  }
+
+  function courseStateChip(v) {
+    if (!v.ready) return '<span class="chip chip--soon">Segera hadir</span>';
+    if (v.watched) return '<span class="chip chip--done">✓ Selesai</span>';
+    return '<span class="chip chip--todo">Belum ditonton</span>';
+  }
+
+  function renderCourse(data) {
+    var notReady = data.total - data.total_ready;
+    document.getElementById('course-ready-badge').textContent =
+      data.total_ready + ' dari ' + data.total + ' video tersedia';
     document.getElementById('academy-progress-text').textContent =
-      'Babak ' + data.completed + '/' + data.total + ' · ' + data.percent + '% Selesai';
+      COURSE_LABELS[data.category] + ' · ' + data.completed + '/' + data.total_ready + ' tonton · ' + data.percent + '%';
     document.getElementById('academy-bar').style.width = data.percent + '%';
-    document.getElementById('academy-message').textContent = data.message;
+    document.getElementById('course-note').textContent = notReady > 0
+      ? notReady + ' video lain di kategori ini belum punya tautan YouTube, jadi belum bisa ditonton dan tidak dihitung dalam progres.'
+      : 'Semua video di kategori ini sudah tersedia.';
+    var list = document.getElementById('course-list');
+    if (!data.videos.length) {
+      list.innerHTML = '<div class="empty">Belum ada video di kategori ini.</div>';
+      return;
+    }
+    list.innerHTML = data.videos.map(function (v, i) {
+      var thumb = v.ready
+        ? '<img class="course-thumb" loading="lazy" width="84" height="48" alt="" src="https://i.ytimg.com/vi/' + encodeURIComponent(v.youtube_id) + '/hqdefault.jpg">'
+        : '<span class="course-thumb course-thumb--empty">🔒</span>';
+      return '<button type="button" class="course-row' + (v.ready ? '' : ' is-disabled') + '"' +
+        ' data-idx="' + i + '"' + (v.ready ? '' : ' disabled') + '>' +
+        '<span class="course-num">' + v.order + '</span>' + thumb +
+        '<span class="course-body"><span class="course-title">' + esc(v.title) + '</span>' + courseStateChip(v) + '</span>' +
+        '<span class="course-play">' + (v.ready ? '▶' : '') + '</span></button>';
+    }).join('');
+    updateAcademyHome();
+  }
+
+  function updateAcademyHome() {
+    var d = courseCache.edukasi_produk;
+    if (!d) return;
     document.getElementById('academy-home-text').textContent =
-      'Babak ' + data.completed + '/' + data.total + ' · ' + data.message;
-    document.getElementById('academy-grid').innerHTML = data.modules.map(m => `
-      <div class="module-card">
-        <div class="module-icon">🔒</div>
-        <div>
-          <div class="module-order">Babak #${m.order}</div>
-          <div class="module-title">${esc(m.title)}</div>
-        </div>
-      </div>`).join('');
+      'Edukasi Produk: ' + d.completed + '/' + d.total_ready + ' video ditonton (' + d.percent + '%).';
+  }
+
+  function loadCourse(cat) {
+    document.getElementById('course-list').innerHTML = '<div class="muted" style="padding:14px 0;">Memuat video...</div>';
+    return api('/v1/courses/' + encodeURIComponent(cat)).then(function (data) {
+      courseCache[cat] = data;
+      if (cat === courseCat) renderCourse(data);
+      return data;
+    }).catch(function () {
+      document.getElementById('course-list').innerHTML =
+        '<div class="empty">Gagal memuat daftar video. Coba muat ulang halaman.</div>';
+    });
+  }
+
+  function openPlayer(idx) {
+    var data = courseCache[courseCat];
+    var v = data && data.videos[idx];
+    if (!v || !v.ready) return;
+    ytCurrent = { cat: courseCat, video: v };
+    document.getElementById('player-cat').textContent = COURSE_LABELS[courseCat] + ' · Video ' + v.order;
+    document.getElementById('player-title').textContent = v.title;
+    document.getElementById('player-foot').textContent =
+      'Progres tercatat otomatis saat video diputar sampai selesai.';
+    document.getElementById('player-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    var frame = document.getElementById('player-frame');
+    frame.innerHTML = '<div id="yt-host"></div>';
+    loadYouTubeApi().then(function () {
+      if (!window.YT || !window.YT.Player) {
+        document.getElementById('player-foot').textContent =
+          'Pemutar YouTube gagal dimuat. Buka videonya langsung: https://youtu.be/' + v.youtube_id;
+        return;
+      }
+      ytPlayer = new window.YT.Player('yt-host', {
+        videoId: v.youtube_id,
+        playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+        events: {
+          onStateChange: function (e) { if (e.data === 0) onVideoEnded(); },
+          onError: function () {
+            document.getElementById('player-foot').textContent =
+              'Video ini tidak bisa diputar di sini. Buka langsung di YouTube: https://youtu.be/' + v.youtube_id;
+          }
+        }
+      });
+    });
+  }
+
+  async function onVideoEnded() {
+    if (!ytCurrent) return;
+    var cat = ytCurrent.cat, v = ytCurrent.video;
+    var foot = document.getElementById('player-foot');
+    if (v.watched) { foot.textContent = 'Video selesai. Progres sudah tercatat sebelumnya.'; return; }
+    foot.textContent = 'Menyimpan progres...';
+    try {
+      await api('/v1/courses/' + encodeURIComponent(cat) + '/watched', {
+        method: 'POST',
+        body: JSON.stringify({ youtube_video_id: v.youtube_id }),
+      });
+      v.watched = true;
+      var d = courseCache[cat];
+      d.completed = d.videos.filter(function (x) { return x.watched; }).length;
+      d.percent = d.total_ready ? Math.round(d.completed / d.total_ready * 100) : 0;
+      if (cat === courseCat) renderCourse(d);
+      foot.textContent = '✓ Selesai — progres tersimpan.';
+    } catch (err) {
+      foot.textContent = 'Video selesai, tapi progres gagal disimpan. Coba muat ulang halaman.';
+    }
+  }
+
+  function closePlayer() {
+    if (ytPlayer && ytPlayer.destroy) { try { ytPlayer.destroy(); } catch (e) { /* already gone */ } }
+    ytPlayer = null; ytCurrent = null;
+    document.getElementById('player-frame').innerHTML = '';
+    document.getElementById('player-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('course-tabs').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-cat]');
+    if (!btn) return;
+    courseCat = btn.dataset.cat;
+    document.querySelectorAll('#course-tabs button').forEach(function (b) {
+      b.classList.toggle('active', b === btn);
+    });
+    if (courseCache[courseCat]) renderCourse(courseCache[courseCat]);
+    else loadCourse(courseCat);
+  });
+
+  document.getElementById('course-list').addEventListener('click', function (e) {
+    var row = e.target.closest('.course-row');
+    if (!row || row.disabled) return;
+    openPlayer(parseInt(row.dataset.idx, 10));
+  });
+
+  document.getElementById('player-close').addEventListener('click', closePlayer);
+  document.getElementById('player-modal').addEventListener('click', function (e) {
+    if (e.target === document.getElementById('player-modal')) closePlayer();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !document.getElementById('player-modal').classList.contains('hidden')) closePlayer();
+  });
+
+  function renderAcademy(data) {
+    document.getElementById('academy-message').textContent = data.message;
+    document.getElementById('academy-grid').innerHTML = data.modules.map(function (m) {
+      return '<div class="module-card"><div class="module-icon">🔒</div><div>' +
+        '<div class="module-order">Babak #' + m.order + '</div>' +
+        '<div class="module-title">' + esc(m.title) + '</div></div></div>';
+    }).join('');
   }
 
   async function loadAcademy() {
+    loadCourse(courseCat);
     try {
       const data = await api('/v1/academy/overview');
       renderAcademy(data);
     } catch (err) {
-      document.getElementById('academy-progress-text').textContent = 'Gagal memuat';
+      document.getElementById('academy-message').textContent = 'Gagal memuat modul.';
     }
   }
 
