@@ -87,11 +87,21 @@ def test_cross_member_read_returns_404_not_403(client):
     assert client.get(f"/v1/prospects/{pid}", headers=budi).status_code == 404
 
 
-def test_responses_do_not_leak_contact_details(client):
+def test_owner_sees_own_contact_but_other_members_never_do(client):
     andi = login(client, "andi@example.test", "andi-pass-123")
+    budi = login(client, "budi@example.test", "budi-pass-456")
     created = client.post("/v1/prospects", headers=andi, json={
         "name": "Sari", "source": "webinar", "consent_purpose": "follow_up", "consent_granted": True,
         "whatsapp": "081234500001", "email": "sari@example.test"}).json()
-    body = str(created) + str(client.get("/v1/prospects", headers=andi).json())
-    assert "081234500001" not in body
-    assert "sari@example.test" not in body
+    pid = created["id"]
+
+    # The owner (Andi) can see the contact details -- needed to act on the lead.
+    andi_list = client.get("/v1/prospects", headers=andi).json()
+    assert andi_list[0]["whatsapp"] == "081234500001"
+    assert andi_list[0]["email"] == "sari@example.test"
+
+    # Budi (a different member) never sees Sari at all: not in his own list, and 404 by id.
+    budi_list_body = str(client.get("/v1/prospects", headers=budi).json())
+    assert "081234500001" not in budi_list_body
+    assert "sari@example.test" not in budi_list_body
+    assert client.get(f"/v1/prospects/{pid}", headers=budi).status_code == 404

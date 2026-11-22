@@ -4,115 +4,255 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Member Intelligence Dashboard (Phase 1)</title>
+  <title>ONE Dashboard — 12ELEVATE</title>
   <style>
-    :root { --ink:#0F172A; --muted:#64748B; --line:#E2E8F0; --blue:#0060DF; --bg:#F8FAFC; }
+    :root {
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --ink: #1E293B;
+      --muted: #64748B;
+      --line: #E2E8F0;
+      --gold-warm: #D4AF37;
+      --gold-deep: #B45309;
+      --gold-wash: #FBF3DE;
+      --green: #15803D;
+      --red: #B91C1C;
+      --radius: 14px;
+    }
     * { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); background:var(--bg); }
-    header { background:#fff; border-bottom:1px solid var(--line); padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
-    header strong { font-size:1rem; }
-    nav { display:flex; gap:6px; flex-wrap:wrap; padding:10px 20px; background:#fff; border-bottom:1px solid var(--line); }
-    nav button { border:1px solid var(--line); background:#fff; padding:8px 14px; border-radius:8px; cursor:pointer; font-weight:600; color:var(--ink); }
-    nav button.active { background:var(--blue); color:#fff; border-color:var(--blue); }
-    main { padding:20px; max-width:900px; margin:0 auto; }
-    .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:14px; }
-    .card h2 { margin:0 0 6px; font-size:1.05rem; }
-    .muted { color:var(--muted); font-size:.9rem; }
-    .empty { text-align:center; padding:28px 12px; color:var(--muted); }
-    input { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; margin:6px 0; font-size:1rem; }
-    button.primary { background:var(--blue); color:#fff; border:0; padding:10px 16px; border-radius:8px; font-weight:700; cursor:pointer; }
-    table { width:100%; border-collapse:collapse; font-size:.92rem; }
-    th, td { text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); }
-    .hidden { display:none; }
-    .status { font-size:.85rem; color:var(--muted); margin-top:8px; }
-    @media (max-width:600px) { nav button { flex:1 1 45%; } }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .shell { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px; background: var(--surface); border-right: 1px solid var(--line);
+      padding: 20px 14px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+    }
+    .brand { font-weight: 800; font-size: 1.05rem; padding: 0 10px 18px; letter-spacing: .2px; }
+    .brand .dot { color: var(--gold-warm); }
+    .side-nav button {
+      width: 100%; text-align: left; display: flex; align-items: center; gap: 10px;
+      background: none; border: 0; border-radius: 10px; padding: 11px 12px; margin-bottom: 4px;
+      font-size: .95rem; font-weight: 600; color: var(--ink); cursor: pointer;
+    }
+    .side-nav button .ic { width: 20px; text-align: center; }
+    .side-nav button.active { background: var(--gold-wash); color: var(--gold-deep); }
+    .side-nav button.active .ic { color: var(--gold-warm); }
+
+    .main-col { flex: 1; min-width: 0; }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--line);
+      padding: 14px 22px; display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 5;
+    }
+    .topbar h1 { font-size: 1.05rem; margin: 0; }
+    main { padding: 22px; max-width: 980px; margin: 0 auto; padding-bottom: 90px; }
+
+    .bottom-nav {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+      background: var(--surface); border-top: 1px solid var(--line);
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    }
+    .bottom-nav-row { display: flex; }
+    .bottom-nav button {
+      flex: 1; background: none; border: 0; display: flex; flex-direction: column; align-items: center;
+      gap: 2px; padding: 6px 2px; font-size: .68rem; font-weight: 700; color: var(--muted); cursor: pointer;
+    }
+    .bottom-nav button .ic { font-size: 1.15rem; }
+    .bottom-nav button.active { color: var(--gold-deep); }
+
+    @media (max-width: 860px) {
+      .sidebar { display: none; }
+      .bottom-nav { display: block; }
+      main { padding: 16px; padding-bottom: 86px; }
+      .topbar { padding: 12px 16px; }
+    }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 18px; margin-bottom: 16px;
+    }
+    .card h2 { margin: 0 0 4px; font-size: 1rem; font-weight: 700; }
+    .card-sub { color: var(--muted); font-size: .82rem; margin: 0 0 12px; }
+    .muted { color: var(--muted); font-size: .9rem; }
+    .empty { text-align: center; padding: 26px 12px; color: var(--muted); font-size: .9rem; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+    @media (max-width: 860px) { .kpi-grid { grid-template-columns: 1fr; } }
+    .kpi-card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .kpi-label { font-size: .8rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+    .kpi-value { font-size: 1.9rem; font-weight: 800; color: var(--ink); line-height: 1; }
+    .kpi-value.placeholder { font-size: 1rem; font-weight: 600; color: var(--muted); }
+    .kpi-note { font-size: .78rem; color: var(--muted); margin-top: 6px; }
+    .kpi-note.urgent { color: var(--red); font-weight: 700; }
+    .kpi-note.good { color: var(--green); font-weight: 700; }
+
+    .progress-track { background: var(--line); border-radius: 999px; height: 8px; margin-top: 10px; overflow: hidden; }
+    .progress-fill { background: var(--gold-warm); height: 100%; border-radius: 999px; }
+
+    .nba-card { border: 1.5px solid var(--gold-warm); background: var(--gold-wash); }
+    .nba-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .nba-row + .nba-row { border-top: 1px solid #EFE2BC; padding-top: 12px; margin-top: 12px; }
+    .nba-name { font-weight: 700; }
+    .nba-meta { font-size: .8rem; color: var(--muted); }
+
+    button.primary {
+      background: var(--gold-warm); color: #1E1203; border: 0; padding: 10px 16px;
+      border-radius: 10px; font-weight: 700; cursor: pointer; font-size: .92rem;
+    }
+    button.primary:hover { background: #C49C2E; }
+    button.ghost {
+      background: #fff; color: var(--ink); border: 1px solid var(--line); padding: 9px 14px;
+      border-radius: 10px; font-weight: 600; cursor: pointer; font-size: .88rem;
+    }
+    button.wa { background: var(--green); color: #fff; }
+    button.wa:hover { background: #116A32; }
+
+    .login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .login-card { max-width: 400px; width: 100%; margin: 0 20px; }
+    input {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px;
+      margin: 6px 0; font-size: .95rem; background: #fff; color: var(--ink);
+    }
+    input:focus { outline: 2px solid var(--gold-warm); outline-offset: 1px; }
+    .status { font-size: .85rem; color: var(--muted); margin-top: 8px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); color: var(--muted); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; }
+    td { text-align: left; padding: 10px 6px; border-bottom: 1px solid var(--line); }
+    .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .75rem; font-weight: 700; }
+    .badge.new { background: var(--gold-wash); color: var(--gold-deep); }
+    .badge.other { background: var(--bg); color: var(--muted); }
+
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-<header>
-  <strong>Member Intelligence Dashboard</strong>
-  <span class="muted" id="who">Belum login</span>
-</header>
 
-<section id="login-view" class="card" style="max-width:420px;margin:40px auto;">
-  <h2>Masuk</h2>
-  <p class="muted">Gunakan email dan password member kamu.</p>
-  <form id="login-form">
-    <input id="email" type="email" autocomplete="username" placeholder="Email" required>
-    <input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
-    <button class="primary" type="submit">Masuk</button>
-  </form>
-  <div class="status" id="login-status"></div>
-</section>
-
-<div id="app" class="hidden">
-  <nav>
-    <button data-view="home" class="active">Home</button>
-    <button data-view="prospects">Prospects</button>
-    <button data-view="assistant">AI Assistant</button>
-    <button data-view="business">My Business</button>
-    <button data-view="academy">Academy</button>
-  </nav>
-
-  <main>
-    <section data-panel="home">
-      <div class="card">
-        <h2>Siapa yang harus dihubungi hari ini?</h2>
-        <div class="empty" id="home-q1">Belum ada prospek. Data akan muncul saat sumber masuk tersambung.</div>
-      </div>
-      <div class="card">
-        <h2>Apa yang perlu dilakukan?</h2>
-        <div class="empty" id="home-q2">Belum ada tindakan. Rekomendasi tampil setelah ada prospek dengan consent.</div>
-      </div>
-      <div class="card">
-        <h2>Bagaimana progresnya?</h2>
-        <div class="empty" id="home-q3">Belum ada data progres untuk dihitung.</div>
-      </div>
-    </section>
-
-    <section data-panel="prospects" class="hidden">
-      <div class="card">
-        <h2>Tambah prospek</h2>
-        <form id="prospect-form">
-          <input id="p-name" type="text" placeholder="Nama prospek" required>
-          <input id="p-source" type="text" placeholder="Sumber (misal: website, webinar, referral)" required>
-          <input id="p-whatsapp" type="text" placeholder="WhatsApp (opsional)">
-          <input id="p-email" type="email" placeholder="Email (opsional)">
-          <label style="display:flex;align-items:center;gap:8px;font-size:.9rem;margin:10px 0;">
-            <input id="p-consent" type="checkbox" style="width:auto;margin:0;" required>
-            Prospek ini telah memberikan izin untuk dihubungi mengenai edukasi wellness / peluang bisnis.
-          </label>
-          <button class="primary" type="submit">Simpan Prospek</button>
-        </form>
-        <div class="status" id="prospect-form-status"></div>
-      </div>
-      <div class="card">
-        <h2>Prospek kamu</h2>
-        <div id="prospect-list" class="muted">Memuat...</div>
-      </div>
-    </section>
-
-    <section data-panel="assistant" class="hidden">
-      <div class="card empty">AI Assistant belum aktif. Fitur ini masuk Phase 2 dan akan selalu meminta persetujuan kamu sebelum ada pesan dikirim.</div>
-    </section>
-
-    <section data-panel="business" class="hidden">
-      <div class="card empty">Ringkasan bisnis akan tampil setelah metrik disepakati. Belum ada angka yang ditampilkan.</div>
-    </section>
-
-    <section data-panel="academy" class="hidden">
-      <div class="card empty">Materi belajar belum tersedia di dashboard ini.</div>
-    </section>
-  </main>
+<div id="login-view" class="login-shell">
+  <div class="card login-card">
+    <h2>Masuk ke ONE Dashboard</h2>
+    <p class="card-sub">Gunakan email dan password Wellness Partner kamu.</p>
+    <form id="login-form">
+      <input id="email" type="email" autocomplete="username" placeholder="Email" required>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+      <button class="primary" type="submit" style="width:100%;margin-top:6px;">Masuk</button>
+    </form>
+    <div class="status" id="login-status"></div>
+  </div>
 </div>
 
+<div id="app" class="hidden shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="dot">●</span> ONE <span style="color:var(--muted);font-weight:600;">by 12ELEVATE</span></div>
+    <nav class="side-nav">
+      <button data-view="home" class="active"><span class="ic">🏠</span> Home</button>
+      <button data-view="prospects"><span class="ic">👥</span> Prospects</button>
+      <button data-view="assistant"><span class="ic">✨</span> AI Co-Pilot</button>
+      <button data-view="business"><span class="ic">📊</span> My Business</button>
+      <button data-view="academy"><span class="ic">🎓</span> Academy</button>
+    </nav>
+  </aside>
+
+  <div class="main-col">
+    <div class="topbar">
+      <h1 id="topbar-title">Home</h1>
+      <span class="muted" id="who" style="font-size:.85rem;"></span>
+    </div>
+
+    <main>
+      <section data-panel="home">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">TARGET &amp; MILESTONE</div>
+            <div class="kpi-value placeholder" id="kpi-target">Belum ada data</div>
+            <div class="kpi-note" id="kpi-target-note">Golden Elevate Pool belum terhubung ke sistem ini.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">12-HOUR HABIT TRACKER</div>
+            <div class="kpi-value placeholder" id="kpi-habit">Belum ada data</div>
+            <div class="kpi-note" id="kpi-habit-note">Fitur ini belum dibangun di Phase 1.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">LEADS SIAP FOLLOW-UP</div>
+            <div class="kpi-value" id="kpi-leads">—</div>
+            <div class="kpi-note" id="kpi-leads-note"></div>
+          </div>
+        </div>
+
+        <div class="card nba-card">
+          <h2>Next Best Action</h2>
+          <p class="card-sub">Prospek yang paling perlu kamu follow-up sekarang.</p>
+          <div id="nba-list"><div class="empty">Memuat...</div></div>
+        </div>
+
+        <div class="card">
+          <h2>Progres ONE Academy</h2>
+          <p class="card-sub">16 modul edukasi wellness &amp; bisnis.</p>
+          <div class="empty">Belum ada data progres modul. Fitur Academy belum aktif di Phase 1.</div>
+        </div>
+      </section>
+
+      <section data-panel="prospects" class="hidden">
+        <div class="card">
+          <h2>Tambah Prospek</h2>
+          <form id="prospect-form">
+            <input id="p-name" type="text" placeholder="Nama prospek" required>
+            <input id="p-source" type="text" placeholder="Sumber (misal: website, webinar, referral)" required>
+            <input id="p-whatsapp" type="text" placeholder="WhatsApp (contoh: 6281234567890)">
+            <input id="p-email" type="email" placeholder="Email (opsional)">
+            <label style="display:flex;align-items:flex-start;gap:8px;font-size:.88rem;margin:10px 0;color:var(--ink);">
+              <input id="p-consent" type="checkbox" style="width:auto;margin:2px 0 0;" required>
+              <span>Prospek ini telah memberikan izin untuk dihubungi mengenai edukasi wellness / peluang bisnis.</span>
+            </label>
+            <button class="primary" type="submit">Simpan Prospek</button>
+          </form>
+          <div class="status" id="prospect-form-status"></div>
+        </div>
+        <div class="card">
+          <h2>Prospek Kamu</h2>
+          <div id="prospect-list" class="muted">Memuat...</div>
+        </div>
+      </section>
+
+      <section data-panel="assistant" class="hidden">
+        <div class="card empty">AI Co-Pilot belum aktif. Fitur ini masuk Phase 2 dan akan selalu meminta persetujuan kamu sebelum ada pesan dikirim.</div>
+      </section>
+
+      <section data-panel="business" class="hidden">
+        <div class="card empty">Ringkasan bisnis akan tampil setelah metrik Golden Elevate Pool disepakati. Belum ada angka yang ditampilkan.</div>
+      </section>
+
+      <section data-panel="academy" class="hidden">
+        <div class="card empty">Materi belajar belum tersedia di dashboard ini.</div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<nav class="bottom-nav hidden" id="bottom-nav">
+  <div class="bottom-nav-row">
+    <button data-view="home" class="active"><span class="ic">🏠</span>Home</button>
+    <button data-view="prospects"><span class="ic">👥</span>Prospects</button>
+    <button data-view="assistant"><span class="ic">✨</span>Co-Pilot</button>
+    <button data-view="business"><span class="ic">📊</span>Bisnis</button>
+    <button data-view="academy"><span class="ic">🎓</span>Academy</button>
+  </div>
+</nav>
+
 <script>
-  // API base: same origin in production; set window.API_BASE to override in dev.
-  // API base is read at call time (not at script load), so window.API_BASE can be set any time.
   function apiBase() { return (window.API_BASE || '').replace(/\/$/, ''); }
   let token = null;
+  let prospectsCache = [];
 
   function show(id, on) { document.getElementById(id).classList.toggle('hidden', !on); }
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   async function api(path, opts = {}) {
     const headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
@@ -141,38 +281,72 @@
     status.textContent = '';
     token = data.access_token;
     document.getElementById('password').value = '';
-    show('login-view', false); show('app', true);
-    document.getElementById('who').textContent = 'Masuk';
+    show('login-view', false);
+    document.getElementById('app').classList.remove('hidden');
+    document.getElementById('bottom-nav').classList.remove('hidden');
     loadProspects();
   });
 
   function logout() {
     token = null;
-    show('app', false); show('login-view', true);
-    document.getElementById('who').textContent = 'Belum login';
+    document.getElementById('app').classList.add('hidden');
+    document.getElementById('bottom-nav').classList.add('hidden');
+    show('login-view', true);
+  }
+
+  function renderHome() {
+    const leads = prospectsCache.filter(p => p.status === 'new');
+    document.getElementById('kpi-leads').textContent = String(leads.length);
+    document.getElementById('kpi-leads-note').textContent = leads.length > 0
+      ? 'Prospek baru belum di-follow-up.'
+      : 'Tidak ada lead baru saat ini.';
+    document.getElementById('kpi-leads-note').className = 'kpi-note' + (leads.length > 0 ? ' urgent' : ' good');
+
+    const nba = document.getElementById('nba-list');
+    if (leads.length === 0) {
+      nba.innerHTML = '<div class="empty">Belum ada lead baru yang perlu di-follow-up.</div>';
+      return;
+    }
+    nba.innerHTML = leads.slice(0, 5).map(p => {
+      const waNumber = (p.whatsapp || '').replace(/[^0-9]/g, '');
+      const waBtn = waNumber
+        ? `<a href="https://wa.me/${esc(waNumber)}?text=${encodeURIComponent('Halo ' + p.name + ', terima kasih sudah mengisi asesmen wellness. Boleh saya bantu jelaskan hasilnya?')}" target="_blank" rel="noopener"><button class="wa">Kirim WhatsApp Insight</button></a>`
+        : `<button class="ghost" disabled title="Prospek ini belum punya nomor WhatsApp">Nomor WA belum ada</button>`;
+      return `<div class="nba-row">
+        <div>
+          <div class="nba-name">${esc(p.name)}</div>
+          <div class="nba-meta">Sumber: ${esc(p.source)} · Masuk: ${esc(new Date(p.created_at).toLocaleDateString('id-ID'))}</div>
+        </div>
+        ${waBtn}
+      </div>`;
+    }).join('');
   }
 
   async function loadProspects() {
     const box = document.getElementById('prospect-list');
     try {
-      const rows = await api('/v1/prospects');
-      if (!rows.length) { box.innerHTML = '<div class="empty">Belum ada prospek.</div>'; return; }
-      const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      prospectsCache = await api('/v1/prospects');
+      renderHome();
+      if (!prospectsCache.length) { box.innerHTML = '<div class="empty">Belum ada prospek.</div>'; return; }
       box.innerHTML = '<table><tr><th>Nama</th><th>Sumber</th><th>Status</th></tr>' +
-        rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.source)}</td><td>${esc(r.status)}</td></tr>`).join('') + '</table>';
+        prospectsCache.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.source)}</td><td><span class="badge ${r.status === 'new' ? 'new' : 'other'}">${esc(r.status)}</span></td></tr>`).join('') + '</table>';
     } catch (err) {
       box.textContent = 'Gagal memuat prospek.';
     }
   }
 
-  document.querySelectorAll('nav button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const view = btn.dataset.view;
-      document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.panel !== view));
-      if (view === 'prospects') loadProspects();  // refresh on open; a 401 here triggers logout()
+  function switchView(view) {
+    document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(b => {
+      b.classList.toggle('active', b.dataset.view === view);
     });
+    document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.panel !== view));
+    const titles = { home: 'Home', prospects: 'Prospects', assistant: 'AI Co-Pilot', business: 'My Business', academy: 'Academy' };
+    document.getElementById('topbar-title').textContent = titles[view] || view;
+    if (view === 'prospects') loadProspects();
+  }
+
+  document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(btn => {
+    btn.addEventListener('click', () => switchView(btn.dataset.view));
   });
 
   document.getElementById('prospect-form').addEventListener('submit', async (e) => {
@@ -205,7 +379,6 @@
     document.getElementById('prospect-form').reset();
     loadProspects();
   });
-
 </script>
 </body>
 </html>

@@ -59,7 +59,11 @@ def create_app(session_factory) -> FastAPI:
 
     @app.get("/v1/prospects")
     def list_mine(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
-        return [{"id": p.id, "name": p.name, "source": p.source, "status": p.status}
+        # The owner can see their own prospect's contact details (needed to act on it,
+        # e.g. a WhatsApp follow-up button). Isolation between members is unaffected:
+        # this query is already scoped to member_id, so no other member's data appears here.
+        return [{"id": p.id, "name": p.name, "source": p.source, "status": p.status,
+                 "whatsapp": p.whatsapp, "email": p.email, "created_at": p.created_at.isoformat()}
                 for p in list_prospects_for_member(db, member_id=member_id)]
 
     @app.post("/v1/prospects", status_code=201)
