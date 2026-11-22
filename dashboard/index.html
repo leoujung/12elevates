@@ -72,6 +72,21 @@
 
     <section data-panel="prospects" class="hidden">
       <div class="card">
+        <h2>Tambah prospek</h2>
+        <form id="prospect-form">
+          <input id="p-name" type="text" placeholder="Nama prospek" required>
+          <input id="p-source" type="text" placeholder="Sumber (misal: website, webinar, referral)" required>
+          <input id="p-whatsapp" type="text" placeholder="WhatsApp (opsional)">
+          <input id="p-email" type="email" placeholder="Email (opsional)">
+          <label style="display:flex;align-items:center;gap:8px;font-size:.9rem;margin:10px 0;">
+            <input id="p-consent" type="checkbox" style="width:auto;margin:0;" required>
+            Prospek ini telah memberikan izin untuk dihubungi mengenai edukasi wellness / peluang bisnis.
+          </label>
+          <button class="primary" type="submit">Simpan Prospek</button>
+        </form>
+        <div class="status" id="prospect-form-status"></div>
+      </div>
+      <div class="card">
         <h2>Prospek kamu</h2>
         <div id="prospect-list" class="muted">Memuat...</div>
       </div>
@@ -159,6 +174,38 @@
       if (view === 'prospects') loadProspects();  // refresh on open; a 401 here triggers logout()
     });
   });
+
+  document.getElementById('prospect-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('prospect-form-status');
+    status.textContent = 'Menyimpan...';
+    const body = {
+      name: document.getElementById('p-name').value,
+      source: document.getElementById('p-source').value,
+      whatsapp: document.getElementById('p-whatsapp').value || null,
+      email: document.getElementById('p-email').value || null,
+      consent_granted: document.getElementById('p-consent').checked,
+      consent_purpose: document.getElementById('p-consent').checked ? 'wellness_education' : null,
+    };
+    let r;
+    try {
+      r = await fetch(apiBase() + '/v1/prospects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      status.textContent = 'Tidak bisa terhubung ke server. Coba lagi nanti.';
+      return;
+    }
+    if (r.status === 401) { logout(); return; }
+    if (r.status === 422) { status.textContent = 'Prospek tidak disimpan: izin (consent) wajib dicentang.'; return; }
+    if (!r.ok) { status.textContent = 'Gagal menyimpan (kode ' + r.status + ').'; return; }
+    status.textContent = 'Prospek tersimpan.';
+    document.getElementById('prospect-form').reset();
+    loadProspects();
+  });
+
 </script>
 </body>
 </html>
