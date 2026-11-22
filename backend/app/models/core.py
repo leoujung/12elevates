@@ -64,3 +64,28 @@ class AuditLog(Base):
     action: Mapped[str] = mapped_column(String(100))
     target: Mapped[str] = mapped_column(String(100))
     at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class LpEntry(Base):
+    """A manually-recorded LP (Loyalty Point) transaction toward the Golden Elevate Pool
+    milestone (150 LP). No automatic integration with 4Life/MyShop exists; the member
+    records this themselves. Owned by exactly one member, same isolation rule as Prospect."""
+    __tablename__ = "lp_entries"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    owner_member_id: Mapped[str] = mapped_column(ForeignKey("members.id"), index=True)
+    points: Mapped[int] = mapped_column()
+    note: Mapped[str | None] = mapped_column(String(300), nullable=True)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class HabitDay(Base):
+    """One row per member per calendar day: how many of the 12 daily habit items were
+    completed. The specific 12 items are not modelled yet (not defined by the business
+    owner); this stores only a count out of 12 so the UI can show real progress without
+    inventing item names."""
+    __tablename__ = "habit_days"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    owner_member_id: Mapped[str] = mapped_column(ForeignKey("members.id"), index=True)
+    day: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD, one row per member per day
+    completed_count: Mapped[int] = mapped_column(default=0)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now, onupdate=_now)

@@ -171,13 +171,23 @@
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-label">TARGET &amp; MILESTONE</div>
-            <div class="kpi-value placeholder" id="kpi-target">Belum ada data</div>
-            <div class="kpi-note" id="kpi-target-note">Golden Elevate Pool belum terhubung ke sistem ini.</div>
+            <div class="kpi-value" id="kpi-target">—</div>
+            <div class="progress-track"><div class="progress-fill" id="kpi-target-bar" style="width:0%"></div></div>
+            <div class="kpi-note" id="kpi-target-note"></div>
+            <form id="lp-form" style="display:flex;gap:6px;margin-top:10px;">
+              <input id="lp-points" type="number" min="1" placeholder="+ LP" style="margin:0;padding:7px 8px;font-size:.82rem;">
+              <button class="ghost" type="submit" style="padding:7px 10px;font-size:.8rem;white-space:nowrap;">Catat LP</button>
+            </form>
           </div>
           <div class="kpi-card">
             <div class="kpi-label">12-HOUR HABIT TRACKER</div>
-            <div class="kpi-value placeholder" id="kpi-habit">Belum ada data</div>
-            <div class="kpi-note" id="kpi-habit-note">Fitur ini belum dibangun di Phase 1.</div>
+            <div class="kpi-value" id="kpi-habit">—</div>
+            <div class="progress-track"><div class="progress-fill" id="kpi-habit-bar" style="width:0%"></div></div>
+            <div class="kpi-note" id="kpi-habit-note">Hari ini</div>
+            <form id="habit-form" style="display:flex;gap:6px;margin-top:10px;">
+              <input id="habit-count" type="number" min="0" max="12" placeholder="0-12" style="margin:0;padding:7px 8px;font-size:.82rem;">
+              <button class="ghost" type="submit" style="padding:7px 10px;font-size:.8rem;white-space:nowrap;">Update</button>
+            </form>
           </div>
           <div class="kpi-card">
             <div class="kpi-label">LEADS SIAP FOLLOW-UP</div>
@@ -285,6 +295,8 @@
     document.getElementById('app').classList.remove('hidden');
     document.getElementById('bottom-nav').classList.remove('hidden');
     loadProspects();
+    loadLp();
+    loadHabit();
   });
 
   function logout() {
@@ -334,6 +346,54 @@
       box.textContent = 'Gagal memuat prospek.';
     }
   }
+
+  async function loadLp() {
+    try {
+      const s = await api('/v1/lp/summary');
+      document.getElementById('kpi-target').textContent = s.total_lp + ' / ' + s.target_lp + ' LP';
+      document.getElementById('kpi-target-bar').style.width = s.percent + '%';
+      document.getElementById('kpi-target-note').textContent = s.qualified
+        ? 'Golden Elevate Pool: kualifikasi tercapai.'
+        : s.percent + '% dari target 150 LP per transaksi.';
+      document.getElementById('kpi-target-note').className = 'kpi-note' + (s.qualified ? ' good' : '');
+    } catch (err) {
+      document.getElementById('kpi-target').textContent = 'Gagal memuat';
+    }
+  }
+
+  async function loadHabit() {
+    try {
+      const h = await api('/v1/habit/today');
+      document.getElementById('kpi-habit').textContent = h.completed_count + ' / ' + h.total;
+      document.getElementById('kpi-habit-bar').style.width = Math.round(h.completed_count / h.total * 100) + '%';
+      document.getElementById('habit-count').value = h.completed_count;
+    } catch (err) {
+      document.getElementById('kpi-habit').textContent = 'Gagal memuat';
+    }
+  }
+
+  document.getElementById('lp-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('lp-points');
+    const points = parseInt(input.value, 10);
+    if (!points || points <= 0) return;
+    try {
+      await api('/v1/lp', { method: 'POST', body: JSON.stringify({ points }) });
+      input.value = '';
+      loadLp();
+    } catch (err) { /* silently ignore; KPI stays at last known value */ }
+  });
+
+  document.getElementById('habit-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('habit-count');
+    const completed_count = parseInt(input.value, 10);
+    if (Number.isNaN(completed_count) || completed_count < 0 || completed_count > 12) return;
+    try {
+      await api('/v1/habit/today', { method: 'PUT', body: JSON.stringify({ completed_count }) });
+      loadHabit();
+    } catch (err) { /* silently ignore; KPI stays at last known value */ }
+  });
 
   function switchView(view) {
     document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(b => {

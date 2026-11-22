@@ -9,6 +9,12 @@ from sqlalchemy.orm import Session
 
 from app.core.security import hash_password, issue_token, member_id_from_token, verify_password
 from app.models.core import Member
+from app.services.progress import (
+    habit_today_for_member,
+    lp_summary_for_member,
+    record_lp,
+    set_habit_progress,
+)
 from app.services.prospects import (
     ConsentRequired,
     get_prospect_for_member,
@@ -29,6 +35,15 @@ class ProspectIn(BaseModel):
     consent_granted: bool = False
     whatsapp: str | None = None
     email: str | None = None
+
+
+class LpEntryIn(BaseModel):
+    points: int
+    note: str | None = None
+
+
+class HabitIn(BaseModel):
+    completed_count: int
 
 
 def create_app(session_factory) -> FastAPI:
@@ -83,5 +98,31 @@ def create_app(session_factory) -> FastAPI:
             # Same response whether it does not exist or belongs to someone else
             raise HTTPException(status.HTTP_404_NOT_FOUND, "not found")
         return {"id": p.id, "name": p.name, "source": p.source, "status": p.status}
+
+    @app.post("/v1/lp", status_code=201)
+    def add_lp(body: LpEntryIn, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        try:
+            entry = record_lp(db, owner_member_id=member_id, points=body.points, note=body.note)
+        except ValueError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        return {"id": entry.id, "points": entry.points}
+
+    @app.get("/v1/lp/summary")
+    def lp_summary(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        return lp_summary_for_member(db, member_id=member_id)
+
+    @app.put("/v1/habit/today")
+    def set_habit_today(body: HabitIn, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        from datetime import date
+        try:
+            row = set_habit_progress(db, owner_member_id=member_id, day=date.today().isoformat(),
+                                     completed_count=body.completed_count)
+        except ValueError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        return {"day": row.day, "completed_count": row.completed_count}
+
+    @app.get("/v1/habit/today")
+    def get_habit_today(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        return habit_today_for_member(db, member_id=member_id)
 
     return app

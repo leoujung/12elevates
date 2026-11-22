@@ -105,3 +105,59 @@ def test_owner_sees_own_contact_but_other_members_never_do(client):
     assert "081234500001" not in budi_list_body
     assert "sari@example.test" not in budi_list_body
     assert client.get(f"/v1/prospects/{pid}", headers=budi).status_code == 404
+
+
+def test_lp_summary_starts_at_zero_and_accumulates(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    summary = client.get("/v1/lp/summary", headers=andi).json()
+    assert summary == {"total_lp": 0, "target_lp": 150, "percent": 0, "qualified": False, "entry_count": 0}
+
+    assert client.post("/v1/lp", headers=andi, json={"points": 50, "note": "pack A"}).status_code == 201
+    assert client.post("/v1/lp", headers=andi, json={"points": 100}).status_code == 201
+    summary = client.get("/v1/lp/summary", headers=andi).json()
+    assert summary["total_lp"] == 150
+    assert summary["percent"] == 100
+    assert summary["qualified"] is True
+    assert summary["entry_count"] == 2
+
+
+def test_lp_rejects_non_positive_points(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    assert client.post("/v1/lp", headers=andi, json={"points": 0}).status_code == 422
+    assert client.post("/v1/lp", headers=andi, json={"points": -5}).status_code == 422
+
+
+def test_lp_is_isolated_between_members(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    budi = login(client, "budi@example.test", "budi-pass-456")
+    client.post("/v1/lp", headers=andi, json={"points": 150})
+    andi_summary = client.get("/v1/lp/summary", headers=andi).json()
+    budi_summary = client.get("/v1/lp/summary", headers=budi).json()
+    assert andi_summary["total_lp"] == 150
+    assert budi_summary["total_lp"] == 0  # Budi's summary is unaffected by Andi's entries
+
+
+def test_habit_today_defaults_to_zero_and_can_be_updated(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    today = client.get("/v1/habit/today", headers=andi).json()
+    assert today["completed_count"] == 0
+    assert today["total"] == 12
+
+    r = client.put("/v1/habit/today", headers=andi, json={"completed_count": 7})
+    assert r.status_code == 200
+    assert r.json()["completed_count"] == 7
+    assert client.get("/v1/habit/today", headers=andi).json()["completed_count"] == 7
+
+
+def test_habit_rejects_out_of_range_count(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    assert client.put("/v1/habit/today", headers=andi, json={"completed_count": 13}).status_code == 422
+    assert client.put("/v1/habit/today", headers=andi, json={"completed_count": -1}).status_code == 422
+
+
+def test_habit_is_isolated_between_members(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    budi = login(client, "budi@example.test", "budi-pass-456")
+    client.put("/v1/habit/today", headers=andi, json={"completed_count": 12})
+    assert client.get("/v1/habit/today", headers=andi).json()["completed_count"] == 12
+    assert client.get("/v1/habit/today", headers=budi).json()["completed_count"] == 0
