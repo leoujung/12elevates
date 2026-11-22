@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.core.security import hash_password, issue_token, member_id_from_token, verify_password
 from app.models.core import Member
+from app.services.academy import academy_overview
 from app.services.habits import (
     consistency_score,
     habit_today_for_member,
@@ -139,5 +140,10 @@ def create_app(session_factory) -> FastAPI:
     @app.get("/v1/habit/consistency")
     def get_consistency(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
         return consistency_score(db, member_id=member_id, days=7)
+
+    @app.get("/v1/academy/overview")
+    def get_academy(member_id: str = Depends(current_member_id)):
+        # member_id required for auth only; academy content is not yet member-specific
+        return academy_overview()
 
     return app

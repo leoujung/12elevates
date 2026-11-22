@@ -199,3 +199,17 @@ def test_consistency_score_returns_7_days(client):
     assert len(score["days"]) == 7
     assert score["days"][-1]["completed_count"] == 4  # today is the last entry
     assert 0 <= score["average_percent"] <= 100
+
+
+def test_academy_overview_requires_auth_and_has_16_placeholder_modules(client):
+    assert client.get("/v1/academy/overview").status_code == 401
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.get("/v1/academy/overview", headers=andi)
+    assert r.status_code == 200
+    data = r.json()
+    assert data["total"] == 16
+    assert len(data["modules"]) == 16
+    assert data["completed"] == 0
+    assert data["percent"] == 0
+    # honesty check: no module claims real content or a completed state
+    assert all(m["status"] == "coming_soon" and m["title"] == "Segera Hadir" for m in data["modules"])

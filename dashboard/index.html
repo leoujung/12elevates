@@ -192,6 +192,18 @@
     .bar-label { font-size: .68rem; color: var(--muted); margin-top: 4px; }
     .bar-shield { font-size: .7rem; position: absolute; top: -16px; }
 
+    /* ---------- Academy ---------- */
+    .academy-hero { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+    .academy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+    @media (max-width: 600px) { .academy-grid { grid-template-columns: 1fr; } }
+    .module-card {
+      border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+      display: flex; align-items: center; gap: 10px; background: var(--bg);
+    }
+    .module-icon { font-size: 1.1rem; width: 24px; text-align: center; flex-shrink: 0; }
+    .module-order { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; }
+    .module-title { font-size: .85rem; font-weight: 700; color: var(--muted); }
+
     .hidden { display: none; }
   </style>
 </head>
@@ -304,9 +316,9 @@
               <div class="muted" style="font-size:.78rem;margin-top:6px;" id="monthly-qualify-text">Kualifikasi Reward Bulan Ini: — / 80% Minimum</div>
             </div>
 
-            <div class="card empty" style="margin-top:0;">
+            <div class="card empty" style="margin-top:0;" id="academy-home-card">
               <strong style="color:var(--ink);">ONE Academy</strong><br>
-              Belum ada data progres modul. Fitur Academy belum aktif di Phase 1.
+              <span id="academy-home-text">Memuat...</span>
             </div>
           </div>
         </div>
@@ -343,7 +355,17 @@
       </section>
 
       <section data-panel="academy" class="hidden">
-        <div class="card empty">Materi belajar belum tersedia di dashboard ini.</div>
+        <div class="card">
+          <div class="academy-hero">
+            <div>
+              <h2 style="margin:0;">ONE Academy</h2>
+              <p class="card-sub" id="academy-progress-text" style="margin:2px 0 0;">Memuat...</p>
+            </div>
+          </div>
+          <div class="progress-track"><div class="progress-fill gold" id="academy-bar" style="width:0%"></div></div>
+          <div class="muted" style="font-size:.85rem;margin-top:10px;" id="academy-message"></div>
+          <div class="academy-grid" id="academy-grid"></div>
+        </div>
       </section>
     </main>
   </div>
@@ -401,6 +423,7 @@
     loadLp();
     loadHabit();
     loadConsistency();
+    loadAcademy();
   });
 
   function logout() {
@@ -600,6 +623,32 @@
     } catch (err) { /* silently ignore; KPI stays at last known value */ }
   });
 
+  function renderAcademy(data) {
+    document.getElementById('academy-progress-text').textContent =
+      'Babak ' + data.completed + '/' + data.total + ' · ' + data.percent + '% Selesai';
+    document.getElementById('academy-bar').style.width = data.percent + '%';
+    document.getElementById('academy-message').textContent = data.message;
+    document.getElementById('academy-home-text').textContent =
+      'Babak ' + data.completed + '/' + data.total + ' · ' + data.message;
+    document.getElementById('academy-grid').innerHTML = data.modules.map(m => `
+      <div class="module-card">
+        <div class="module-icon">🔒</div>
+        <div>
+          <div class="module-order">Babak #${m.order}</div>
+          <div class="module-title">${esc(m.title)}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  async function loadAcademy() {
+    try {
+      const data = await api('/v1/academy/overview');
+      renderAcademy(data);
+    } catch (err) {
+      document.getElementById('academy-progress-text').textContent = 'Gagal memuat';
+    }
+  }
+
   function switchView(view) {
     document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(b => {
       b.classList.toggle('active', b.dataset.view === view);
@@ -608,6 +657,7 @@
     const titles = { home: 'Home', prospects: 'Prospects', assistant: 'AI Co-Pilot', business: 'My Business', academy: 'Academy' };
     document.getElementById('topbar-title').textContent = titles[view] || view;
     if (view === 'prospects') loadProspects();
+    if (view === 'academy') loadAcademy();
   }
 
   document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(btn => {
