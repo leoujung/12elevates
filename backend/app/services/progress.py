@@ -1,17 +1,16 @@
-"""Phase 2 service: Golden Elevate Pool (LP entries) and 12-Hour Habit Tracker.
+"""Phase 2 service: Golden Elevate Pool LP tracking.
 
 Rules enforced here (same pattern as prospects.py):
 - Every read/write is scoped to the owning member.
-- LP entries are manually recorded by the member (no automatic 4Life/MyShop integration exists).
-- Habit tracker stores only a count out of 12; the specific 12 daily items are not modelled
-  (not yet defined by the business owner) -- this deliberately avoids inventing a checklist.
+- LP entries are manually recorded by the member (no automatic 4Life/MyShop integration
+  exists). This is a progress-bar milestone tracker, not the coupon/lottery system shown
+  in the Golden Elevate Pool mockups -- that is a separate, not-yet-built feature that
+  needs its own business-rule confirmation (allocation, draw mechanism) before building.
 """
-from datetime import date
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models.core import HabitDay, LpEntry
+from app.models.core import LpEntry
 
 GOLDEN_ELEVATE_POOL_TARGET_LP = 150
 
@@ -38,25 +37,3 @@ def lp_summary_for_member(db: Session, *, member_id: str) -> dict:
         "qualified": total >= GOLDEN_ELEVATE_POOL_TARGET_LP,
         "entry_count": len(entries),
     }
-
-
-def set_habit_progress(db: Session, *, owner_member_id: str, day: str, completed_count: int) -> HabitDay:
-    if not (0 <= completed_count <= 12):
-        raise ValueError("completed_count must be between 0 and 12")
-    stmt = select(HabitDay).where(HabitDay.owner_member_id == owner_member_id, HabitDay.day == day)
-    row = db.execute(stmt).scalar_one_or_none()
-    if row is None:
-        row = HabitDay(owner_member_id=owner_member_id, day=day, completed_count=completed_count)
-        db.add(row)
-    else:
-        row.completed_count = completed_count
-    db.commit()
-    return row
-
-
-def habit_today_for_member(db: Session, *, member_id: str, today: str | None = None) -> dict:
-    today = today or date.today().isoformat()
-    stmt = select(HabitDay).where(HabitDay.owner_member_id == member_id, HabitDay.day == today)
-    row = db.execute(stmt).scalar_one_or_none()
-    completed = row.completed_count if row else 0
-    return {"day": today, "completed_count": completed, "total": 12}

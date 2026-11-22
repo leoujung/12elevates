@@ -15,8 +15,9 @@
       --gold-warm: #D4AF37;
       --gold-deep: #B45309;
       --gold-wash: #FBF3DE;
-      --green: #15803D;
-      --red: #B91C1C;
+      --green: #10B981;
+      --amber: #F59E0B;
+      --gray-bar: #CBD5E1;
       --radius: 14px;
     }
     * { box-sizing: border-box; }
@@ -35,11 +36,12 @@
     .brand .dot { color: var(--gold-warm); }
     .side-nav button {
       width: 100%; text-align: left; display: flex; align-items: center; gap: 10px;
-      background: none; border: 0; border-radius: 10px; padding: 11px 12px; margin-bottom: 4px;
+      background: none; border: 0; border-left: 4px solid transparent; border-radius: 10px;
+      padding: 11px 10px; margin-bottom: 4px;
       font-size: .95rem; font-weight: 600; color: var(--ink); cursor: pointer;
     }
     .side-nav button .ic { width: 20px; text-align: center; }
-    .side-nav button.active { background: var(--gold-wash); color: var(--gold-deep); }
+    .side-nav button.active { background: var(--gold-wash); color: var(--gold-deep); border-left-color: var(--gold-warm); }
     .side-nav button.active .ic { color: var(--gold-warm); }
 
     .main-col { flex: 1; min-width: 0; }
@@ -49,7 +51,7 @@
       position: sticky; top: 0; z-index: 5;
     }
     .topbar h1 { font-size: 1.05rem; margin: 0; }
-    main { padding: 22px; max-width: 980px; margin: 0 auto; padding-bottom: 90px; }
+    main { padding: 22px; max-width: 1040px; margin: 0 auto; padding-bottom: 90px; }
 
     .bottom-nav {
       display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
@@ -60,15 +62,21 @@
     .bottom-nav button {
       flex: 1; background: none; border: 0; display: flex; flex-direction: column; align-items: center;
       gap: 2px; padding: 6px 2px; font-size: .68rem; font-weight: 700; color: var(--muted); cursor: pointer;
+      position: relative;
     }
     .bottom-nav button .ic { font-size: 1.15rem; }
     .bottom-nav button.active { color: var(--gold-deep); }
+    .pill-badge {
+      position: absolute; top: -2px; right: 18%; background: #EF4444; color: #fff;
+      font-size: .62rem; font-weight: 800; border-radius: 999px; padding: 1px 5px; line-height: 1.2;
+    }
 
     @media (max-width: 860px) {
       .sidebar { display: none; }
       .bottom-nav { display: block; }
       main { padding: 16px; padding-bottom: 86px; }
       .topbar { padding: 12px 16px; }
+      .workspace-grid { grid-template-columns: 1fr !important; }
     }
 
     .card {
@@ -88,13 +96,17 @@
     }
     .kpi-label { font-size: .8rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
     .kpi-value { font-size: 1.9rem; font-weight: 800; color: var(--ink); line-height: 1; }
-    .kpi-value.placeholder { font-size: 1rem; font-weight: 600; color: var(--muted); }
     .kpi-note { font-size: .78rem; color: var(--muted); margin-top: 6px; }
-    .kpi-note.urgent { color: var(--red); font-weight: 700; }
+    .kpi-note.urgent { color: #D97706; font-weight: 700; }
     .kpi-note.good { color: var(--green); font-weight: 700; }
 
-    .progress-track { background: var(--line); border-radius: 999px; height: 8px; margin-top: 10px; overflow: hidden; }
-    .progress-fill { background: var(--gold-warm); height: 100%; border-radius: 999px; }
+    .progress-track { background: var(--line); border-radius: 999px; height: 8px; margin-top: 10px; overflow: hidden; position: relative; }
+    .progress-fill { height: 100%; border-radius: 999px; transition: width .3s; }
+    .progress-fill.gold { background: var(--gold-warm); }
+    .progress-fill.green { background: var(--green); }
+    .milestone-marker {
+      position: absolute; top: -3px; width: 2px; height: 14px; background: #94A3B8;
+    }
 
     .nba-card { border: 1.5px solid var(--gold-warm); background: var(--gold-wash); }
     .nba-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -111,8 +123,9 @@
       background: #fff; color: var(--ink); border: 1px solid var(--line); padding: 9px 14px;
       border-radius: 10px; font-weight: 600; cursor: pointer; font-size: .88rem;
     }
-    button.wa { background: var(--green); color: #fff; }
-    button.wa:hover { background: #116A32; }
+    button.wa { background: var(--green); color: #fff; border: 0; padding: 9px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: .88rem; }
+    button.wa:hover { background: #0E9A72; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
 
     .login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .login-card { max-width: 400px; width: 100%; margin: 0 20px; }
@@ -129,6 +142,55 @@
     .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .75rem; font-weight: 700; }
     .badge.new { background: var(--gold-wash); color: var(--gold-deep); }
     .badge.other { background: var(--bg); color: var(--muted); }
+
+    /* ---------- Habit Tracker ---------- */
+    .habit-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .streak-badge { font-size: .82rem; font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; }
+    .rest-day-btn { font-size: .78rem; padding: 6px 10px; }
+    .habit-footer { margin-top: 12px; padding: 10px 12px; border-radius: 10px; font-size: .85rem; font-weight: 600; }
+    .habit-footer.pending { background: #FEF3E2; color: #92400E; }
+    .habit-footer.win { background: #ECFDF5; color: #047857; }
+    .habit-footer.legend { background: var(--gold-wash); color: var(--gold-deep); }
+
+    .habit-group-title { font-size: .78rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin: 14px 0 8px; }
+    .habit-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--line); }
+    .habit-item:last-child { border-bottom: none; }
+    .habit-check {
+      width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--line); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; cursor: pointer; margin-top: 1px;
+      font-size: .8rem; font-weight: 800; color: transparent; background: #fff;
+    }
+    .habit-check.done.core4 { background: var(--green); border-color: var(--green); color: #fff; }
+    .habit-check.done.power { background: var(--gold-warm); border-color: var(--gold-warm); color: #fff; }
+    .habit-text { flex: 1; min-width: 0; }
+    .habit-title { font-weight: 700; font-size: .92rem; }
+    .habit-title.done { text-decoration: line-through; color: var(--muted); }
+    .habit-desc { font-size: .78rem; color: var(--muted); margin-top: 1px; }
+    .habit-action { font-size: .76rem; padding: 5px 9px; white-space: nowrap; }
+
+    .powerups-toggle {
+      width: 100%; text-align: left; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 10px; padding: 11px 14px; font-weight: 700; font-size: .88rem; color: var(--ink);
+      cursor: pointer; margin-top: 14px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .powerups-body { overflow: hidden; max-height: 0; transition: max-height .25s ease; }
+    .powerups-body.open { max-height: 1200px; }
+
+    /* ---------- Consistency card ---------- */
+    .consistency-tabs { display: flex; gap: 6px; }
+    .consistency-tabs button {
+      background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+      font-size: .76rem; font-weight: 700; color: var(--muted); cursor: pointer;
+    }
+    .consistency-tabs button.active { background: var(--gold-wash); color: var(--gold-deep); border-color: var(--gold-warm); }
+    .consistency-score-row { display: flex; align-items: baseline; gap: 8px; margin: 8px 0 14px; }
+    .consistency-score { font-size: 2.1rem; font-weight: 800; color: var(--ink); }
+    .consistency-delta { font-size: .85rem; font-weight: 700; color: var(--green); }
+    .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 72px; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
+    .bar { width: 100%; max-width: 22px; border-radius: 6px 6px 2px 2px; min-height: 4px; }
+    .bar-label { font-size: .68rem; color: var(--muted); margin-top: 4px; }
+    .bar-shield { font-size: .7rem; position: absolute; top: -16px; }
 
     .hidden { display: none; }
   </style>
@@ -172,7 +234,7 @@
           <div class="kpi-card">
             <div class="kpi-label">TARGET &amp; MILESTONE</div>
             <div class="kpi-value" id="kpi-target">—</div>
-            <div class="progress-track"><div class="progress-fill" id="kpi-target-bar" style="width:0%"></div></div>
+            <div class="progress-track"><div class="progress-fill gold" id="kpi-target-bar" style="width:0%"></div></div>
             <div class="kpi-note" id="kpi-target-note"></div>
             <form id="lp-form" style="display:flex;gap:6px;margin-top:10px;">
               <input id="lp-points" type="number" min="1" placeholder="+ LP" style="margin:0;padding:7px 8px;font-size:.82rem;">
@@ -180,17 +242,13 @@
             </form>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">12-HOUR HABIT TRACKER</div>
+            <div class="kpi-label">DAILY HABIT SCORE</div>
             <div class="kpi-value" id="kpi-habit">—</div>
             <div class="progress-track"><div class="progress-fill" id="kpi-habit-bar" style="width:0%"></div></div>
             <div class="kpi-note" id="kpi-habit-note">Hari ini</div>
-            <form id="habit-form" style="display:flex;gap:6px;margin-top:10px;">
-              <input id="habit-count" type="number" min="0" max="12" placeholder="0-12" style="margin:0;padding:7px 8px;font-size:.82rem;">
-              <button class="ghost" type="submit" style="padding:7px 10px;font-size:.8rem;white-space:nowrap;">Update</button>
-            </form>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">LEADS SIAP FOLLOW-UP</div>
+            <div class="kpi-label">LEADS SIAP SAPA</div>
             <div class="kpi-value" id="kpi-leads">—</div>
             <div class="kpi-note" id="kpi-leads-note"></div>
           </div>
@@ -202,10 +260,55 @@
           <div id="nba-list"><div class="empty">Memuat...</div></div>
         </div>
 
-        <div class="card">
-          <h2>Progres ONE Academy</h2>
-          <p class="card-sub">16 modul edukasi wellness &amp; bisnis.</p>
-          <div class="empty">Belum ada data progres modul. Fitur Academy belum aktif di Phase 1.</div>
+        <div class="workspace-grid" style="display:grid;grid-template-columns:7fr 5fr;gap:16px;align-items:start;">
+          <div class="card" id="habit-card">
+            <div class="habit-header-row">
+              <h2 style="margin:0;">12-Hour Daily Habit Tracker</h2>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <span class="streak-badge" id="streak-badge">🔥 0 Hari</span>
+                <button class="ghost rest-day-btn" id="rest-day-btn">🛡️ Rest Day</button>
+              </div>
+            </div>
+            <div class="progress-track" style="margin-top:12px;">
+              <div class="milestone-marker" style="left:33%;"></div>
+              <div class="progress-fill" id="habit-main-bar" style="width:0%"></div>
+            </div>
+            <div class="habit-group-title">LEVEL 1: CORE 4 — Target Santai Harian (<span id="core4-count">0/4</span>)</div>
+            <div id="core4-list"></div>
+            <button class="powerups-toggle" id="powerups-toggle" type="button">
+              <span id="powerups-toggle-label">Lihat 8 Power-Ups Bonus (0/8)</span><span id="powerups-arrow">▾</span>
+            </button>
+            <div class="powerups-body" id="powerups-body">
+              <div class="habit-group-title">LEVEL 2: POWER-UPS 8 — Akselerator Bonus</div>
+              <div id="powerup-list"></div>
+            </div>
+            <div class="habit-footer pending" id="habit-footer">Memuat...</div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h2 style="margin:0;">Skor Konsistensi</h2>
+                <div class="consistency-tabs">
+                  <button class="active" data-period="7">7 Hari</button>
+                </div>
+              </div>
+              <div class="consistency-score-row">
+                <span class="consistency-score" id="consistency-score">—</span>
+                <span class="muted" style="font-size:.85rem;">rata-rata</span>
+              </div>
+              <div class="bar-chart" id="consistency-bars"></div>
+              <div class="progress-track" style="margin-top:14px;">
+                <div class="progress-fill gold" id="monthly-qualify-bar" style="width:0%"></div>
+              </div>
+              <div class="muted" style="font-size:.78rem;margin-top:6px;" id="monthly-qualify-text">Kualifikasi Reward Bulan Ini: — / 80% Minimum</div>
+            </div>
+
+            <div class="card empty" style="margin-top:0;">
+              <strong style="color:var(--ink);">ONE Academy</strong><br>
+              Belum ada data progres modul. Fitur Academy belum aktif di Phase 1.
+            </div>
+          </div>
         </div>
       </section>
 
@@ -232,11 +335,11 @@
       </section>
 
       <section data-panel="assistant" class="hidden">
-        <div class="card empty">AI Co-Pilot belum aktif. Fitur ini masuk Phase 2 dan akan selalu meminta persetujuan kamu sebelum ada pesan dikirim.</div>
+        <div class="card empty">AI Co-Pilot belum aktif. Fitur ini butuh integrasi LLM berbayar dan menunggu persetujuan biaya. Belum ada pesan yang bisa dikirim otomatis.</div>
       </section>
 
       <section data-panel="business" class="hidden">
-        <div class="card empty">Ringkasan bisnis akan tampil setelah metrik Golden Elevate Pool disepakati. Belum ada angka yang ditampilkan.</div>
+        <div class="card empty">Ringkasan bisnis akan tampil setelah metrik Golden Elevate Pool (versi kupon/undian) disepakati. Belum ada angka yang ditampilkan.</div>
       </section>
 
       <section data-panel="academy" class="hidden">
@@ -249,9 +352,8 @@
 <nav class="bottom-nav hidden" id="bottom-nav">
   <div class="bottom-nav-row">
     <button data-view="home" class="active"><span class="ic">🏠</span>Home</button>
-    <button data-view="prospects"><span class="ic">👥</span>Prospects</button>
-    <button data-view="assistant"><span class="ic">✨</span>Co-Pilot</button>
-    <button data-view="business"><span class="ic">📊</span>Bisnis</button>
+    <button data-view="prospects"><span class="ic">👥</span>Leads &amp; AI</button>
+    <button data-view="assistant"><span class="ic">✨</span>AI Studio</button>
     <button data-view="academy"><span class="ic">🎓</span>Academy</button>
   </div>
 </nav>
@@ -260,6 +362,7 @@
   function apiBase() { return (window.API_BASE || '').replace(/\/$/, ''); }
   let token = null;
   let prospectsCache = [];
+  let habitCache = null;
 
   function show(id, on) { document.getElementById(id).classList.toggle('hidden', !on); }
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -297,6 +400,7 @@
     loadProspects();
     loadLp();
     loadHabit();
+    loadConsistency();
   });
 
   function logout() {
@@ -322,7 +426,7 @@
     nba.innerHTML = leads.slice(0, 5).map(p => {
       const waNumber = (p.whatsapp || '').replace(/[^0-9]/g, '');
       const waBtn = waNumber
-        ? `<a href="https://wa.me/${esc(waNumber)}?text=${encodeURIComponent('Halo ' + p.name + ', terima kasih sudah mengisi asesmen wellness. Boleh saya bantu jelaskan hasilnya?')}" target="_blank" rel="noopener"><button class="wa">Kirim WhatsApp Insight</button></a>`
+        ? `<a href="https://wa.me/${esc(waNumber)}?text=${encodeURIComponent('Halo ' + p.name + ', terima kasih sudah mengisi asesmen wellness. Boleh saya bantu jelaskan hasilnya?')}" target="_blank" rel="noopener"><button class="wa">Kirim Rapor via WhatsApp</button></a>`
         : `<button class="ghost" disabled title="Prospek ini belum punya nomor WhatsApp">Nomor WA belum ada</button>`;
       return `<div class="nba-row">
         <div>
@@ -350,26 +454,138 @@
   async function loadLp() {
     try {
       const s = await api('/v1/lp/summary');
-      document.getElementById('kpi-target').textContent = s.total_lp + ' / ' + s.target_lp + ' LP';
+      document.getElementById('kpi-target').textContent = s.percent + '%';
       document.getElementById('kpi-target-bar').style.width = s.percent + '%';
       document.getElementById('kpi-target-note').textContent = s.qualified
-        ? 'Golden Elevate Pool: kualifikasi tercapai.'
-        : s.percent + '% dari target 150 LP per transaksi.';
+        ? 'Golden Elevate Pool: kualifikasi tercapai! (' + s.total_lp + '/' + s.target_lp + ' LP)'
+        : 'Kurang ' + (100 - s.percent) + '% lagi untuk kualifikasi (' + s.total_lp + '/' + s.target_lp + ' LP).';
       document.getElementById('kpi-target-note').className = 'kpi-note' + (s.qualified ? ' good' : '');
     } catch (err) {
       document.getElementById('kpi-target').textContent = 'Gagal memuat';
     }
   }
 
+  function renderHabitList(containerId, items, completedIds, level) {
+    const box = document.getElementById(containerId);
+    box.innerHTML = items.map(item => {
+      const done = completedIds.includes(item.id);
+      const actionBtn = !item.action ? '' :
+        item.action === 'whatsapp'
+          ? `<button class="ghost habit-action" data-action="whatsapp" data-item="${item.id}">💬 Buka WA</button>`
+          : `<button class="ghost habit-action" data-action="copy" data-item="${item.id}">📋 Salin Teks</button>`;
+      return `<div class="habit-item">
+        <div class="habit-check ${done ? 'done ' + level : ''}" data-toggle="${item.id}">${done ? '✓' : ''}</div>
+        <div class="habit-text">
+          <div class="habit-title ${done ? 'done' : ''}">${item.id}. ${esc(item.title)}</div>
+          <div class="habit-desc">${esc(item.desc)}</div>
+        </div>
+        ${actionBtn}
+      </div>`;
+    }).join('');
+    box.querySelectorAll('[data-toggle]').forEach(el => {
+      el.addEventListener('click', () => toggleItem(parseInt(el.dataset.toggle, 10), !el.classList.contains('done')));
+    });
+  }
+
+  function renderHabit(h) {
+    habitCache = h;
+    const core4Items = h.items.filter(i => i.level === 'core4');
+    const powerItems = h.items.filter(i => i.level === 'power_up');
+    const core4Done = core4Items.filter(i => h.completed_ids.includes(i.id)).length;
+    const powerDone = powerItems.filter(i => h.completed_ids.includes(i.id)).length;
+
+    document.getElementById('kpi-habit').textContent = h.percent + '%';
+    document.getElementById('kpi-habit-bar').style.width = h.percent + '%';
+    document.getElementById('kpi-habit-bar').className = 'progress-fill ' + (h.core4_done ? 'green' : 'gold');
+    document.getElementById('kpi-habit-note').textContent = h.core4_done ? '✓ Daily Win Tercapai' : core4Done + ' dari 4 Core Habit selesai';
+    document.getElementById('kpi-habit-note').className = 'kpi-note' + (h.core4_done ? ' good' : '');
+
+    document.getElementById('streak-badge').textContent = '🔥 ' + h.streak_days + ' Hari Beruntun';
+    const restBtn = document.getElementById('rest-day-btn');
+    restBtn.textContent = h.is_rest_day ? '🛡️ Rest Day Aktif' : `🛡️ ${h.rest_days_left_this_month}x Rest Day`;
+    restBtn.disabled = h.is_rest_day || h.rest_days_left_this_month <= 0;
+
+    document.getElementById('habit-main-bar').style.width = h.percent + '%';
+    document.getElementById('habit-main-bar').className = 'progress-fill ' + (h.core4_done ? 'green' : 'gold');
+    document.getElementById('core4-count').textContent = core4Done + '/4';
+
+    renderHabitList('core4-list', core4Items, h.completed_ids, 'core4');
+    renderHabitList('powerup-list', powerItems, h.completed_ids, 'power');
+    document.getElementById('powerups-toggle-label').textContent = `Lihat 8 Power-Ups Bonus (${powerDone}/8)`;
+
+    const footer = document.getElementById('habit-footer');
+    footer.textContent = h.footer_message;
+    footer.className = 'habit-footer ' + (h.completed_count >= 12 ? 'legend' : h.core4_done ? 'win' : 'pending');
+  }
+
   async function loadHabit() {
     try {
       const h = await api('/v1/habit/today');
-      document.getElementById('kpi-habit').textContent = h.completed_count + ' / ' + h.total;
-      document.getElementById('kpi-habit-bar').style.width = Math.round(h.completed_count / h.total * 100) + '%';
-      document.getElementById('habit-count').value = h.completed_count;
+      renderHabit(h);
     } catch (err) {
       document.getElementById('kpi-habit').textContent = 'Gagal memuat';
     }
+  }
+
+  async function toggleItem(itemId, done) {
+    try {
+      const h = await api('/v1/habit/today', { method: 'PUT', body: JSON.stringify({ item_id: itemId, done }) });
+      renderHabit(h);
+      loadConsistency();
+    } catch (err) { /* ignore; UI stays at last known state */ }
+  }
+
+  document.getElementById('powerups-toggle').addEventListener('click', () => {
+    const body = document.getElementById('powerups-body');
+    const arrow = document.getElementById('powerups-arrow');
+    const open = body.classList.toggle('open');
+    arrow.textContent = open ? '▴' : '▾';
+  });
+
+  document.getElementById('rest-day-btn').addEventListener('click', async () => {
+    try {
+      await api('/v1/habit/rest-day', { method: 'POST' });
+      loadHabit();
+      loadConsistency();
+    } catch (err) { /* quota likely exhausted; button disables itself on reload */ }
+  });
+
+  document.getElementById('habit-card').addEventListener('click', (e) => {
+    const btn = e.target.closest('.habit-action');
+    if (!btn || !habitCache) return;
+    const item = habitCache.items.find(i => i.id === parseInt(btn.dataset.item, 10));
+    if (!item) return;
+    if (btn.dataset.action === 'whatsapp') {
+      window.open('https://wa.me/?text=' + encodeURIComponent(item.desc), '_blank');
+    } else {
+      navigator.clipboard?.writeText(item.desc).catch(() => {});
+      btn.textContent = '✓ Disalin';
+      setTimeout(() => { btn.textContent = '📋 Salin Teks'; }, 1500);
+    }
+  });
+
+  async function loadConsistency() {
+    try {
+      const c = await api('/v1/habit/consistency');
+      document.getElementById('consistency-score').textContent = c.average_percent + '%';
+      const bars = document.getElementById('consistency-bars');
+      const dayNames = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
+      bars.innerHTML = c.days.map(d => {
+        const dt = new Date(d.date);
+        const label = dayNames[dt.getDay()];
+        let color = 'var(--gray-bar)';
+        if (d.percent >= 75) color = 'var(--gold-warm)';
+        else if (d.percent >= 33) color = 'var(--green)';
+        else if (d.is_rest_day) color = 'var(--gray-bar)';
+        const h = Math.max(4, Math.round(d.percent * 0.68));
+        const shield = d.is_rest_day ? '<div class="bar-shield">🛡️</div>' : '';
+        return `<div class="bar-col" title="${d.date}: ${d.percent}%">${shield}<div class="bar" style="height:${h}px;background:${color};"></div><div class="bar-label">${label}</div></div>`;
+      }).join('');
+      const qualifyPct = Math.min(100, c.average_percent);
+      document.getElementById('monthly-qualify-bar').style.width = qualifyPct + '%';
+      document.getElementById('monthly-qualify-text').textContent =
+        'Kualifikasi Reward Bulan Ini: ' + c.average_percent + '% / 80% Minimum';
+    } catch (err) { /* leave placeholder */ }
   }
 
   document.getElementById('lp-form').addEventListener('submit', async (e) => {
@@ -381,17 +597,6 @@
       await api('/v1/lp', { method: 'POST', body: JSON.stringify({ points }) });
       input.value = '';
       loadLp();
-    } catch (err) { /* silently ignore; KPI stays at last known value */ }
-  });
-
-  document.getElementById('habit-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const input = document.getElementById('habit-count');
-    const completed_count = parseInt(input.value, 10);
-    if (Number.isNaN(completed_count) || completed_count < 0 || completed_count > 12) return;
-    try {
-      await api('/v1/habit/today', { method: 'PUT', body: JSON.stringify({ completed_count }) });
-      loadHabit();
     } catch (err) { /* silently ignore; KPI stays at last known value */ }
   });
 

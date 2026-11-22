@@ -79,13 +79,21 @@ class LpEntry(Base):
 
 
 class HabitDay(Base):
-    """One row per member per calendar day: how many of the 12 daily habit items were
-    completed. The specific 12 items are not modelled yet (not defined by the business
-    owner); this stores only a count out of 12 so the UI can show real progress without
-    inventing item names."""
+    """One row per member per calendar day for the 12-Hour Daily Habit Tracker.
+
+    completed_items stores a comma-separated list of item ids (see HABIT_ITEMS in
+    app/services/habits.py) that were checked that day, e.g. "1,2,3,4". The 12 items
+    are the Core 4 + Power-Ups 8 defined in the 22-Nov Master Brief -- not invented here.
+
+    is_rest_day: if true, this day does not break the streak even with 0 items done
+    (Streak Freeze). Quota/period for how many rest days are allowed is an ASSUMPTION
+    (1 per calendar month) because the brief did not specify a period -- flagged for
+    business-owner confirmation, not silently decided as fact.
+    """
     __tablename__ = "habit_days"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     owner_member_id: Mapped[str] = mapped_column(ForeignKey("members.id"), index=True)
     day: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD, one row per member per day
-    completed_count: Mapped[int] = mapped_column(default=0)
+    completed_items: Mapped[str] = mapped_column(String(100), default="")
+    is_rest_day: Mapped[bool] = mapped_column(Boolean, default=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now, onupdate=_now)

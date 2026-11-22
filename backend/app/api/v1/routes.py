@@ -9,12 +9,13 @@ from sqlalchemy.orm import Session
 
 from app.core.security import hash_password, issue_token, member_id_from_token, verify_password
 from app.models.core import Member
-from app.services.progress import (
+from app.services.habits import (
+    consistency_score,
     habit_today_for_member,
-    lp_summary_for_member,
-    record_lp,
-    set_habit_progress,
+    toggle_habit_item,
+    use_rest_day,
 )
+from app.services.progress import lp_summary_for_member, record_lp
 from app.services.prospects import (
     ConsentRequired,
     get_prospect_for_member,
@@ -42,8 +43,9 @@ class LpEntryIn(BaseModel):
     note: str | None = None
 
 
-class HabitIn(BaseModel):
-    completed_count: int
+class HabitToggleIn(BaseModel):
+    item_id: int
+    done: bool
 
 
 def create_app(session_factory) -> FastAPI:
@@ -112,17 +114,30 @@ def create_app(session_factory) -> FastAPI:
         return lp_summary_for_member(db, member_id=member_id)
 
     @app.put("/v1/habit/today")
-    def set_habit_today(body: HabitIn, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+    def toggle_habit_today(body: HabitToggleIn, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
         from datetime import date
         try:
-            row = set_habit_progress(db, owner_member_id=member_id, day=date.today().isoformat(),
-                                     completed_count=body.completed_count)
+            toggle_habit_item(db, owner_member_id=member_id, day=date.today().isoformat(),
+                              item_id=body.item_id, done=body.done)
         except ValueError as e:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
-        return {"day": row.day, "completed_count": row.completed_count}
+        return habit_today_for_member(db, member_id=member_id)
 
     @app.get("/v1/habit/today")
     def get_habit_today(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
         return habit_today_for_member(db, member_id=member_id)
+
+    @app.post("/v1/habit/rest-day")
+    def take_rest_day(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        from datetime import date
+        try:
+            result = use_rest_day(db, owner_member_id=member_id, day=date.today().isoformat())
+        except ValueError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        return result
+
+    @app.get("/v1/habit/consistency")
+    def get_consistency(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        return consistency_score(db, member_id=member_id, days=7)
 
     return app

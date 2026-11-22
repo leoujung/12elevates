@@ -137,27 +137,65 @@ def test_lp_is_isolated_between_members(client):
     assert budi_summary["total_lp"] == 0  # Budi's summary is unaffected by Andi's entries
 
 
-def test_habit_today_defaults_to_zero_and_can_be_updated(client):
+def test_habit_today_defaults_empty_and_can_toggle_items(client):
     andi = login(client, "andi@example.test", "andi-pass-123")
     today = client.get("/v1/habit/today", headers=andi).json()
     assert today["completed_count"] == 0
     assert today["total"] == 12
+    assert today["core4_done"] is False
+    assert len(today["items"]) == 12  # the 12 named Core4 + Power-Ups items are returned
 
-    r = client.put("/v1/habit/today", headers=andi, json={"completed_count": 7})
+    r = client.put("/v1/habit/today", headers=andi, json={"item_id": 1, "done": True})
     assert r.status_code == 200
-    assert r.json()["completed_count"] == 7
-    assert client.get("/v1/habit/today", headers=andi).json()["completed_count"] == 7
+    assert r.json()["completed_count"] == 1
+    assert 1 in r.json()["completed_ids"]
+
+    # untoggle
+    r = client.put("/v1/habit/today", headers=andi, json={"item_id": 1, "done": False})
+    assert r.json()["completed_count"] == 0
 
 
-def test_habit_rejects_out_of_range_count(client):
+def test_core4_completion_marks_daily_win(client):
     andi = login(client, "andi@example.test", "andi-pass-123")
-    assert client.put("/v1/habit/today", headers=andi, json={"completed_count": 13}).status_code == 422
-    assert client.put("/v1/habit/today", headers=andi, json={"completed_count": -1}).status_code == 422
+    for item_id in [1, 2, 3]:
+        client.put("/v1/habit/today", headers=andi, json={"item_id": item_id, "done": True})
+    assert client.get("/v1/habit/today", headers=andi).json()["core4_done"] is False
+    client.put("/v1/habit/today", headers=andi, json={"item_id": 4, "done": True})
+    today = client.get("/v1/habit/today", headers=andi).json()
+    assert today["core4_done"] is True
+    assert "Daily Win" in today["footer_message"] or "Legend" in today["footer_message"]
+
+
+def test_habit_rejects_unknown_item_id(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    assert client.put("/v1/habit/today", headers=andi, json={"item_id": 99, "done": True}).status_code == 422
 
 
 def test_habit_is_isolated_between_members(client):
     andi = login(client, "andi@example.test", "andi-pass-123")
     budi = login(client, "budi@example.test", "budi-pass-456")
-    client.put("/v1/habit/today", headers=andi, json={"completed_count": 12})
+    for item_id in range(1, 13):
+        client.put("/v1/habit/today", headers=andi, json={"item_id": item_id, "done": True})
     assert client.get("/v1/habit/today", headers=andi).json()["completed_count"] == 12
     assert client.get("/v1/habit/today", headers=budi).json()["completed_count"] == 0
+
+
+def test_rest_day_quota_enforced(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.post("/v1/habit/rest-day", headers=andi)
+    assert r.status_code == 200
+    assert r.json()["is_rest_day"] is True
+    assert r.json()["rest_days_left_this_month"] == 0
+    # quota is 1/month: a second rest day today should be rejected since it's already used
+    r2 = client.post("/v1/habit/rest-day", headers=andi)
+    assert r2.status_code == 422
+
+
+def test_consistency_score_returns_7_days(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    for item_id in range(1, 5):
+        client.put("/v1/habit/today", headers=andi, json={"item_id": item_id, "done": True})
+    score = client.get("/v1/habit/consistency", headers=andi).json()
+    assert len(score["days"]) == 7
+    assert score["days"][-1]["completed_count"] == 4  # today is the last entry
+    assert 0 <= score["average_percent"] <= 100
