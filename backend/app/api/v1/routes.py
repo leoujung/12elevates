@@ -24,6 +24,8 @@ from app.services.prospects import (
     list_prospects_for_member,
 )
 from app.services.video_courses import course_overview, gep_eligible, mark_watched
+from app.services import gold_pool_issuance as issuance
+from app.models.core import Member as _Member
 
 
 class LoginIn(BaseModel):
@@ -54,8 +56,21 @@ class VideoWatchedIn(BaseModel):
     youtube_video_id: str
 
 
+class AdminTxIn(BaseModel):
+    member_email: str
+    transaction_id: str
+    tx_type: str
+    lp: int
+    verified_at: str
+
+
+class AdminCsvIn(BaseModel):
+    csv: str
+
+
 def create_app(session_factory) -> FastAPI:
     app = FastAPI(title="12ELEVATE AI Network Building Intelligence (Phase 1)")
+    app.state.session_factory = session_factory  # used by tests and admin tooling
 
     def get_db():
         db: Session = session_factory()
@@ -71,6 +86,13 @@ def create_app(session_factory) -> FastAPI:
             return member_id_from_token(authorization.split(" ", 1)[1])
         except Exception:
             raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid or expired token")
+
+    def require_admin(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)) -> str:
+        # Admin status is read from the database on every request, never from the token.
+        m = db.get(_Member, member_id)
+        if m is None or not m.is_admin:
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "admin only")
+        return member_id
 
     @app.post("/v1/auth/login")
     def login(body: LoginIn, db: Session = Depends(get_db)):
@@ -107,13 +129,12 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_404_NOT_FOUND, "not found")
         return {"id": p.id, "name": p.name, "source": p.source, "status": p.status}
 
-    @app.post("/v1/lp", status_code=201)
-    def add_lp(body: LpEntryIn, member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
-        try:
-            entry = record_lp(db, owner_member_id=member_id, points=body.points, note=body.note)
-        except ValueError as e:
-            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
-        return {"id": entry.id, "points": entry.points}
+    @app.post("/v1/lp", status_code=410)
+    def add_lp_disabled(member_id: str = Depends(current_member_id)):
+        # Members can no longer self-report LP. Verified transactions come only from
+        # the admin import path (/v1/admin/transactions*), per Gold Elevate Pool v4.0 §5.
+        raise HTTPException(status.HTTP_410_GONE,
+                            "self-reported LP is disabled; transactions are verified by an administrator")
 
     @app.get("/v1/lp/summary")
     def lp_summary(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
@@ -170,5 +191,26 @@ def create_app(session_factory) -> FastAPI:
     @app.get("/v1/gep/eligibility")
     def get_gep_eligibility(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
         return gep_eligible(db, member_id=member_id)
+
+
+    # ---- Admin: Gold Pool transaction verification (Phase 3) ----
+    @app.post("/v1/admin/transactions", status_code=201)
+    def admin_record_transaction(body: AdminTxIn, actor: str = Depends(require_admin),
+                                 db: Session = Depends(get_db)):
+        try:
+            res = issuance.record_manual(db, actor_id=actor, member_email=body.member_email,
+                                         transaction_id=body.transaction_id, tx_type=body.tx_type,
+                                         lp=body.lp, verified_at=body.verified_at)
+        except issuance.VerificationError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, e.code)
+        return {"transaction_id": res.transaction_id, "status": res.status,
+                "coupon_id": res.coupon_id, "reason": res.reason}
+
+    @app.post("/v1/admin/transactions/import-csv", status_code=201)
+    def admin_import_csv(body: AdminCsvIn, actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        try:
+            return issuance.import_csv(db, actor_id=actor, content=body.csv)
+        except issuance.VerificationError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, e.code)
 
     return app

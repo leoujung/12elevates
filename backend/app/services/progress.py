@@ -26,9 +26,13 @@ def record_lp(db: Session, *, owner_member_id: str, points: int, note: str | Non
 
 def lp_summary_for_member(db: Session, *, member_id: str) -> dict:
     """Total LP recorded and progress toward the 150 LP Golden Elevate Pool milestone."""
-    stmt = select(LpEntry).where(LpEntry.owner_member_id == member_id).order_by(LpEntry.recorded_at)
+    # Phase 3: LP comes only from administrator-verified transactions (gp_transactions).
+    # Self-reported LP entries in lp_entries are no longer counted.
+    from app.models.gold_pool import GpTransaction
+    stmt = select(GpTransaction).where(GpTransaction.owner_member_id == member_id,
+                                       GpTransaction.verified_at.is_not(None)).order_by(GpTransaction.verified_at)
     entries = list(db.execute(stmt).scalars())
-    total = sum(e.points for e in entries)
+    total = sum(e.lp for e in entries)
     pct = min(100, round(total / GOLDEN_ELEVATE_POOL_TARGET_LP * 100)) if GOLDEN_ELEVATE_POOL_TARGET_LP else 0
     return {
         "total_lp": total,
