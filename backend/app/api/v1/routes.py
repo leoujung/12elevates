@@ -242,6 +242,13 @@ def create_app(session_factory) -> FastAPI:
         return {"ok": True, "recorded": chosen, "cycle_id": body.cycle_id}
 
     # ---- Gold Pool draw schedule (v4 s.6, s.13, s.33). Nothing here executes a draw. ----
+    @app.get("/v1/me")
+    def get_me(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        m = db.get(Member, member_id)
+        if m is None:
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, "member not found")
+        return {"id": m.id, "display_name": m.display_name, "email": m.email, "is_admin": bool(m.is_admin)}
+
     @app.get("/v1/gp/draw-schedule")
     def get_draw_schedule(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
         return draw.member_status(db)
