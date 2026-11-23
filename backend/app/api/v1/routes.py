@@ -89,6 +89,15 @@ class AdminCsvIn(BaseModel):
 
 def create_app(session_factory) -> FastAPI:
     app = FastAPI(title="12ELEVATE AI Network Building Intelligence (Phase 1)")
+    # CORS: only the official 12ELEVATE front-ends may call the API from a browser (approved by Leo, 2026-11-23).
+    from fastapi.middleware.cors import CORSMiddleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["https://12elevates.com", "https://app.12elevates.com"],
+        allow_credentials=False,
+        allow_methods=["GET", "POST", "PUT"],
+        allow_headers=["Authorization", "Content-Type"],
+    )
     app.state.session_factory = session_factory  # used by tests and admin tooling
 
     def get_db():

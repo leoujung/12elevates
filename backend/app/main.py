@@ -15,6 +15,7 @@ if not os.environ.get("APP_JWT_SECRET") or len(os.environ["APP_JWT_SECRET"]) < 3
 _engine = make_engine()  # uses APP_DATABASE_URL
 app = create_app(sessionmaker(bind=_engine))
 
+
 # Serve the member dashboard from the same origin (no CORS needed in production).
 from pathlib import Path
 from fastapi.responses import FileResponse, HTMLResponse
