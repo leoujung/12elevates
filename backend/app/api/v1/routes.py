@@ -249,6 +249,26 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_401_UNAUTHORIZED, "member not found")
         return {"id": m.id, "display_name": m.display_name, "email": m.email, "is_admin": bool(m.is_admin)}
 
+    @app.get("/v1/gp/my-coupons")
+    def get_my_coupons(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        # Only the caller's own coupons. VERIFIED/USED are the only statuses shown as valid;
+        # anything else (ISSUED, PENDING_*, ...) is pending, never presented as a valid coupon.
+        from app.models.gold_pool import GpCoupon
+        rows = (db.query(GpCoupon)
+                  .filter(GpCoupon.owner_member_id == member_id)
+                  .order_by(GpCoupon.issued_at)
+                  .all())
+        valid_statuses = {"VERIFIED", "USED"}
+        coupons = [
+            {"number": i + 1, "state": "verified" if c.status in valid_statuses else "pending"}
+            for i, c in enumerate(rows)
+        ]
+        return {
+            "coupons": coupons,
+            "verified": sum(1 for c in coupons if c["state"] == "verified"),
+            "target": 30,
+        }
+
     @app.get("/v1/gp/draw-schedule")
     def get_draw_schedule(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
         return draw.member_status(db)
