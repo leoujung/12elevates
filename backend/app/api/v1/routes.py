@@ -431,4 +431,8 @@ def create_app(session_factory) -> FastAPI:
         except issuance.VerificationError as e:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, e.code)
 
+    # Persistent global suppression (UU PDP opt-out) for the Vercel intake functions.
+    from app.api.v1.internal_suppression import register_suppression_routes
+    register_suppression_routes(app, get_db)
+
     return app
