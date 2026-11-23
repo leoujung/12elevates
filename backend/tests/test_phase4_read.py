@@ -42,3 +42,15 @@ def test_audit_log_is_newest_first_and_has_reason(db):
 
 def test_prizes_empty_when_no_draw_has_run(db):
     assert adm.prize_list(db) == {"prizes": []}
+
+
+def test_cycle_list_includes_cycle_id_for_run_draw(db):
+    _issue_for_cycle_test(db)
+    cycles = adm.list_cycles(db)["cycles"]
+    assert cycles and isinstance(cycles[0]["cycle_id"], str) and len(cycles[0]["cycle_id"]) == 36
+
+
+def _issue_for_cycle_test(db):
+    iss.record_manual(db, actor_id="admin-x", member_email="andi@example.test",
+                      transaction_id="TX-P4-CID", tx_type="NEW_PARTNER", lp=150,
+                      verified_at="2026-11-20T10:00:00+07:00")

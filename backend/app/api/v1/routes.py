@@ -230,6 +230,26 @@ def create_app(session_factory) -> FastAPI:
             db.rollback()
             raise
 
+    # ---- Prize fulfillment: DRAW_CONFIRMED -> DELIVERED (audited, note required) ----
+    @app.post("/v1/admin/gp/prizes/{prize_id}/deliver")
+    def admin_prize_deliver(prize_id: str, body: dict, actor: str = Depends(require_admin),
+                            db: Session = Depends(get_db)):
+        from app.services import gold_pool_prize as pz
+        try:
+            p = pz.mark_delivered(db, prize_id=prize_id, actor_id=actor,
+                                  reason=str(body.get("reason", "")))
+        except pz.PrizeNotFound:
+            db.rollback()
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "prize not found")
+        except pz.PrizeNotDeliverable as e:
+            db.rollback()
+            raise HTTPException(status.HTTP_409_CONFLICT, f"prize is {e.current_status}, not DRAW_CONFIRMED")
+        except ValueError as e:
+            db.rollback()
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        db.commit()
+        return {"prize_id": p.id, "prize_status": p.prize_status}
+
     # ---- Admin Phase 4: read-only views (all require is_admin) ----
     @app.get("/v1/admin/gp/cycles")
     def admin_cycles(actor: str = Depends(require_admin), db: Session = Depends(get_db)):

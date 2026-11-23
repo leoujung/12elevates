@@ -18,7 +18,7 @@ def list_cycles(db: Session) -> dict:
             GpCoupon.original_cycle_id == c.id, GpCoupon.status == rules.VERIFIED)).scalar_one()
         issued = db.execute(select(func.count()).select_from(GpCoupon).where(
             GpCoupon.original_cycle_id == c.id, GpCoupon.status == rules.ISSUED)).scalar_one()
-        out.append({"cycle_number": c.cycle_number, "status": c.status,
+        out.append({"cycle_id": c.id, "cycle_number": c.cycle_number, "status": c.status,
                     "verified_coupons": verified, "waiting_coupons": issued,
                     "target": 30})
     return {"cycles": out}
