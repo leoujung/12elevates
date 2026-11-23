@@ -1291,21 +1291,8 @@
     var cat = ytCurrent.cat, v = ytCurrent.video;
     var foot = document.getElementById('player-foot');
     if (v.watched) { foot.textContent = 'Video selesai. Progres sudah tercatat sebelumnya.'; return; }
-    foot.textContent = 'Menyimpan progres...';
-    try {
-      await api('/v1/courses/' + encodeURIComponent(cat) + '/watched', {
-        method: 'POST',
-        body: JSON.stringify({ youtube_video_id: v.youtube_id }),
-      });
-      v.watched = true;
-      var d = courseCache[cat];
-      d.completed = d.videos.filter(function (x) { return x.watched; }).length;
-      d.percent = d.total_ready ? Math.round(d.completed / d.total_ready * 100) : 0;
-      if (cat === courseCat) renderCourse(d);
-      foot.textContent = '✓ Selesai — progres tersimpan.';
-    } catch (err) {
-      foot.textContent = 'Video selesai, tapi progres gagal disimpan. Coba muat ulang halaman.';
-    }
+    // v4 s.7.2: members cannot self-record completion. Admin verifies and records it.
+    foot.textContent = 'Menunggu verifikasi admin. Progres akan dicatat setelah diverifikasi.';
   }
 
   function closePlayer() {
