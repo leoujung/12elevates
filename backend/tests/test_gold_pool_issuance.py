@@ -137,3 +137,13 @@ def test_csv_too_many_rows_rejected(admin_db):
     with pytest.raises(iss.VerificationError) as e:
         iss.import_csv(admin_db, actor_id="member-admin", content=header + body)
     assert e.value.code == "CSV_TOO_MANY_ROWS"
+
+
+def test_new_coupon_is_stored_as_issued_not_verified(admin_db):
+    # Regression: a coupon must be stored as ISSUED (waiting), never VERIFIED, at creation time.
+    iss.record_manual(admin_db, actor_id="member-admin", member_email="andi@example.test",
+                      transaction_id="TX-STATUS", tx_type="NEW_PARTNER", lp=150,
+                      verified_at="2026-11-20T10:00:00+07:00")
+    coupons = admin_db.execute(select(GpCoupon)).scalars().all()
+    assert len(coupons) == 1
+    assert coupons[0].status == "ISSUED"

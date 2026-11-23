@@ -110,13 +110,18 @@ def issue_for_transaction(db: Session, *, actor_id: str, transaction_id: str, me
     tx = GpTransaction(id=str(uuid.uuid4()), transaction_id=transaction_id, owner_member_id=member_id,
                        tx_type=tx_type, lp=lp, source=source, recorded_by=actor_id,
                        verified_at=verified_at, recorded_at=_now())
+    # Persist the transaction first so the coupon foreign key always points to a stored row.
+    db.add(tx)
+    db.flush()
+    # A new coupon is ISSUED (waiting). It becomes VERIFIED only through a separate admin
+    # verification step, never at creation (v4: no valid claim before verification).
     coupon = GpCoupon(id=str(uuid.uuid4()), transaction_pk=tx.id, owner_member_id=member_id,
-                      original_cycle_id=cycle.id, lp_at_issue=lp, status=rules.VERIFIED, issued_at=_now())
+                      original_cycle_id=cycle.id, lp_at_issue=lp, status=rules.ISSUED, issued_at=_now())
     allocation = GpCouponAllocation(id=str(uuid.uuid4()), coupon_id=coupon.id, source_cycle_id=cycle.id,
                                     target_cycle_id=cycle.id, allocation_type="NEW",
-                                    eligibility_status=rules.VERIFIED, included_in_snapshot=False,
+                                    eligibility_status=rules.ISSUED, included_in_snapshot=False,
                                     created_at=_now())
-    db.add_all([tx, coupon, allocation])
+    db.add_all([coupon, allocation])
     _audit(db, actor_id=actor_id, action="COUPON_ISSUED", entity_id=coupon.id,
            after=f"tx={transaction_id};cycle={cycle.cycle_number};lp={lp}")
     return IssueResult(transaction_id, "ISSUED", coupon.id, None)
