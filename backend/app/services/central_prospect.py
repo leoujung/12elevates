@@ -155,9 +155,10 @@ def persist_inbound(db, raw_event, *, now=None):
         # 3) registration_id / assessment_id dedup per tenant (stored as opaque ref in payload_minimal)
         for ref_kind in ("registration_id", "assessment_id"):
             if ev.get(ref_kind):
+                # payload_minimal is jsonb in PostgreSQL: query the key with ->> (exact match), never LIKE on text.
                 dup = db.execute(
-                    text("select 1 from cp_inbound_events where member_id = :m and payload_minimal like :pat"),
-                    {"m": ev["member_id"], "pat": '%"' + ref_kind + '": "' + ev[ref_kind] + '"%'},
+                    text("select 1 from cp_inbound_events where member_id = :m and payload_minimal ->> :k = :v"),
+                    {"m": ev["member_id"], "k": ref_kind, "v": ev[ref_kind]},
                 ).first()
                 if dup:
                     return {"status": "DUPLICATE_IGNORED", "event_id": ev["event_id"]}
