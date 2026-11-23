@@ -435,4 +435,8 @@ def create_app(session_factory) -> FastAPI:
     from app.api.v1.internal_suppression import register_suppression_routes
     register_suppression_routes(app, get_db)
 
+    # Central Prospect inbound persistence (E1.2, staging branch).
+    from app.api.v1.internal_inbound import register_inbound_routes
+    register_inbound_routes(app, get_db)
+
     return app
