@@ -249,3 +249,10 @@ def test_admin_seed_path_visible_in_member_summary(client):
 
 def test_admin_route_requires_token(client):
     assert client.post("/v1/admin/transactions/import-csv", json={"csv": "x"}).status_code == 401
+
+
+def test_gep_eligibility_uses_three_new_videos_rule(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.get("/v1/gep/eligibility", headers=andi).json()
+    assert r["rule"] == "3_new_completed_videos_per_cycle"
+    assert r["required_total"] == 3 and r["eligible"] is False

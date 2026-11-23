@@ -116,15 +116,23 @@ def mark_watched(db: Session, *, owner_member_id: str, category: str, youtube_vi
 
 
 def gep_eligible(db: Session, *, member_id: str) -> dict:
-    """Single source of truth for the 'Keuntungan Mitra fully watched' Golden Elevate
-    Pool eligibility gate the business owner specified. Only counts videos that are
-    actually ready (have a youtube_id); if none are ready yet, eligible is False and
-    that is reported honestly rather than defaulting to True."""
-    data = course_overview(db, member_id=member_id, category="keuntungan_mitra")
-    required = [v for v in data["videos"] if v.get("required_for_pool") and v["ready"]]
-    watched_required = [v for v in required if v["watched"]]
+    """Gold Elevate Pool Academy gate (Master Prompt v4.0 §7).
+
+    Requires THREE NEW completed Academy videos for the applicable cycle. Videos already used
+    by an earlier qualification batch (gp_academy_usage) do not count. Response keys are kept
+    unchanged for existing dashboard clients.
+    """
+    from app.models.gold_pool import GpAcademyUsage
+    from app.services.gold_pool_academy import academy_qualification
+
+    watched = _watched_ids(db, member_id=member_id)
+    used = {row[0] for row in db.execute(
+        select(GpAcademyUsage.video_id).where(GpAcademyUsage.member_id == member_id)).all()}
+    q = academy_qualification(watched, used)
     return {
-        "eligible": len(required) > 0 and len(watched_required) == len(required),
-        "required_total": len(required),
-        "required_watched": len(watched_required),
+        "eligible": q["qualified"],
+        "required_total": q["new_videos_required"],
+        "required_watched": q["new_videos_completed"],
+        "remaining": q["remaining"],
+        "rule": "3_new_completed_videos_per_cycle",
     }
