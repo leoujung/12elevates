@@ -23,3 +23,10 @@ def test_me_never_exposes_secrets(client):
 def test_me_requires_token(client):
     r = client.get("/v1/me")
     assert r.status_code == 401
+
+
+def test_me_exposes_channel_but_never_sponsor(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    body = client.get("/v1/me", headers=andi).json()
+    assert "registration_channel" in body
+    assert "sponsor" not in str(body).lower()

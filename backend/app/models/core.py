@@ -35,6 +35,10 @@ class Member(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
     # Phase 3: admin role for Gold Pool transaction import and draw operations. Default off.
     is_admin: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    # Network + registration metadata (nullable; for future network features). Sponsor never shown to other members.
+    sponsor_name: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    sponsor_ref: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    registration_channel: Mapped[str | None] = mapped_column(String(10), nullable=True)
 
 
 class Prospect(Base):

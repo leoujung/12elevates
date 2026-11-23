@@ -340,7 +340,9 @@ def create_app(session_factory) -> FastAPI:
         m = db.get(Member, member_id)
         if m is None:
             raise HTTPException(status.HTTP_401_UNAUTHORIZED, "member not found")
-        return {"id": m.id, "display_name": m.display_name, "email": m.email, "is_admin": bool(m.is_admin)}
+        # registration_channel only (WA/EMAIL/null: status, not content). Sponsor is never returned.
+        return {"id": m.id, "display_name": m.display_name, "email": m.email, "is_admin": bool(m.is_admin),
+                "registration_channel": m.registration_channel}
 
     @app.get("/v1/gp/my-coupons")
     def get_my_coupons(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
@@ -401,6 +403,26 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, e.code)
         return {"transaction_id": res.transaction_id, "status": res.status,
                 "coupon_id": res.coupon_id, "reason": res.reason}
+
+    class AdminRegIn(BaseModel):
+        member_email: str
+        sponsor_name: str | None = None
+        sponsor_ref: str | None = None
+        registration_channel: str | None = None
+        reason: str
+
+    @app.post("/v1/admin/member-registration")
+    def admin_member_registration(body: AdminRegIn, actor: str = Depends(require_admin),
+                                  db: Session = Depends(get_db)):
+        from app.services import gold_pool_registration as reg
+        try:
+            m = reg.set_member_registration(db, actor_id=actor, member_email=body.member_email,
+                                            sponsor_name=body.sponsor_name, sponsor_ref=body.sponsor_ref,
+                                            registration_channel=body.registration_channel, reason=body.reason)
+        except reg.RegistrationError as e:
+            code = status.HTTP_404_NOT_FOUND if e.code == "MEMBER_NOT_FOUND" else status.HTTP_422_UNPROCESSABLE_ENTITY
+            raise HTTPException(code, e.code)
+        return {"ok": True, "member_id": m.id, "registration_channel": m.registration_channel}
 
     @app.post("/v1/admin/transactions/import-csv", status_code=201)
     def admin_import_csv(body: AdminCsvIn, actor: str = Depends(require_admin), db: Session = Depends(get_db)):
