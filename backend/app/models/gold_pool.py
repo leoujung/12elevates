@@ -160,3 +160,7 @@ class GpAuditLog(Base):
     after_value: Mapped[str | None] = mapped_column(Text, nullable=True)
     reason: Mapped[str | None] = mapped_column(String(300), nullable=True)
     at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+# Draw schedule settings live in app/services/gold_pool_draw.py (imported below so Base sees it).
+from app.services.gold_pool_draw import GpDrawSettings  # noqa: E402,F401

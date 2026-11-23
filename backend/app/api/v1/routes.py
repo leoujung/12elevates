@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 """Phase 1 API: login and member-scoped prospect endpoints.
@@ -27,6 +28,8 @@ from app.services.prospects import (
 )
 from app.services.video_courses import course_overview, gep_eligible, mark_watched
 from app.services import gold_pool_issuance as issuance
+from app.services import gold_pool_draw as draw
+from app.services.draw_schedule import DrawNotAllowed
 from app.models.core import Member as _Member
 
 
@@ -52,6 +55,13 @@ class LpEntryIn(BaseModel):
 class HabitToggleIn(BaseModel):
     item_id: int
     done: bool
+
+
+class DrawScheduleIn(BaseModel):
+    scheduled_at: datetime | None = None
+    zoom_url: str | None = None
+    legal_review_approved: bool = False
+    timezone: str = "Asia/Jakarta"
 
 
 class AcademyBatchIn(BaseModel):
@@ -221,6 +231,29 @@ def create_app(session_factory) -> FastAPI:
             db.rollback()
             raise HTTPException(status.HTTP_409_CONFLICT, "video already used by this member")
         return {"ok": True, "recorded": chosen, "cycle_id": body.cycle_id}
+
+    # ---- Gold Pool draw schedule (v4 s.6, s.13, s.33). Nothing here executes a draw. ----
+    @app.get("/v1/gp/draw-schedule")
+    def get_draw_schedule(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
+        return draw.member_status(db)
+
+    @app.put("/v1/admin/gp/draw-schedule")
+    def put_draw_schedule(body: DrawScheduleIn, actor: str = Depends(require_admin),
+                          db: Session = Depends(get_db)):
+        return draw.admin_update(db, scheduled_at=body.scheduled_at, zoom_url=body.zoom_url,
+                                 legal_review_approved=body.legal_review_approved,
+                                 timezone_name=body.timezone)
+
+    @app.post("/v1/admin/gp/draw-enable")
+    def post_draw_enable(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        try:
+            return draw.admin_enable(db)
+        except DrawNotAllowed as e:
+            raise HTTPException(status.HTTP_409_CONFLICT, {"code": e.code, "detail": e.detail})
+
+    @app.post("/v1/admin/gp/draw-disable")
+    def post_draw_disable(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        return draw.admin_disable(db)
 
     @app.get("/v1/gep/eligibility")
     def get_gep_eligibility(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
