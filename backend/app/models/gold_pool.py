@@ -35,7 +35,6 @@ class GpTransaction(Base):
     recorded_by: Mapped[str | None] = mapped_column(String(36), nullable=True)
     verified_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
-    coupon_count: Mapped[int] = mapped_column(Integer, default=0)
 
 
 class GpCoupon(Base):

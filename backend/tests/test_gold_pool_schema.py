@@ -55,3 +55,15 @@ def test_participation_unique_member_draw():
 def test_snapshot_entries_unique_position_and_coupon():
     names = [c.name for c in _gp_tables()["gp_draw_entries"].constraints]
     assert "uq_gp_entry_snapshot_coupon" in names and "uq_gp_entry_snapshot_position" in names
+
+
+def test_model_columns_match_migration_columns_exactly():
+    """Guards against model/migration drift (a phantom column broke production in Phase 3)."""
+    import re
+    src = MIGRATION.read_text(encoding="utf-8")
+    for name, table in _gp_tables().items():
+        block = re.search(rf'op\.create_table\(\s*"{name}"(.*?)\n    \)\n', src, re.S)
+        assert block, f"{name} not created by migration"
+        mig_cols = set(re.findall(r'sa\.Column\("([a-z_]+)"', block.group(1)))
+        model_cols = {c.name for c in table.columns}
+        assert model_cols == mig_cols, f"{name}: model-only={model_cols - mig_cols}, migration-only={mig_cols - model_cols}"
