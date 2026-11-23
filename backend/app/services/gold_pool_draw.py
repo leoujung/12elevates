@@ -24,7 +24,10 @@ class GpDrawSettings(Base):
 def _verified_coupons(db: Session) -> int:
     """Coupons issued from admin-verified transactions. Never counts client input."""
     from app.models.gold_pool import GpCoupon
-    return db.execute(select(func.count()).select_from(GpCoupon)).scalar_one()
+    from app.services import gold_pool_rules as rules
+    # Only admin-VERIFIED coupons count. ISSUED (waiting) must never reach the 30 target.
+    return db.execute(select(func.count()).select_from(GpCoupon)
+                      .where(GpCoupon.status == rules.VERIFIED)).scalar_one()
 
 
 def _load(db: Session) -> DrawSchedule:

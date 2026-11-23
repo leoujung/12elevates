@@ -217,6 +217,27 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
         return {"ok": True}
 
+    # ---- Admin Phase 4: read-only views (all require is_admin) ----
+    @app.get("/v1/admin/gp/cycles")
+    def admin_cycles(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        from app.services import gold_pool_admin_read as adm
+        return adm.list_cycles(db)
+
+    @app.get("/v1/admin/gp/coupons/pending")
+    def admin_pending(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        from app.services import gold_pool_admin_read as adm
+        return adm.pending_coupons(db)
+
+    @app.get("/v1/admin/gp/prizes")
+    def admin_prizes(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        from app.services import gold_pool_admin_read as adm
+        return adm.prize_list(db)
+
+    @app.get("/v1/admin/gp/audit-log")
+    def admin_audit(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        from app.services import gold_pool_admin_read as adm
+        return adm.audit_log(db)
+
     @app.post("/v1/admin/gp/coupons/{coupon_id}/verify")
     def admin_verify_coupon(coupon_id: str, body: dict, actor: str = Depends(require_admin),
                             db: Session = Depends(get_db)):
