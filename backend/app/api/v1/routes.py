@@ -6,7 +6,8 @@ from sqlalchemy.exc import IntegrityError
 Every prospect route derives the member from the JWT only. The client never
 supplies owner_member_id, so a caller cannot ask for another member's data.
 """
-from fastapi import Depends, FastAPI, Header, HTTPException, status
+import os
+from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -88,7 +89,12 @@ class AdminCsvIn(BaseModel):
 
 
 def create_app(session_factory) -> FastAPI:
-    app = FastAPI(title="12ELEVATE AI Network Building Intelligence (Phase 1)")
+    # API docs are OFF unless explicitly enabled: they expose the full endpoint map to the public.
+    _docs_on = os.environ.get("APP_ENABLE_DOCS", "").lower() in ("1", "true", "yes")
+    app = FastAPI(title="12ELEVATE AI Network Building Intelligence (Phase 1)",
+                  docs_url="/docs" if _docs_on else None,
+                  redoc_url="/redoc" if _docs_on else None,
+                  openapi_url="/openapi.json" if _docs_on else None)
     # CORS: only the official 12ELEVATE front-ends may call the API from a browser (approved by Leo, 2026-11-23).
     from fastapi.middleware.cors import CORSMiddleware
     app.add_middleware(
@@ -122,12 +128,25 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_403_FORBIDDEN, "admin only")
         return member_id
 
+    from app.services.login_ratelimit import LoginRateLimiter
+    _login_limit = LoginRateLimiter()
+
     @app.post("/v1/auth/login")
-    def login(body: LoginIn, db: Session = Depends(get_db)):
+    def login(body: LoginIn, request: Request, db: Session = Depends(get_db)):
+        # Client IP: Traefik forwards it in X-Forwarded-For; uvicorn only listens on 127.0.0.1.
+        # Trust X-Forwarded-For only from the local proxy (Traefik on the same host). Traefik appends the
+        # real client IP at the END of the list, so the last entry is the only one we accept.
+        peer = request.client.host if request.client else "unknown"
+        xff = [p.strip() for p in (request.headers.get("x-forwarded-for") or "").split(",") if p.strip()]
+        ip = xff[-1] if (peer in ("127.0.0.1", "::1") and xff) else peer
+        if _login_limit.is_blocked(ip):
+            raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "too many failed attempts, try again later")
         member = db.query(Member).filter(Member.email == body.email.lower()).one_or_none()
         # Same error for unknown email and wrong password (no account enumeration)
         if member is None or not member.password_hash or not verify_password(body.password, member.password_hash):
+            _login_limit.record_failure(ip)
             raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid credentials")
+        _login_limit.reset(ip)
         return {"access_token": issue_token(member.id), "token_type": "bearer"}
 
     @app.get("/v1/prospects")
