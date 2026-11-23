@@ -7,6 +7,7 @@ and sync-queue creation AFTER a successful database commit.
 n8n owns orchestration only; it must not re-implement these rules.
 """
 import re
+import json
 import uuid
 from datetime import datetime, timezone
 
@@ -50,6 +51,15 @@ def normalize_phone(raw):
 def normalize_email(raw):
     clean = (raw or "").strip().lower()
     return clean if _EMAIL.match(clean) else None
+
+
+def _ref(value):
+    """Optional business reference id. Stored only as an opaque id, never as PII."""
+    if value is None or value == "":
+        return None
+    if not isinstance(value, str) or len(value.strip()) > 100:
+        raise InboundError("INVALID_REFERENCE_ID")
+    return value.strip() or None
 
 
 def validate_event(event):
@@ -102,6 +112,8 @@ def validate_event(event):
         "referral_code": (str((event.get("attribution") or {}).get("referral_code") or "")[:50]) or None,
         "source_page": (str((event.get("attribution") or {}).get("landing_page") or "")[:200]) or None,
         "name": (str(lead.get("name") or "").strip()[:200]) or None,
+        "registration_id": _ref(event.get("registration_id")),
+        "assessment_id": _ref(event.get("assessment_id")),
     }
 
 
@@ -135,10 +147,20 @@ def persist_inbound(db, raw_event, *, now=None):
 
     try:
         # Idempotency: same event_id already processed -> no new rows.
-        seen = db.execute(text("select status from cp_inbound_events where event_id = :e"),
-                          {"e": ev["event_id"]}).first()
+        seen = db.execute(text("select status from cp_inbound_events where event_id = :e and member_id = :m"),
+                          {"e": ev["event_id"], "m": ev["member_id"]}).first()
         if seen:
             return {"status": "DUPLICATE_IGNORED", "event_id": ev["event_id"]}
+
+        # 3) registration_id / assessment_id dedup per tenant (stored as opaque ref in payload_minimal)
+        for ref_kind in ("registration_id", "assessment_id"):
+            if ev.get(ref_kind):
+                dup = db.execute(
+                    text("select 1 from cp_inbound_events where member_id = :m and payload_minimal like :pat"),
+                    {"m": ev["member_id"], "pat": '%"' + ref_kind + '": "' + ev[ref_kind] + '"%'},
+                ).first()
+                if dup:
+                    return {"status": "DUPLICATE_IGNORED", "event_id": ev["event_id"]}
 
         identifiers = [("phone", ev["phone"])] if ev["phone"] else []
         if ev["email"]:
@@ -160,10 +182,12 @@ def persist_inbound(db, raw_event, *, now=None):
                     {"i": str(uuid.uuid4()), "p": prospect_id, "m": ev["member_id"], "k": kind, "v": value, "now": now},
                 )
 
+        refs = {k: ev[k] for k in ("registration_id", "assessment_id") if ev.get(k)}
         db.execute(
             text("insert into cp_inbound_events (event_id, event_type, member_id, prospect_id, status, payload_minimal, received_at) "
-                 "values (:e, :t, :m, :p, 'persisted', '{}', :now)"),
-            {"e": ev["event_id"], "t": ev["event_type"], "m": ev["member_id"], "p": prospect_id, "now": now},
+                 "values (:e, :t, :m, :p, 'persisted', :refs, :now)"),
+            {"e": ev["event_id"], "t": ev["event_type"], "m": ev["member_id"], "p": prospect_id,
+             "refs": json.dumps(refs, sort_keys=True), "now": now},
         )
 
         for purpose, granted in ev["consents"].items():
@@ -176,17 +200,17 @@ def persist_inbound(db, raw_event, *, now=None):
 
         if not db.execute(text("select 1 from cp_provenance where prospect_id = :p"), {"p": prospect_id}).first():
             db.execute(
-                text("insert into cp_provenance (prospect_id, source_page, campaign, referral_code, first_event_id, first_seen_at) "
-                     "values (:p, :sp, :c, :r, :e, :now)"),
-                {"p": prospect_id, "sp": ev["source_page"], "c": ev["campaign"], "r": ev["referral_code"],
+                text("insert into cp_provenance (prospect_id, member_id, source_page, campaign, referral_code, first_event_id, first_seen_at) "
+                     "values (:p, :mm, :sp, :c, :r, :e, :now)"),
+                {"p": prospect_id, "mm": ev["member_id"], "sp": ev["source_page"], "c": ev["campaign"], "r": ev["referral_code"],
                  "e": ev["event_id"], "now": now},
             )
 
         # CRM export is queued in the SAME transaction: it exists only if the DB rows exist.
         db.execute(
-            text("insert into cp_sync_queue (prospect_id, event_id, destination, idempotency_key, status, attempts, next_attempt_at, created_at, updated_at) "
-                 "values (:p, :e, 'google_sheets_staging', :k, 'pending', 0, :now, :now, :now)"),
-            {"p": prospect_id, "e": ev["event_id"], "k": f"sheets:{ev['event_id']}", "now": now},
+            text("insert into cp_sync_queue (prospect_id, member_id, event_id, destination, idempotency_key, status, attempts, next_attempt_at, created_at, updated_at) "
+                 "values (:p, :mm, :e, 'google_sheets_staging', :k, 'pending', 0, :now, :now, :now)"),
+            {"p": prospect_id, "mm": ev["member_id"], "e": ev["event_id"], "k": f"sheets:{ev['member_id']}:{ev['event_id']}", "now": now},
         )
 
         db.execute(
