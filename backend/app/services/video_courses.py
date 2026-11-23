@@ -102,6 +102,7 @@ def course_overview(db: Session, *, member_id: str, category: str) -> dict:
 
 
 def mark_watched(db: Session, *, owner_member_id: str, category: str, youtube_video_id: str) -> None:
+    """Admin-only recording path. Member self-reporting was closed (v4 s.7.2): callers must be verified."""
     valid_ids = {v["youtube_id"] for v in CATALOGS.get(category, []) if v["youtube_id"]}
     if youtube_video_id not in valid_ids:
         raise ValueError("unknown or not-yet-configured video id for this category")
@@ -123,16 +124,17 @@ def gep_eligible(db: Session, *, member_id: str) -> dict:
     unchanged for existing dashboard clients.
     """
     from app.models.gold_pool import GpAcademyUsage
-    from app.services.gold_pool_academy import academy_qualification
+    from app.services.gold_pool_rules import ACADEMY_NEW_VIDEOS_REQUIRED
 
     watched = _watched_ids(db, member_id=member_id)
     used = {row[0] for row in db.execute(
         select(GpAcademyUsage.video_id).where(GpAcademyUsage.member_id == member_id)).all()}
-    q = academy_qualification(watched, used)
+    available = len(watched - used)
+    required = ACADEMY_NEW_VIDEOS_REQUIRED
     return {
-        "eligible": q["qualified"],
-        "required_total": q["new_videos_required"],
-        "required_watched": q["new_videos_completed"],
-        "remaining": q["remaining"],
+        "eligible": available >= required,
+        "required_total": required,
+        "required_watched": min(available, required),
+        "remaining": max(0, required - available),
         "rule": "3_new_completed_videos_per_cycle",
     }

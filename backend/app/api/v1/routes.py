@@ -1,3 +1,5 @@
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 """Phase 1 API: login and member-scoped prospect endpoints.
 
 Every prospect route derives the member from the JWT only. The client never
@@ -52,7 +54,14 @@ class HabitToggleIn(BaseModel):
     done: bool
 
 
+class AcademyBatchIn(BaseModel):
+    member_id: str
+    cycle_id: str
+    video_ids: list[str]
+
+
 class VideoWatchedIn(BaseModel):
+    owner_member_id: str
     youtube_video_id: str
 
 
@@ -180,13 +189,38 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_404_NOT_FOUND, str(e))
 
     @app.post("/v1/courses/{category}/watched", status_code=201)
-    def post_watched(category: str, body: VideoWatchedIn, member_id: str = Depends(current_member_id),
+    def post_watched(category: str, body: VideoWatchedIn, actor: str = Depends(require_admin),
                       db: Session = Depends(get_db)):
+        # Admin-only (v4 s.7.2): a member cannot self-report a video as completed.
         try:
-            mark_watched(db, owner_member_id=member_id, category=category, youtube_video_id=body.youtube_video_id)
+            mark_watched(db, owner_member_id=body.owner_member_id, category=category, youtube_video_id=body.youtube_video_id)
         except ValueError as e:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
         return {"ok": True}
+
+    @app.post("/v1/admin/gp/academy-batch", status_code=201)
+    def admin_academy_batch(body: AcademyBatchIn, actor: str = Depends(require_admin),
+                            db: Session = Depends(get_db)):
+        # Records a qualification batch of 3 NEW verified videos (v4 s.7.3). Unique per member+video.
+        from app.models.gold_pool import GpAcademyUsage, GpCycle
+        from app.services.gold_pool_rules import validate_academy_batch, AcademyBatchError
+        cycle = db.get(GpCycle, body.cycle_id)
+        if cycle is None:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "cycle not found")
+        used = {r[0] for r in db.execute(select(GpAcademyUsage.video_id).where(
+            GpAcademyUsage.member_id == body.member_id)).all()}
+        try:
+            chosen = validate_academy_batch([(v, True) for v in body.video_ids], used)
+        except AcademyBatchError as e:
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        for vid in chosen:
+            db.add(GpAcademyUsage(member_id=body.member_id, video_id=vid, cycle_id=body.cycle_id))
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            raise HTTPException(status.HTTP_409_CONFLICT, "video already used by this member")
+        return {"ok": True, "recorded": chosen, "cycle_id": body.cycle_id}
 
     @app.get("/v1/gep/eligibility")
     def get_gep_eligibility(member_id: str = Depends(current_member_id), db: Session = Depends(get_db)):
