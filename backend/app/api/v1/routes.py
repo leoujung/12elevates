@@ -217,6 +217,26 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
         return {"ok": True}
 
+    @app.post("/v1/admin/gp/coupons/{coupon_id}/verify")
+    def admin_verify_coupon(coupon_id: str, body: dict, actor: str = Depends(require_admin),
+                            db: Session = Depends(get_db)):
+        # Admin verification: ISSUED -> VERIFIED only. Audited with a required reason (v4 s.7.2).
+        from app.services import gold_pool_verify as ver
+        try:
+            c = ver.verify_coupon(db, coupon_id=coupon_id, actor_id=actor,
+                                  reason=str(body.get("reason", "")))
+        except ver.CouponNotFound:
+            db.rollback()
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "coupon not found")
+        except ver.CouponNotVerifiable as e:
+            db.rollback()
+            raise HTTPException(status.HTTP_409_CONFLICT, f"coupon is {e.current_status}, not ISSUED")
+        except ValueError as e:
+            db.rollback()
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
+        db.commit()
+        return {"coupon_id": c.id, "status": c.status}
+
     @app.post("/v1/admin/gp/academy-batch", status_code=201)
     def admin_academy_batch(body: AcademyBatchIn, actor: str = Depends(require_admin),
                             db: Session = Depends(get_db)):
