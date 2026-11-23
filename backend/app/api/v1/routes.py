@@ -217,6 +217,19 @@ def create_app(session_factory) -> FastAPI:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(e))
         return {"ok": True}
 
+    # ---- Admin Phase 5: draw execution. Gates (enabled + legal review) enforced in the engine. ----
+    @app.post("/v1/admin/gp/cycles/{cycle_id}/run-draw")
+    def admin_run_draw(cycle_id: str, actor: str = Depends(require_admin), db: Session = Depends(get_db)):
+        from app.services import gold_pool_engine as eng
+        try:
+            return eng.run_draw(db, cycle_id=cycle_id, actor_id=actor)
+        except eng.DrawBlocked as e:
+            db.rollback()
+            raise HTTPException(status.HTTP_409_CONFLICT, {"code": e.code, "detail": e.detail})
+        except Exception:
+            db.rollback()
+            raise
+
     # ---- Admin Phase 4: read-only views (all require is_admin) ----
     @app.get("/v1/admin/gp/cycles")
     def admin_cycles(actor: str = Depends(require_admin), db: Session = Depends(get_db)):
