@@ -35,3 +35,17 @@
 3. Siapa yang menjadi controller, dan apakah ada joint controller dengan pihak lain (partner, IngatSehat)?
 4. Kapan DPIA harus selesai, dan apakah P1 boleh berjalan sementara DPIA dikerjakan?
 5. Mohon konfirmasi tertulis bahwa direktif ini sudah diadopsi manajemen.
+
+## Pembaruan: adopsi tertulis Direktur (12E-DIR-ADP-001, 24 Nov 2026)
+
+Direktur (Bapak Leo) memberikan konfirmasi tertulis bahwa 12E-LEGAL-AI-NBI-002 dan 12E-LEGAL-AI-NBI-003 diadopsi sebagai arahan proyek internal.
+
+| No | Perubahan status |
+|---|---|
+| D1 | **TERPENUHI** untuk adopsi arahan internal. Konfirmasi tertulis Direktur sudah ada. |
+| D2 | TETAP TERBUKA. Dasar hukum per tujuan belum ditetapkan. Dokumen adopsi menyatakan tidak menggantikan kewajiban hukum. |
+| D3 | TETAP TERBUKA. Notice belum APPROVED dengan referensi legal tertulis. |
+| D6 | TETAP TERBUKA. DPIA wajib sebelum aktivitas berisiko tinggi di produksi. Bisa berjalan paralel. |
+| D7 | Ditegaskan: wellness umum boleh setelah verifikasi; kondisi kesehatan dipisahkan dan tidak masuk matching umum tanpa otorisasi kepatuhan tersendiri. |
+
+Catatan: adopsi arahan internal **tidak** berarti data nyata boleh diproses. Dokumen adopsi (bagian 2 dan 7) menegaskan bahwa pemrosesan data pribadi dan aktivasi produksi tetap harus memenuhi persyaratan hukum yang berlaku.
