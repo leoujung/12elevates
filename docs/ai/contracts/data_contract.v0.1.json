@@ -1,0 +1,78 @@
+{
+  "$comment": "12ELEVATE AI Network Building Intelligence - Task 1 DATA CONTRACT (DRAFT, synthetic-only). Fields with legal_basis.status = BLOCKED must not be used for real-person matching. No consent or retention value is invented: unresolved values are null and marked BLOCKED.",
+  "version": "0.1.0",
+  "common_rules": {
+    "tenant": "every record carries member_id (tenant owner). Cross-tenant reads are forbidden.",
+    "missing_is_not_zero": "absent values are null and count as missing for data_confidence; never coerced to 0.",
+    "ai_access_default": "deny. A field is usable by AI only when ai_usable = true AND legal_basis.status = APPROVED."
+  },
+  "legal_basis_status_values": ["APPROVED", "BLOCKED", "NOT_REQUIRED"],
+  "customer_matching_schema": {
+    "entity": "customer_interest_profile",
+    "fields": {
+      "prospect_id": {"type": "string", "source": "inbound/external provenance", "purpose": "canonical identity", "legal_basis": {"status": "NOT_REQUIRED", "note": "identifier only"}, "retention": "BLOCKED: retention period not decided", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "pseudonymous identifier"},
+      "member_id": {"type": "string", "source": "system", "purpose": "tenant isolation", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "same as prospect", "tenant_owner": "self", "ai_usable": true, "sensitivity": "internal"},
+      "declared_wellness_interest": {"type": "list<enum>", "source": "voluntary form field (NOT YET BUILT)", "purpose": "match dimension: declared wellness interest (30%)", "legal_basis": {"status": "BLOCKED", "note": "matching-specific consent text and version not approved"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "RESTRICTED: health-adjacent"},
+      "education_preference": {"type": "enum", "source": "voluntary form field (NOT YET BUILT)", "purpose": "match dimension (20%)", "legal_basis": {"status": "BLOCKED", "note": "matching consent pending legal"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "personal preference"},
+      "declared_needs_goals": {"type": "list<enum>", "source": "voluntary form field (NOT YET BUILT)", "purpose": "match dimension (20%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "RESTRICTED: may reveal health condition"},
+      "engagement_relevance": {"type": "float 0-1 (derived)", "source": "engagement_events (NOT YET BUILT)", "purpose": "match dimension (15%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "behavioural"},
+      "product_category_interest": {"type": "list<enum>", "source": "voluntary form/click (NOT YET BUILT)", "purpose": "match dimension (15%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "personal preference"},
+      "data_freshness_at": {"type": "timestamp", "source": "system (received_at)", "purpose": "data confidence", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "same as prospect", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "internal"},
+      "suppressed": {"type": "boolean", "source": "suppression list (exists in production, verified)", "purpose": "hard gate: suppressed prospects are never matched", "legal_basis": {"status": "NOT_REQUIRED", "note": "opt-out always wins"}, "retention": "permanent while opt-out applies", "tenant_owner": "global", "ai_usable": true, "sensitivity": "internal"}
+    }
+  },
+  "business_matching_schema": {
+    "entity": "business_interest_profile",
+    "gate": "business_matching requires EXPLICIT opt-in on the candidate side AND legal review approval. Until then this entity is synthetic-only.",
+    "fields": {
+      "prospect_id": {"type": "string", "source": "provenance", "purpose": "identity", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "pseudonymous identifier"},
+      "business_opt_in": {"type": "boolean", "source": "explicit candidate opt-in (NOT YET BUILT)", "purpose": "hard gate for any business matching", "legal_basis": {"status": "BLOCKED", "note": "opt-in wording requires legal"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "consent record"},
+      "declared_entrepreneurship_interest": {"type": "boolean", "source": "voluntary (NOT YET BUILT)", "purpose": "match dimension (30%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "RESTRICTED: employment and financial aspiration"},
+      "business_goals": {"type": "list<enum>", "source": "voluntary (NOT YET BUILT)", "purpose": "match dimension (25%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "RESTRICTED"},
+      "relevant_experience_declared": {"type": "list<enum>", "source": "voluntary only; never inferred from job title (NOT YET BUILT)", "purpose": "match dimension (15%)", "legal_basis": {"status": "BLOCKED", "note": "MLM/direct-selling regulation not verified"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "RESTRICTED"},
+      "digital_business_interest": {"type": "list<enum>", "source": "voluntary (NOT YET BUILT)", "purpose": "match dimension (15%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "personal preference"},
+      "leadership_development_interest": {"type": "list<enum>", "source": "voluntary (NOT YET BUILT)", "purpose": "match dimension (15%)", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "personal preference"}
+    }
+  },
+  "derived_assessment_features_schema": {
+    "entity": "assessment_feature",
+    "rule": "raw answers are NEVER stored for matching (Task 4). Only approved derived features, with provenance back to the assessment_id.",
+    "fields": {
+      "assessment_id": {"type": "string", "source": "assessment (stable ID is Blocker 1 scope)", "purpose": "provenance", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "internal"},
+      "track": {"type": "enum", "source": "assessment result", "purpose": "coarse interest category", "legal_basis": {"status": "BLOCKED", "note": "assessment-derived use needs matching consent"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "RESTRICTED: health-adjacent"},
+      "raw_answers": {"type": "NOT STORED", "source": "n/a", "purpose": "none for matching", "legal_basis": {"status": "BLOCKED", "note": "prohibited for matching by Task 4"}, "retention": "n/a", "tenant_owner": "n/a", "ai_usable": false, "sensitivity": "RESTRICTED"}
+    }
+  },
+  "engagement_events_schema": {
+    "entity": "engagement_event",
+    "allowed_event_types": ["WEBINAR_REGISTERED", "WEBINAR_ATTENDED", "EDUCATION_VIEWED", "EDUCATION_COMPLETED"],
+    "fields": {
+      "event_id": {"type": "string", "source": "client-stable ID (Blocker 1: currently random in browser)", "purpose": "idempotency key", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "internal"},
+      "event_type": {"type": "enum", "source": "system", "purpose": "classification", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "internal"},
+      "occurred_at": {"type": "timestamp", "source": "system", "purpose": "recency", "legal_basis": {"status": "NOT_REQUIRED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": true, "sensitivity": "internal"},
+      "consent_purpose_ref": {"type": "string", "source": "matching_consent", "purpose": "proves usage basis", "legal_basis": {"status": "BLOCKED"}, "retention": "BLOCKED", "tenant_owner": "member_id", "ai_usable": false, "sensitivity": "consent record"}
+    }
+  },
+  "matching_consent_schema": {
+    "entity": "matching_consent",
+    "rule": "separate from registration_processing, marketing, and webinar consent. Never pre-checked. Never inferred from a form submission.",
+    "fields": {
+      "purpose": {"type": "enum", "values": ["matching_customer", "matching_business", "marketing"], "legal_basis": {"status": "BLOCKED", "note": "notice text and version pending legal"}},
+      "granted": {"type": "boolean", "legal_basis": {"status": "NOT_REQUIRED"}},
+      "notice_version": {"type": "string", "legal_basis": {"status": "BLOCKED", "note": "no approved notice version exists"}},
+      "granted_at": {"type": "timestamp", "legal_basis": {"status": "NOT_REQUIRED"}},
+      "source": {"type": "string", "legal_basis": {"status": "NOT_REQUIRED"}},
+      "withdrawn_at": {"type": "timestamp", "legal_basis": {"status": "NOT_REQUIRED", "note": "withdrawal must stop matching immediately"}}
+    }
+  },
+  "matching_outcomes_schema": {
+    "entity": "matching_outcome",
+    "purpose": "labels for Precision@5 evaluation and calibration. Without labels, confidence is not a measured accuracy.",
+    "fields": {
+      "match_result_id": {"type": "string", "legal_basis": {"status": "NOT_REQUIRED"}, "ai_usable": true},
+      "member_feedback": {"type": "enum", "values": ["RELEVANT", "NOT_RELEVANT", "NO_ACTION"], "legal_basis": {"status": "NOT_REQUIRED", "note": "member's own feedback on the tool"}, "ai_usable": true},
+      "human_label": {"type": "enum", "values": ["RELEVANT", "NOT_RELEVANT", "UNKNOWN"], "legal_basis": {"status": "BLOCKED", "note": "who labels real people and with what basis is undecided"}, "ai_usable": false},
+      "outcome": {"type": "enum", "values": ["NONE", "CONTACTED", "JOINED", "CUSTOMER"], "legal_basis": {"status": "BLOCKED", "note": "tracking outcomes of named people needs legal basis"}, "ai_usable": false}
+    }
+  }
+}
