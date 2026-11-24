@@ -195,3 +195,97 @@ Note on item 4: the currently deployed API image does not include the AI modules
 ### Remaining scope (unchanged)
 - Legal basis per purpose (O1), approved notice (O2), DPIA (O3), review of `declared_wellness_interest` (O4), decision on `declared_needs_goals` (O5), retention (O6), deletion (O7), provenance (O8), assessment medical-data verification (O9), DB role grants (O10), API authentication (O11), staging schema apply (O12, awaiting approval), member transparency (O13).
 - The `build_engine_eval.py` direct-rank call and the unclosed bypass findings from the previous report are still open.
+---
+
+## Implementation update 2 — Closure of direct-ranking bypass (commit cdff4a7)
+
+**Date:** 24 November 2026
+**Commit reference:** `cdff4a7ab5d6` (branch `ai/matching-prototype`).
+**Decision basis:** technical closure approval for the direct `rank()` call in `build_engine_eval.py`, subject to the documentation requirements recorded here.
+**Status:** `BUSINESS_MATCHING_ENABLED = False`. Business Matching is not activated. Real personal data is not processed. No production change.
+
+### 1. What was implemented
+- **New `backend/ai/synthetic_guard.py`.** Provenance guard for synthetic evaluation data. A candidate passes only if its id was registered by the synthetic generator in the current process, its id and member match the synthetic patterns, `synthetic=True`, it is not declared from `job_title`, its dimensions are allowed for the engine, and its values are in [0, 1].
+- **New `synthetic_eval_rank` in `backend/ai/matching_service.py`.** The only entry point evaluation code may use to rank. Order: RBAC (`run_on_synthetic`, developer role only), synthetic guard, field policy, ranking, audit. Business engine requests are refused and audited.
+- **Changed `backend/ai/eval/build_engine_eval.py`.** It no longer calls `rank_customer` or `rank_business` directly. It registers generated ids, then ranks through `synthetic_eval_rank`. Business is skipped and produces no items.
+- **New `backend/tests/test_synthetic_guard.py`.** 22 dedicated tests.
+
+### 2. Test evidence
+- **11 suites, 183 tests, all passed.**
+  - customer 15, business 15, data_collection 15, evaluation 8, labelling 20, consent 19, rbac 16, matching_service 23, field_policy 17, config_flag 14, synthetic_guard 22.
+- The 22 dedicated synthetic guard tests cover:
+  - positive control (valid synthetic input ranks);
+  - non-synthetic flag refused;
+  - real-looking id refused;
+  - synthetic-looking id not registered by the generator refused;
+  - the generator cannot register a non-synthetic id;
+  - non-synthetic member id refused;
+  - cross-member candidate refused;
+  - `job_title` experience refused;
+  - unknown dimension refused;
+  - health dimension refused;
+  - out-of-range and negative values refused;
+  - member and platform_admin roles refused;
+  - business and unknown engines refused;
+  - refused and allowed runs audited, chain verifies, no profile values in audit;
+  - source check: the evaluation script does not call `rank()` directly and uses `synthetic_eval_rank`.
+
+### 3. Mutation testing
+Each mutant was applied to the working copy, the tests were run, and the file was restored. The restored state passed 22/22.
+- **Provenance registry check removed** in `synthetic_guard.py`: **1 test failed**.
+- **Synthetic flag check removed** in `synthetic_guard.py`: the run failed, caught by the existing `customer_matching` guard (`RefusedInput`), not by a dedicated test in this suite. Recorded as such.
+- **`build_engine_eval.py` reverted to a direct `rank()` call:** **1 test failed**.
+- Earlier mutants from previous reports remain in force (consent gate, field policy on both paths, cross-tenant, DRAFT check, config flag env read).
+
+Honest note on the second mutant: that check is not independently covered by a test in the new suite. It should get a dedicated test in a later change.
+
+### 4. Synthetic-only limitation (required statement)
+Provenance registration is **process-memory based**.
+- It is a **safeguard against accidental use of real data** in the evaluation path.
+- It is **not a security guarantee**. It does not protect against intentional modification of the source code or a malicious developer. Such a person could edit the generator, the guard, or the tests.
+- The residual risk is governed by code review, branch protection, and the RBAC developer role. None of these is enforced by this module.
+- It must not be described as an absolute guarantee.
+
+### 5. Consent boundary (required statement)
+- The consent ledger check is **bypassed only for verified synthetic evaluation data**. The bypass is in `synthetic_eval_rank`, and it applies only when the synthetic guard passes.
+- The exception **must never apply** to real member data, personal data, or production matching.
+- Production and real-person matching continue to use `customer_matches`, which keeps the consent check. Business matching remains refused.
+- Because the bypass sits behind the guard, a non-synthetic candidate cannot reach it through the guarded entry point. That property is covered by tests, subject to the limitation in section 4.
+
+### 6. Business evaluation artifacts
+- **Not deleted, overwritten, or regenerated.** The committed artifacts `docs/ai/eval/engine_eval/evaluator_1_engine_eval.json` (sha256 prefix `dcdbe3c7ca863632`) and `evaluator_2_engine_eval.json` (sha256 prefix `476497f11bd5228c`) are unchanged. Each still contains 125 business items and 0 filled labels. Private keys are unchanged.
+- A separate notice was created: `docs/ai/eval/engine_eval/DEPRECATION_NOTICE_BUSINESS_ITEMS.md`. Status: **SUPERSEDED — NOT VALID FOR CURRENT BUSINESS MATCHING EVALUATION.**
+- The notice records the reason: the items were generated without the guarded path. It does **not** claim that previously distributed copies have been recalled or deleted. Those copies exist outside this repository.
+- Open question: whether the 125 customer items in the same files should also be superseded. They were generated with `rank_customer` directly, before the guarded entry point existed. Not decided.
+
+### 7. Evaluation integrity
+- A **dry-run** was performed: the build logic was executed in memory, and nothing was written to disk.
+- Result: **125 Customer items, 0 Business items.**
+- A **full regeneration was intentionally not performed**, to protect the existing evaluator artifacts and private keys. Regenerating would overwrite files already distributed to evaluators and would make them inconsistent with their keys.
+- The committed artifacts were therefore not produced by the new code path. The dry-run shows what the current code would produce, not what is in the repository.
+
+### 8. Changed files
+- `backend/ai/synthetic_guard.py` (new), commit `cdff4a7`
+- `backend/ai/matching_service.py` (added `synthetic_eval_rank`), commit `cdff4a7`
+- `backend/ai/eval/build_engine_eval.py` (direct `rank()` removed), commit `cdff4a7`
+- `backend/tests/test_synthetic_guard.py` (new, 22 tests), commit `cdff4a7`
+- `docs/ai/eval/engine_eval/DEPRECATION_NOTICE_BUSINESS_ITEMS.md` (new), this report commit
+- `docs/ai/legal/IMPLEMENTATION_REPORT_20261124.md` (this update), this report commit
+
+### 9. Limitations
+- The provenance registry is process-memory only (section 4).
+- The synthetic-flag mutant is covered only by a lower layer, not by a dedicated test (section 3).
+- The evaluation path bypasses consent for synthetic data only. This is intentional, and it is limited by the guard.
+- The committed engine-eval artifacts were not regenerated, so they still contain the superseded business items.
+- The customer items in those artifacts were generated without the guarded entry point. Their status is undecided.
+
+### 10. Outstanding risks
+- **R1. Superseded artifacts remain in circulation.** Copies distributed outside the repo cannot be recalled by this report.
+- **R2. Process-memory registry** can be bypassed by source modification. Mitigation is review and branch protection, not yet enforced.
+- **R3. Customer evaluation artifacts** are of undecided validity.
+- **R4. Server-level deployment verification is NOT VERIFIED.** The VPS (`srv1964287`) was not reachable from this session. The four items from the previous report remain open. The repo-level finding does not extend to other environments.
+- **R5. Legal items O1–O13** remain open, per their individual status. Technical implementation passing tests does not close any of them.
+- **R6. Business Matching activation** requires the governance path in the decision record (written Data Controller decision, review, audit, tests, lawful basis, Privacy Notice, data classification, DPIA). None of those is complete.
+
+### 11. Final status
+`BUSINESS_MATCHING_ENABLED = False`. Business Matching is not enabled. No real personal data is processed. No production activation is authorized by this update.
