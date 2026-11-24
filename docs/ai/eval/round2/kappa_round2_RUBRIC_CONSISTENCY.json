@@ -1,0 +1,27 @@
+{
+  "metric": "rubric_consistency (NOT model accuracy)",
+  "round": 2,
+  "rubric": "RUBRIC_v0.2",
+  "evaluators": {
+    "evaluator_1": "Bara",
+    "evaluator_2": "Naya"
+  },
+  "scopes": {
+    "customer": {
+      "n": 100,
+      "raw_agreement": 1.0,
+      "cohen_kappa": 1.0
+    },
+    "business": {
+      "n": 100,
+      "raw_agreement": 1.0,
+      "cohen_kappa": 1.0
+    },
+    "overall": {
+      "n": 200,
+      "raw_agreement": 1.0,
+      "cohen_kappa": 1.0
+    }
+  },
+  "note": "Kappa is 1.0 because both evaluators applied the deterministic rubric R1-R4. This shows the rubric is applied consistently, not that the matching engine is accurate. Precision@5 requires a non-mechanical human judgement of engine output, not yet collected."
+}
