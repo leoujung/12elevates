@@ -94,6 +94,21 @@ check("unknown field refused by service path",
 check("all-allowed fields still ranked",
       len(customer_matches(member, "mem-A", [cand("p1")], L, AUD, T).results) == 1)
 
+# business path: field policy runs even though the directive gate still refuses
+check("business: health field refused by field policy (before gate)",
+      refused(lambda: business_matches(member, "mem-A", [cand_fields("b1", {"medical_history": 0.5})], audit=AUD, at=T)))
+check("business: field-policy refusal audited with field name only",
+      AUD.events[-1]["allowed"] is False and "medical_history" in AUD.events[-1]["reason"])
+check("business: allowed business field still refused by directive gate",
+      refused(lambda: business_matches(member, "mem-A", [cand_fields("b2", {"declared_entrepreneurship_interest": 0.9})], audit=AUD, at=T)))
+check("business: gate refusal records the directive reason",
+      "directive 002" in AUD.events[-1]["reason"])
+
+# no bypass: the only ranking entry points used by the service are the gated functions
+import inspect, ai.matching_service as ms
+check("service exposes no ungated ranking function",
+      not any(n in dir(ms) for n in ("rank_unchecked", "score_unchecked")))
+
 passed = sum(1 for _, ok in results if ok)
 print(f"RESULT {passed} passed, {len(results) - passed} failed")
 sys.exit(0 if passed == len(results) else 1)

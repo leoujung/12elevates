@@ -71,8 +71,20 @@ def customer_matches(actor: Actor, member_id: str, candidates: list[Candidate],
                                  excluded_no_consent=no_consent, excluded_by_gate=0)
 
 
-def business_matches(actor: Actor, member_id: str, *_args, audit: AuditLog, at: str):
-    """Always refused while the directive's preconditions are unmet."""
+def business_matches(actor: Actor, member_id: str, candidates: list | None = None, *,
+                     audit: AuditLog, at: str):
+    """Business matching: field policy is checked first, then the directive gate refuses.
+
+    The field check runs even while the flag is off, so a future activation cannot skip it.
+    """
+    used_fields = sorted({k for c in (candidates or []) for k in getattr(c, "dims", {})})
+    try:
+        check_fields_for_matching(used_fields, "business")
+    except FieldRefused as e:
+        audit.write(actor_id=actor.actor_id, role=actor.role, action="business_matching_run",
+                    tenant_id=actor.tenant_id, target_tenant=member_id, allowed=False,
+                    reason=f"field policy: {e}", at=at)
+        raise MatchingRefused("field not permitted for business matching")
     audit.write(actor_id=actor.actor_id, role=actor.role, action="business_matching_run",
                 tenant_id=actor.tenant_id, target_tenant=member_id, allowed=False,
                 reason="business matching disabled (directive 002 preconditions unmet)", at=at)
