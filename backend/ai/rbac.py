@@ -21,7 +21,7 @@ import json
 from dataclasses import dataclass, field
 from typing import Optional
 
-BUSINESS_MATCHING_ENABLED = False  # directive: keep disabled
+from ai.config import BUSINESS_MATCHING_ENABLED  # single source of truth
 
 ROLE_PERMISSIONS: dict[str, frozenset[str]] = {
     "member": frozenset({"view_own_matches", "record_own_consent"}),

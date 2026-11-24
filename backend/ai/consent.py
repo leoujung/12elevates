@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 PURPOSES = ("matching_customer", "matching_business", "marketing")
-BUSINESS_MATCHING_ENABLED = False   # directive: keep Business Matching disabled
+from ai.config import BUSINESS_MATCHING_ENABLED  # single source of truth
 ACTIONS = ("GRANTED", "WITHDRAWN", "DENIED")
 
 
