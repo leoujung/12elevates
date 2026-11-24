@@ -19,6 +19,7 @@ from typing import Optional
 from ai.business_matching import BusinessCandidate  # noqa: F401  (imported so the refusal path is explicit)
 from ai.consent import BUSINESS_MATCHING_ENABLED, Ledger, may_match
 from ai.customer_matching import Candidate, MatchResult, rank as rank_customer
+from ai.field_policy import FieldRefused, check_fields_for_matching
 from ai.rbac import Actor, AuditLog, authorize
 
 
@@ -39,6 +40,17 @@ def customer_matches(actor: Actor, member_id: str, candidates: list[Candidate],
     # 1. authorization (audited, allowed or denied)
     if not authorize(actor, "view_own_matches", member_id, audit, at):
         raise MatchingRefused("access denied")
+
+    # 1b. field policy: every dimension the engine would read must be allowed for customer matching.
+    # Fail closed on the whole request. Field names only are audited, never values.
+    used_fields = sorted({k for c in candidates for k in c.dims})
+    try:
+        check_fields_for_matching(used_fields, "customer")
+    except FieldRefused as e:
+        audit.write(actor_id=actor.actor_id, role=actor.role, action="customer_matching_run",
+                    tenant_id=actor.tenant_id, target_tenant=member_id, allowed=False,
+                    reason=f"field policy: {e}", at=at)
+        raise MatchingRefused("field not permitted for customer matching")
 
     # 2. consent per prospect (tenant-scoped by member_id inside may_match)
     consented: list[Candidate] = []

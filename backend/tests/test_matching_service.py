@@ -77,6 +77,23 @@ check("each completed run audited", len(runs) == 3)
 check("audit entry contains no profile values", all("0.9" not in e["reason"] and "declared" not in e["reason"] for e in AUD.events))
 check("audit chain verifies", AUD.verify())
 
+# field policy wired into the service path
+def cand_fields(pid, dims):
+    return Candidate(pid, "mem-A", True, False, dims, [], 2)
+
+check("health field in candidate dims refuses the whole request",
+      refused(lambda: customer_matches(member, "mem-A",
+              [cand("p1"), cand_fields("p5", {"declared_wellness_interest": 0.9, "medical_history": 0.5})],
+              L, AUD, T)))
+check("field-policy refusal is audited with field name only",
+      AUD.events[-1]["allowed"] is False and "medical_history" in AUD.events[-1]["reason"]
+      and "0.5" not in AUD.events[-1]["reason"])
+check("unknown field refused by service path",
+      refused(lambda: customer_matches(member, "mem-A",
+              [cand_fields("p6", {"declared_wellness_interest": 0.9, "mystery_score": 0.4})], L, AUD, T)))
+check("all-allowed fields still ranked",
+      len(customer_matches(member, "mem-A", [cand("p1")], L, AUD, T).results) == 1)
+
 passed = sum(1 for _, ok in results if ok)
 print(f"RESULT {passed} passed, {len(results) - passed} failed")
 sys.exit(0 if passed == len(results) else 1)
