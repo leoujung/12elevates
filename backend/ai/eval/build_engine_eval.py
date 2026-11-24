@@ -23,12 +23,17 @@ HERE = Path(__file__).resolve()
 REPO = HERE.parents[3]
 sys.path.insert(0, str(REPO / "backend"))
 
-from ai.customer_matching import Candidate, rank as rank_customer  # noqa: E402
-from ai.business_matching import BusinessCandidate, rank as rank_business  # noqa: E402
+from ai.customer_matching import Candidate  # noqa: E402
+from ai.business_matching import BusinessCandidate  # noqa: E402
+from ai.rbac import Actor, AuditLog  # noqa: E402
+from ai.matching_service import synthetic_eval_rank, MatchingRefused  # noqa: E402
+from ai.synthetic_guard import register_synthetic_prospects  # noqa: E402
 from ai.customer_matching import WEIGHTS as CW  # noqa: E402
 from ai.business_matching import WEIGHTS as BW  # noqa: E402
 
 SEED = 20261126
+EVAL_ACTOR = Actor("eval-builder", "developer", None)  # synthetic-only role
+EVAL_AUDIT = AuditLog()
 QUERIES_PER_ENGINE = 25     # 25 x top-5 = up to 125 slots; dedupe must leave >= MIN_ITEMS
 POOL_SIZE = 12
 MIN_ITEMS = 100
@@ -62,7 +67,10 @@ def build(rng: random.Random):
                 else:
                     dims = _rand_dims(rng, BW)
                     pool.append(BusinessCandidate(pid, member, True, True, False, "declared", dims, rng.randint(0, 4)))
-            ranked = rank_customer(pool, member) if engine == "customer" else rank_business(pool, member)[0]
+            if engine != "customer":
+                continue  # business evaluation refused by directive gate; no business items produced
+            register_synthetic_prospects([c.prospect_id for c in pool])
+            ranked = synthetic_eval_rank(EVAL_ACTOR, member, engine, pool, EVAL_AUDIT, "2026-11-27T09:00:00+07:00")
             top = ranked[:TOP_K]
             profiles = {c.prospect_id: (c.dims) for c in pool}
             for rank_pos, r in enumerate(top, start=1):

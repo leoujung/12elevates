@@ -91,3 +91,45 @@ def business_matches(actor: Actor, member_id: str, candidates: list | None = Non
     if not BUSINESS_MATCHING_ENABLED:
         raise MatchingRefused("business matching disabled")
     raise MatchingRefused("business matching path not implemented")
+
+
+# ---------------------------------------------------------------------------
+# Synthetic evaluation entry point. This is the ONLY way evaluation code may rank.
+# It does not call rank() on raw input. Order, fail closed:
+#   1. RBAC: actor needs "run_on_synthetic" (developer role) for this member
+#   2. synthetic provenance guard (ids registered by the generator, flags, dims, member)
+#   3. field policy for the engine
+#   4. rank over guarded candidates only
+#   5. audit entry (ids and counts only)
+# Consent is not checked here because no real person is involved. This is stated, not hidden:
+# any real-person path must use customer_matches() and the consent ledger.
+# ---------------------------------------------------------------------------
+from ai.synthetic_guard import NonSyntheticRefused, assert_synthetic  # noqa: E402
+
+
+def synthetic_eval_rank(actor: Actor, member_id: str, engine: str, candidates: list,
+                        audit: AuditLog, at: str):
+    if engine not in ("customer", "business"):
+        raise MatchingRefused("unknown engine")
+    if engine == "business":
+        # Business ranking is out of scope for this entry point while the directive gate is closed.
+        audit.write(actor_id=actor.actor_id, role=actor.role, action="synthetic_eval_rank",
+                    tenant_id=actor.tenant_id, target_tenant=member_id, allowed=False,
+                    reason="business evaluation refused by directive gate", at=at)
+        raise MatchingRefused("business evaluation refused by directive gate")
+    if not authorize(actor, "run_on_synthetic", member_id, audit, at):
+        raise MatchingRefused("access denied")
+    from ai.customer_matching import WEIGHTS as CW
+    try:
+        assert_synthetic(candidates, member_id, CW)
+        check_fields_for_matching(sorted({k for c in candidates for k in c.dims}), "customer")
+    except (NonSyntheticRefused, FieldRefused) as e:
+        audit.write(actor_id=actor.actor_id, role=actor.role, action="synthetic_eval_rank",
+                    tenant_id=actor.tenant_id, target_tenant=member_id, allowed=False,
+                    reason=f"guard: {type(e).__name__}", at=at)
+        raise MatchingRefused(f"refused: {type(e).__name__}") from e
+    results = rank_customer(candidates, member_id)
+    audit.write(actor_id=actor.actor_id, role=actor.role, action="synthetic_eval_rank",
+                tenant_id=actor.tenant_id, target_tenant=member_id, allowed=True,
+                reason=f"ranked={len(results)}", at=at)
+    return results
