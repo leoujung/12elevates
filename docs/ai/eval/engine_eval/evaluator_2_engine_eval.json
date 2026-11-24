@@ -1,0 +1,3762 @@
+{
+  "$comment": "SYNTHETIC candidates only (fictional ids). For each item, judge from the profile alone whether this person is a reasonable candidate for a wellness/business education invitation. Use RELEVANT, NOT_RELEVANT or UNKNOWN. Use your own judgement; there is no scoring rule to apply. Do not guess missing values. Fill reviewer_id, reviewed_at, and an optional comment (one short sentence). Do not try to find out how the ranking was produced.",
+  "evaluator": 2,
+  "task": "engine_output_precision_at_5",
+  "label_values": [
+    "RELEVANT",
+    "NOT_RELEVANT",
+    "UNKNOWN"
+  ],
+  "items": [
+    {
+      "item_id": "eb-cf563e3d4bf1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.4,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.65,
+        "digital_business_interest": 0.97,
+        "leadership_development_interest": 0.63
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-b0a53f99b1c2",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.09,
+        "declared_needs_goals": 0.92,
+        "engagement_relevance": null,
+        "product_category_interest": 0.95
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4be2f3312567",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.69,
+        "education_preference": 0.72,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.6,
+        "product_category_interest": 0.47
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-50c6e32d46d8",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.95,
+        "education_preference": 0.9,
+        "declared_needs_goals": 0.95,
+        "engagement_relevance": null,
+        "product_category_interest": 0.53
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-17a8ca287c5e",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.84,
+        "education_preference": 0.65,
+        "declared_needs_goals": 0.59,
+        "engagement_relevance": null,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4238ebff4188",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.39,
+        "education_preference": 0.39,
+        "declared_needs_goals": 0.72,
+        "engagement_relevance": 0.98,
+        "product_category_interest": 0.35
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-942d38ed1209",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.89,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.87,
+        "engagement_relevance": 0.94,
+        "product_category_interest": 0.54
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-5189e9183319",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 1.0,
+        "education_preference": 0.01,
+        "declared_needs_goals": 0.89,
+        "engagement_relevance": null,
+        "product_category_interest": 0.86
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-ac30c4e05595",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.9,
+        "education_preference": 0.97,
+        "declared_needs_goals": 0.46,
+        "engagement_relevance": 0.94,
+        "product_category_interest": 0.01
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-aef2a2b15fb6",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.67,
+        "business_goals_alignment": 0.96,
+        "relevant_experience_declared": 0.08,
+        "digital_business_interest": 1.0,
+        "leadership_development_interest": 0.99
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-2ee2c707acad",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.97,
+        "education_preference": 0.06,
+        "declared_needs_goals": 0.04,
+        "engagement_relevance": null,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-97da9f7cc4e5",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.68,
+        "business_goals_alignment": 0.94,
+        "relevant_experience_declared": 0.56,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.73
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-b339d401984b",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.86,
+        "business_goals_alignment": 0.52,
+        "relevant_experience_declared": 0.03,
+        "digital_business_interest": 0.91,
+        "leadership_development_interest": 0.54
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-5bc5b6863c8b",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.99,
+        "education_preference": 0.04,
+        "declared_needs_goals": 0.83,
+        "engagement_relevance": 0.38,
+        "product_category_interest": 0.79
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-f971c4127622",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.54,
+        "education_preference": 0.42,
+        "declared_needs_goals": 0.88,
+        "engagement_relevance": 0.54,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-dd72f73ba3ae",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.09,
+        "business_goals_alignment": 0.76,
+        "relevant_experience_declared": 0.53,
+        "digital_business_interest": 0.54,
+        "leadership_development_interest": 0.78
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-31a435c98e08",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.84,
+        "education_preference": 0.72,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.91,
+        "product_category_interest": 0.85
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-f7e797e66105",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.48,
+        "declared_needs_goals": 0.52,
+        "engagement_relevance": null,
+        "product_category_interest": 0.81
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-3cbab8d956b9",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.49,
+        "education_preference": null,
+        "declared_needs_goals": 0.39,
+        "engagement_relevance": 0.14,
+        "product_category_interest": 0.89
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7882fc38dbda",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.71,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.99
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-d48c676718df",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.29,
+        "business_goals_alignment": 0.78,
+        "relevant_experience_declared": 0.53,
+        "digital_business_interest": 0.9,
+        "leadership_development_interest": 0.41
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-77ae8f0334b1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.73,
+        "business_goals_alignment": 0.67,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.87,
+        "leadership_development_interest": 0.74
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-608b955a96e9",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.94,
+        "education_preference": 0.91,
+        "declared_needs_goals": 0.66,
+        "engagement_relevance": 0.77,
+        "product_category_interest": 0.39
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-d89dc4a80b04",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.34,
+        "business_goals_alignment": 0.87,
+        "relevant_experience_declared": 0.95,
+        "digital_business_interest": 1.0,
+        "leadership_development_interest": 0.94
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4102465e6b10",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.88,
+        "education_preference": 0.48,
+        "declared_needs_goals": 0.36,
+        "engagement_relevance": 0.04,
+        "product_category_interest": 0.96
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4dbc17a0603d",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.51,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.85,
+        "digital_business_interest": 0.86,
+        "leadership_development_interest": 0.65
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d1be0a9935b0",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.29,
+        "education_preference": 0.94,
+        "declared_needs_goals": 0.87,
+        "engagement_relevance": 0.91,
+        "product_category_interest": 0.57
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-7372507e9fb6",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.98,
+        "declared_needs_goals": 0.88,
+        "engagement_relevance": null,
+        "product_category_interest": 0.32
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-3f5fea95730c",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.19,
+        "business_goals_alignment": 0.93,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": 0.79,
+        "leadership_development_interest": 0.68
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-62e7d54d58e1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": 0.79,
+        "relevant_experience_declared": 0.39,
+        "digital_business_interest": 0.97,
+        "leadership_development_interest": 0.54
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-bc9c313f60bd",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.78,
+        "business_goals_alignment": 0.51,
+        "relevant_experience_declared": 0.04,
+        "digital_business_interest": 0.09,
+        "leadership_development_interest": 0.88
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-d8b12546d389",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.15,
+        "business_goals_alignment": 0.97,
+        "relevant_experience_declared": 0.97,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.89
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-e4429ac7b264",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.86,
+        "declared_needs_goals": 0.22,
+        "engagement_relevance": 0.81,
+        "product_category_interest": 0.46
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-c7866bb72f38",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.81,
+        "business_goals_alignment": 0.09,
+        "relevant_experience_declared": 0.82,
+        "digital_business_interest": 0.83,
+        "leadership_development_interest": 0.41
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-641b3cd4a728",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.56,
+        "business_goals_alignment": 0.96,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": 0.27,
+        "leadership_development_interest": 0.04
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-27e01ad42e3a",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.61,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.8,
+        "product_category_interest": 0.8
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-593853124949",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.83,
+        "business_goals_alignment": 0.85,
+        "relevant_experience_declared": 0.33,
+        "digital_business_interest": 0.94,
+        "leadership_development_interest": 0.61
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-fcc66b9304a4",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.8,
+        "business_goals_alignment": 0.77,
+        "relevant_experience_declared": 0.35,
+        "digital_business_interest": 0.5,
+        "leadership_development_interest": 0.64
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-dd23d7222486",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.31,
+        "business_goals_alignment": 0.32,
+        "relevant_experience_declared": 0.17,
+        "digital_business_interest": 0.72,
+        "leadership_development_interest": 0.94
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-47ca26032fff",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.74,
+        "education_preference": 0.58,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.76,
+        "product_category_interest": 0.63
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-a94881fbd9af",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.88,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.37
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-debb6a5f9cbf",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.75,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.5,
+        "leadership_development_interest": 0.72
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-d7aa334304a6",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.03,
+        "business_goals_alignment": 0.93,
+        "relevant_experience_declared": 0.71,
+        "digital_business_interest": 0.49,
+        "leadership_development_interest": 0.83
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1eef8574ec6b",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.96,
+        "education_preference": 0.97,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.27,
+        "product_category_interest": 0.05
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-08d4807f8d6f",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.82,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.73,
+        "digital_business_interest": 0.16,
+        "leadership_development_interest": 0.78
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-879474e2ae37",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.45,
+        "business_goals_alignment": 0.88,
+        "relevant_experience_declared": 0.13,
+        "digital_business_interest": 0.9,
+        "leadership_development_interest": 0.69
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-f0012df5c948",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.97,
+        "business_goals_alignment": 0.96,
+        "relevant_experience_declared": 0.56,
+        "digital_business_interest": 0.87,
+        "leadership_development_interest": 0.2
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-c341fecc2830",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.77,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.72,
+        "engagement_relevance": null,
+        "product_category_interest": 0.91
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-c6679b4c94d4",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.48,
+        "business_goals_alignment": 1.0,
+        "relevant_experience_declared": 0.38,
+        "digital_business_interest": 0.54,
+        "leadership_development_interest": 0.27
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-112733ab527a",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.15,
+        "declared_needs_goals": 0.71,
+        "engagement_relevance": 0.2,
+        "product_category_interest": 0.77
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-9f3136f44b0a",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.68,
+        "relevant_experience_declared": 0.8,
+        "digital_business_interest": 0.43,
+        "leadership_development_interest": 0.48
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-e841f24c8739",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.96,
+        "relevant_experience_declared": 0.97,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-f94b0c1d5c78",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.94,
+        "education_preference": 0.7,
+        "declared_needs_goals": 0.01,
+        "engagement_relevance": 0.55,
+        "product_category_interest": 0.87
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-ea48bdee7509",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.53,
+        "business_goals_alignment": 0.62,
+        "relevant_experience_declared": 0.87,
+        "digital_business_interest": 0.93,
+        "leadership_development_interest": 0.74
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-6545e7bdd662",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.76,
+        "business_goals_alignment": 0.94,
+        "relevant_experience_declared": 0.03,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-ff318c38c684",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.89,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": 0.82,
+        "digital_business_interest": 0.72,
+        "leadership_development_interest": 0.51
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-e47090f4567e",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.62,
+        "education_preference": 0.83,
+        "declared_needs_goals": 0.77,
+        "engagement_relevance": 0.75,
+        "product_category_interest": 0.45
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-35d15dc4ede0",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.46,
+        "business_goals_alignment": 0.42,
+        "relevant_experience_declared": 0.77,
+        "digital_business_interest": 0.3,
+        "leadership_development_interest": 0.69
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-62f6960b84b0",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.96,
+        "education_preference": 0.19,
+        "declared_needs_goals": 0.67,
+        "engagement_relevance": 0.63,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-261968672295",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.52,
+        "education_preference": null,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.4,
+        "product_category_interest": 0.96
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-00a583513214",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.36,
+        "education_preference": 0.48,
+        "declared_needs_goals": 0.86,
+        "engagement_relevance": 0.98,
+        "product_category_interest": 0.6
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-23faf94f6946",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.62,
+        "business_goals_alignment": 0.22,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": 0.13,
+        "leadership_development_interest": 0.6
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-8949dde5bd98",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.98,
+        "education_preference": 0.92,
+        "declared_needs_goals": 0.08,
+        "engagement_relevance": null,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-2b5464d2a471",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.97,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.32,
+        "digital_business_interest": 0.22,
+        "leadership_development_interest": 0.94
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-b144b2de0e26",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.45,
+        "business_goals_alignment": 0.81,
+        "relevant_experience_declared": 0.98,
+        "digital_business_interest": 0.72,
+        "leadership_development_interest": 0.18
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-8ce1b7be44d5",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.28,
+        "education_preference": 0.82,
+        "declared_needs_goals": 0.79,
+        "engagement_relevance": null,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-8de5f7a61e7a",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.43,
+        "education_preference": 0.84,
+        "declared_needs_goals": 0.57,
+        "engagement_relevance": 0.31,
+        "product_category_interest": 0.46
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-b98ad1b99fed",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": 0.8,
+        "relevant_experience_declared": 0.15,
+        "digital_business_interest": 0.16,
+        "leadership_development_interest": 0.67
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-00b9caaeffc2",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.26,
+        "relevant_experience_declared": 0.74,
+        "digital_business_interest": 0.94,
+        "leadership_development_interest": 0.8
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-820360707547",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.71,
+        "education_preference": 0.22,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.92,
+        "product_category_interest": 0.42
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-7c9fc8144d0c",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.62,
+        "education_preference": 0.87,
+        "declared_needs_goals": 0.91,
+        "engagement_relevance": 0.26,
+        "product_category_interest": 0.0
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-66b1fb61b1e2",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.62,
+        "business_goals_alignment": 0.94,
+        "relevant_experience_declared": 0.23,
+        "digital_business_interest": 0.98,
+        "leadership_development_interest": 0.32
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-971e43337b58",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.91,
+        "declared_needs_goals": 0.25,
+        "engagement_relevance": 0.94,
+        "product_category_interest": 0.96
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d9afdc5fabc3",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.69,
+        "education_preference": null,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.17,
+        "product_category_interest": 0.75
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-a9ec4fb17ca9",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.83,
+        "business_goals_alignment": 0.63,
+        "relevant_experience_declared": 0.89,
+        "digital_business_interest": 0.13,
+        "leadership_development_interest": 0.47
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-7ddc16652e57",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.63,
+        "education_preference": null,
+        "declared_needs_goals": 0.6,
+        "engagement_relevance": null,
+        "product_category_interest": 0.92
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-04e548ad8f1d",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.87,
+        "education_preference": 0.54,
+        "declared_needs_goals": 0.49,
+        "engagement_relevance": 0.62,
+        "product_category_interest": 0.03
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-b656a9791170",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.35,
+        "education_preference": 0.8,
+        "declared_needs_goals": 0.96,
+        "engagement_relevance": 0.97,
+        "product_category_interest": 0.33
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-bd8e8e3aacfb",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.4,
+        "business_goals_alignment": 0.75,
+        "relevant_experience_declared": 0.81,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.42
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-e6892f3ed5fd",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.61,
+        "declared_needs_goals": 0.7,
+        "engagement_relevance": 0.32,
+        "product_category_interest": 0.63
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-74b4a6ed7957",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.46,
+        "education_preference": 0.96,
+        "declared_needs_goals": 0.91,
+        "engagement_relevance": 0.31,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-cdd243785144",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.62,
+        "education_preference": 0.26,
+        "declared_needs_goals": 0.7,
+        "engagement_relevance": 0.88,
+        "product_category_interest": 0.99
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-27a0c4257c14",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.48,
+        "business_goals_alignment": 0.6,
+        "relevant_experience_declared": 0.99,
+        "digital_business_interest": 0.67,
+        "leadership_development_interest": 0.61
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-6e71fcd044af",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.46,
+        "business_goals_alignment": 0.82,
+        "relevant_experience_declared": 0.62,
+        "digital_business_interest": 0.89,
+        "leadership_development_interest": 0.19
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-2b40beeab311",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.78,
+        "education_preference": 0.04,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.97,
+        "product_category_interest": 0.7
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7bbe358727cf",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.44,
+        "business_goals_alignment": 0.78,
+        "relevant_experience_declared": 0.24,
+        "digital_business_interest": 0.75,
+        "leadership_development_interest": 0.74
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-7e7b72db38d4",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.56,
+        "education_preference": 0.65,
+        "declared_needs_goals": 0.87,
+        "engagement_relevance": 0.87,
+        "product_category_interest": 0.25
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-16bddaec8a50",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.98,
+        "education_preference": null,
+        "declared_needs_goals": 0.96,
+        "engagement_relevance": 0.27,
+        "product_category_interest": 0.11
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-e48719da9cd1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.76,
+        "relevant_experience_declared": 0.91,
+        "digital_business_interest": 0.94,
+        "leadership_development_interest": 0.68
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-51884b6ee911",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.77,
+        "education_preference": null,
+        "declared_needs_goals": 0.78,
+        "engagement_relevance": 0.83,
+        "product_category_interest": 0.68
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d878f368d48f",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.88,
+        "education_preference": 0.74,
+        "declared_needs_goals": 0.14,
+        "engagement_relevance": 0.38,
+        "product_category_interest": 0.63
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-017b4fb1c28b",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.89,
+        "business_goals_alignment": 0.42,
+        "relevant_experience_declared": 0.69,
+        "digital_business_interest": 0.95,
+        "leadership_development_interest": 0.77
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-04bc507795f9",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.05,
+        "business_goals_alignment": 0.7,
+        "relevant_experience_declared": 0.57,
+        "digital_business_interest": 0.41,
+        "leadership_development_interest": 0.72
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-0a66cd0515fa",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.77,
+        "education_preference": 0.97,
+        "declared_needs_goals": 0.27,
+        "engagement_relevance": 0.63,
+        "product_category_interest": 0.77
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4f65c79d613a",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.94,
+        "business_goals_alignment": 0.92,
+        "relevant_experience_declared": 0.38,
+        "digital_business_interest": 0.85,
+        "leadership_development_interest": 0.3
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-53b20ecd1748",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.84,
+        "business_goals_alignment": 0.01,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.92,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-825d6dd64d6b",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.62,
+        "education_preference": null,
+        "declared_needs_goals": 0.75,
+        "engagement_relevance": 0.65,
+        "product_category_interest": 0.28
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-ab8e4d042eb4",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.72,
+        "education_preference": 0.57,
+        "declared_needs_goals": 0.54,
+        "engagement_relevance": null,
+        "product_category_interest": 0.98
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-f6a052b770a6",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.42,
+        "business_goals_alignment": 0.83,
+        "relevant_experience_declared": 0.94,
+        "digital_business_interest": 0.67,
+        "leadership_development_interest": 0.61
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-95879ba66a45",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.26,
+        "business_goals_alignment": 0.94,
+        "relevant_experience_declared": 0.6,
+        "digital_business_interest": 0.44,
+        "leadership_development_interest": 0.92
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-b2bdfca32f46",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.57,
+        "education_preference": 0.33,
+        "declared_needs_goals": 0.78,
+        "engagement_relevance": 0.57,
+        "product_category_interest": 0.94
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7cf2eb86f82e",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.58,
+        "business_goals_alignment": 0.59,
+        "relevant_experience_declared": 0.87,
+        "digital_business_interest": 0.12,
+        "leadership_development_interest": 0.14
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-8463b2989ae9",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.81,
+        "relevant_experience_declared": 0.53,
+        "digital_business_interest": 0.28,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-bcb379ac3e35",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.26,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.06,
+        "product_category_interest": 0.63
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-e6722a485d83",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.43,
+        "education_preference": null,
+        "declared_needs_goals": 0.79,
+        "engagement_relevance": null,
+        "product_category_interest": 0.96
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1a2b5314b353",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.88,
+        "education_preference": 0.86,
+        "declared_needs_goals": 0.29,
+        "engagement_relevance": 0.99,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7b90ec7da5c0",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.72,
+        "business_goals_alignment": 0.94,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": 0.79,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-2e98ff6f7d46",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.59,
+        "education_preference": 0.14,
+        "declared_needs_goals": 0.33,
+        "engagement_relevance": 1.0,
+        "product_category_interest": 0.83
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-09172c6062da",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.89,
+        "education_preference": 0.31,
+        "declared_needs_goals": 0.66,
+        "engagement_relevance": null,
+        "product_category_interest": 0.33
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1fac194aa677",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.71,
+        "education_preference": null,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.04,
+        "product_category_interest": 0.88
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1543dc19b663",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.8,
+        "education_preference": 0.6,
+        "declared_needs_goals": 0.75,
+        "engagement_relevance": 0.53,
+        "product_category_interest": 0.73
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-21e13950d726",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.69,
+        "business_goals_alignment": 0.5,
+        "relevant_experience_declared": 0.64,
+        "digital_business_interest": 0.69,
+        "leadership_development_interest": 0.97
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-96165cc17ef1",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.27,
+        "education_preference": 0.86,
+        "declared_needs_goals": 0.81,
+        "engagement_relevance": 0.44,
+        "product_category_interest": 0.49
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-08ac57438e4e",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.91,
+        "education_preference": 0.51,
+        "declared_needs_goals": 0.5,
+        "engagement_relevance": 0.1,
+        "product_category_interest": 0.98
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-eef8a0c96f25",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.22,
+        "business_goals_alignment": 0.91,
+        "relevant_experience_declared": 0.69,
+        "digital_business_interest": 0.95,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-a1d9f671673f",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.51,
+        "business_goals_alignment": 0.91,
+        "relevant_experience_declared": 0.2,
+        "digital_business_interest": 0.51,
+        "leadership_development_interest": 0.71
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4389e25fb4b8",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.63,
+        "relevant_experience_declared": 0.79,
+        "digital_business_interest": 0.95,
+        "leadership_development_interest": 0.48
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-909bdad00804",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.91,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.91,
+        "engagement_relevance": 0.63,
+        "product_category_interest": 0.89
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fb10e6b711c1",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.5,
+        "education_preference": 0.41,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.97,
+        "product_category_interest": 0.99
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-221525f904dd",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.57,
+        "business_goals_alignment": 0.59,
+        "relevant_experience_declared": 0.72,
+        "digital_business_interest": 0.49,
+        "leadership_development_interest": 0.57
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-6a5995ebcb7a",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.79,
+        "business_goals_alignment": 0.91,
+        "relevant_experience_declared": 0.72,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.48
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-77e8fc5a975e",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.62,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.78,
+        "engagement_relevance": null,
+        "product_category_interest": 0.56
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-185ed48f3f33",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.66,
+        "education_preference": 0.11,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.41,
+        "product_category_interest": 0.69
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1b47b12e336c",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.73,
+        "education_preference": 0.18,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.01,
+        "product_category_interest": 0.98
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-936c5e3b23fd",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.71,
+        "declared_needs_goals": 0.44,
+        "engagement_relevance": 0.41,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4504e1182f35",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.9,
+        "education_preference": 0.8,
+        "declared_needs_goals": 0.15,
+        "engagement_relevance": 0.49,
+        "product_category_interest": 0.34
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-5d53f2a64089",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.5,
+        "business_goals_alignment": 0.65,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.69,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-eb6f813a1b1c",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.9,
+        "business_goals_alignment": 0.7,
+        "relevant_experience_declared": 0.83,
+        "digital_business_interest": 0.96,
+        "leadership_development_interest": 0.22
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4ba95e8455e8",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.68,
+        "business_goals_alignment": 0.87,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.33,
+        "leadership_development_interest": 0.35
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7a51a4aeb408",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.99,
+        "business_goals_alignment": 0.28,
+        "relevant_experience_declared": 0.6,
+        "digital_business_interest": 0.16,
+        "leadership_development_interest": 0.7
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-44c9ef5e5b81",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 1.0,
+        "business_goals_alignment": 0.42,
+        "relevant_experience_declared": 0.05,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fd8adb74e75f",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.36,
+        "declared_needs_goals": 0.69,
+        "engagement_relevance": 0.45,
+        "product_category_interest": 0.85
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-100f2b49f280",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.6,
+        "business_goals_alignment": 0.35,
+        "relevant_experience_declared": 0.94,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.45
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-8640bb3cdfb1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.75,
+        "business_goals_alignment": 0.26,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.98,
+        "leadership_development_interest": 0.22
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-6514c840c4f5",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.2,
+        "business_goals_alignment": 0.4,
+        "relevant_experience_declared": 0.47,
+        "digital_business_interest": 0.55,
+        "leadership_development_interest": 0.74
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-289dc1f28e4a",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.64,
+        "education_preference": 0.8,
+        "declared_needs_goals": 0.16,
+        "engagement_relevance": 0.62,
+        "product_category_interest": 0.08
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d2e1d9424816",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.84,
+        "education_preference": 0.98,
+        "declared_needs_goals": 0.64,
+        "engagement_relevance": 0.61,
+        "product_category_interest": 0.64
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-9d109ec9d01f",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.98,
+        "education_preference": 0.11,
+        "declared_needs_goals": 0.36,
+        "engagement_relevance": 0.19,
+        "product_category_interest": 0.61
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-2bbd0c1654c9",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.84,
+        "business_goals_alignment": 0.99,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.67,
+        "leadership_development_interest": 0.59
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fa0eeac42985",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.49,
+        "education_preference": 0.82,
+        "declared_needs_goals": 0.56,
+        "engagement_relevance": 0.81,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-1885c3bf7427",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.85,
+        "business_goals_alignment": 0.47,
+        "relevant_experience_declared": 0.66,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.65
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-53834a8fee07",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.85,
+        "education_preference": 0.37,
+        "declared_needs_goals": 0.85,
+        "engagement_relevance": 0.38,
+        "product_category_interest": 0.73
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-960b76cad43f",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.46,
+        "business_goals_alignment": 0.9,
+        "relevant_experience_declared": 0.81,
+        "digital_business_interest": 0.61,
+        "leadership_development_interest": 0.1
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-82b2a2395bfc",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.81,
+        "education_preference": 0.63,
+        "declared_needs_goals": 0.81,
+        "engagement_relevance": 0.76,
+        "product_category_interest": 0.91
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-b7ab9a9fb8c4",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.73,
+        "education_preference": 0.6,
+        "declared_needs_goals": null,
+        "engagement_relevance": null,
+        "product_category_interest": 0.46
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-735162f1b33d",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.55,
+        "education_preference": null,
+        "declared_needs_goals": 0.55,
+        "engagement_relevance": 0.74,
+        "product_category_interest": 0.69
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-0a4383708ef4",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.88,
+        "education_preference": 0.47,
+        "declared_needs_goals": 0.17,
+        "engagement_relevance": 0.54,
+        "product_category_interest": 0.62
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-0678870251c5",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.46,
+        "education_preference": 0.61,
+        "declared_needs_goals": 0.96,
+        "engagement_relevance": null,
+        "product_category_interest": 0.04
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-71414d9e85bb",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.95,
+        "relevant_experience_declared": 0.8,
+        "digital_business_interest": 0.38,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-60cf4fbdef6f",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.82,
+        "education_preference": 0.93,
+        "declared_needs_goals": 0.62,
+        "engagement_relevance": 0.74,
+        "product_category_interest": 0.07
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4b75c4c19d2f",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.93,
+        "business_goals_alignment": 0.74,
+        "relevant_experience_declared": 0.86,
+        "digital_business_interest": 0.31,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-ceac54a86d2b",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.73,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.78,
+        "digital_business_interest": 0.49,
+        "leadership_development_interest": 0.16
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-8204d113831a",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.94,
+        "business_goals_alignment": 0.92,
+        "relevant_experience_declared": 0.97,
+        "digital_business_interest": 0.88,
+        "leadership_development_interest": 0.71
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-b22bbcbb2582",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.77,
+        "education_preference": 0.41,
+        "declared_needs_goals": 0.76,
+        "engagement_relevance": 0.85,
+        "product_category_interest": 0.3
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-03fb8c971f37",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.96,
+        "business_goals_alignment": 0.64,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.45,
+        "leadership_development_interest": 0.53
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-8885ce709c19",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.97,
+        "business_goals_alignment": 0.78,
+        "relevant_experience_declared": 0.38,
+        "digital_business_interest": 0.9,
+        "leadership_development_interest": 0.4
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-04701f3be6c8",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.72,
+        "education_preference": 0.43,
+        "declared_needs_goals": 0.7,
+        "engagement_relevance": 0.92,
+        "product_category_interest": 0.77
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4f7c82f5af11",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.77,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.47,
+        "engagement_relevance": 0.32,
+        "product_category_interest": 0.95
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d060ed102de0",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.92,
+        "education_preference": 0.34,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.71,
+        "product_category_interest": 0.34
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-a6cb0e93c47d",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.81,
+        "business_goals_alignment": 0.87,
+        "relevant_experience_declared": 0.86,
+        "digital_business_interest": 0.36,
+        "leadership_development_interest": 0.83
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4f3cdcb86e8d",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.76,
+        "relevant_experience_declared": 0.12,
+        "digital_business_interest": 0.67,
+        "leadership_development_interest": 0.55
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-99c0f02a4abc",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.77,
+        "education_preference": 0.42,
+        "declared_needs_goals": 0.48,
+        "engagement_relevance": 0.55,
+        "product_category_interest": 0.52
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-70fcf50db611",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.91,
+        "education_preference": 0.14,
+        "declared_needs_goals": 0.69,
+        "engagement_relevance": 0.59,
+        "product_category_interest": 0.65
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-ad0a0f4590f9",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.89,
+        "education_preference": 0.37,
+        "declared_needs_goals": 0.87,
+        "engagement_relevance": 0.82,
+        "product_category_interest": 0.8
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-76da306bd9ff",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.9,
+        "education_preference": 0.21,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.96,
+        "product_category_interest": 0.7
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-8f7dd231e7fb",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 1.0,
+        "education_preference": 0.92,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.72,
+        "product_category_interest": 0.12
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-232b344f45bb",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.86,
+        "business_goals_alignment": 0.81,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.15,
+        "leadership_development_interest": 0.6
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-286502133a8f",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.4,
+        "leadership_development_interest": 0.62
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-6f4b987a7b04",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.97,
+        "education_preference": 0.65,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.25,
+        "product_category_interest": 0.39
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1b0c27c943c0",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.28,
+        "education_preference": 0.83,
+        "declared_needs_goals": 0.77,
+        "engagement_relevance": 0.8,
+        "product_category_interest": 0.13
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-c00c6da353d5",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": null,
+        "declared_needs_goals": 0.73,
+        "engagement_relevance": 0.99,
+        "product_category_interest": 0.68
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-c44777937af3",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.87,
+        "business_goals_alignment": 0.6,
+        "relevant_experience_declared": 0.21,
+        "digital_business_interest": 0.7,
+        "leadership_development_interest": 0.52
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-b40b08bfa8ab",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.62,
+        "business_goals_alignment": 0.69,
+        "relevant_experience_declared": 0.63,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.28
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-5bbe88b74094",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.49,
+        "education_preference": 0.64,
+        "declared_needs_goals": 0.4,
+        "engagement_relevance": 0.98,
+        "product_category_interest": 0.01
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-2a73e33dffca",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.98,
+        "education_preference": null,
+        "declared_needs_goals": 0.64,
+        "engagement_relevance": 0.92,
+        "product_category_interest": 0.93
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-ded978c90c69",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.75,
+        "business_goals_alignment": 0.83,
+        "relevant_experience_declared": 0.88,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-9eb4cf07e3de",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.96,
+        "declared_needs_goals": 0.9,
+        "engagement_relevance": 0.43,
+        "product_category_interest": 0.76
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7e69930394da",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.71,
+        "relevant_experience_declared": 0.58,
+        "digital_business_interest": 0.42,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-2e8c11efcb37",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.84,
+        "education_preference": 0.6,
+        "declared_needs_goals": 0.57,
+        "engagement_relevance": 0.49,
+        "product_category_interest": 0.9
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-8f1b81d3946b",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.47,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.41,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.85
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-e8cf98e49780",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.84,
+        "business_goals_alignment": 0.64,
+        "relevant_experience_declared": 0.55,
+        "digital_business_interest": 0.87,
+        "leadership_development_interest": 0.12
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7e821a5cc6a2",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.59,
+        "business_goals_alignment": 0.65,
+        "relevant_experience_declared": 0.96,
+        "digital_business_interest": 0.46,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-57ad07ff2834",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.64,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.67,
+        "digital_business_interest": 0.73,
+        "leadership_development_interest": 0.84
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-5745c93f6b5e",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.41,
+        "education_preference": 0.87,
+        "declared_needs_goals": 0.8,
+        "engagement_relevance": 0.87,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-d7263dd56fbf",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.56,
+        "business_goals_alignment": 0.34,
+        "relevant_experience_declared": 0.67,
+        "digital_business_interest": 0.21,
+        "leadership_development_interest": 0.78
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-22d5f1ae7956",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.24,
+        "business_goals_alignment": 0.68,
+        "relevant_experience_declared": 0.09,
+        "digital_business_interest": 0.79,
+        "leadership_development_interest": 0.22
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-347b42805278",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.85,
+        "business_goals_alignment": 0.75,
+        "relevant_experience_declared": 0.72,
+        "digital_business_interest": 0.61,
+        "leadership_development_interest": 0.6
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-e35603ffe7ff",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.71,
+        "business_goals_alignment": 0.63,
+        "relevant_experience_declared": 0.7,
+        "digital_business_interest": 0.2,
+        "leadership_development_interest": 0.09
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-bc0e582dbfba",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.91,
+        "business_goals_alignment": 0.83,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.46,
+        "leadership_development_interest": 0.73
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4cc5653acc83",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.45,
+        "education_preference": 0.74,
+        "declared_needs_goals": 0.73,
+        "engagement_relevance": 0.24,
+        "product_category_interest": 0.94
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-e2a1789a14c4",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.85,
+        "education_preference": 0.6,
+        "declared_needs_goals": 0.71,
+        "engagement_relevance": 0.55,
+        "product_category_interest": 0.87
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-f3c1743a267a",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.35,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": 0.86,
+        "leadership_development_interest": 0.08
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-8ea6eae82ee0",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.47,
+        "education_preference": null,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.45,
+        "product_category_interest": 0.62
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-e2f19052be02",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.98,
+        "business_goals_alignment": 0.45,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.63
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-e2757670de66",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.38,
+        "business_goals_alignment": 0.6,
+        "relevant_experience_declared": 0.21,
+        "digital_business_interest": 0.57,
+        "leadership_development_interest": 0.59
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fb60cab4065e",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.74,
+        "education_preference": 0.86,
+        "declared_needs_goals": 0.18,
+        "engagement_relevance": 0.53,
+        "product_category_interest": 0.26
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-366873cdbd00",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.53,
+        "education_preference": 0.81,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.31,
+        "product_category_interest": 0.69
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-f9a60ade8562",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.57,
+        "education_preference": 0.92,
+        "declared_needs_goals": 0.09,
+        "engagement_relevance": 0.42,
+        "product_category_interest": 0.97
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-a2d9b9f69477",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.83,
+        "education_preference": 0.81,
+        "declared_needs_goals": 0.08,
+        "engagement_relevance": 0.45,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7bc2eb0a7be5",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.86,
+        "business_goals_alignment": 0.73,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.56,
+        "leadership_development_interest": 0.88
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-55f70b087634",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.51,
+        "engagement_relevance": 0.92,
+        "product_category_interest": 0.72
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-f2151364352d",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.05,
+        "business_goals_alignment": 0.86,
+        "relevant_experience_declared": 0.38,
+        "digital_business_interest": 0.94,
+        "leadership_development_interest": 0.8
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-f2010ac502b3",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.64,
+        "business_goals_alignment": 0.12,
+        "relevant_experience_declared": 0.47,
+        "digital_business_interest": 0.71,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-c28eebdf5ad7",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.86,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.23,
+        "digital_business_interest": 0.55,
+        "leadership_development_interest": 0.35
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-48972ecae333",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.46,
+        "relevant_experience_declared": 0.95,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-99c36fba36ec",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.61,
+        "business_goals_alignment": 0.99,
+        "relevant_experience_declared": 0.67,
+        "digital_business_interest": 0.03,
+        "leadership_development_interest": 0.3
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d36c01b98adc",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.88,
+        "education_preference": 0.51,
+        "declared_needs_goals": 0.94,
+        "engagement_relevance": 0.24,
+        "product_category_interest": 0.29
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-1ea1149b06c2",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.83,
+        "education_preference": 0.95,
+        "declared_needs_goals": 0.99,
+        "engagement_relevance": 0.63,
+        "product_category_interest": 0.31
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-4b5caa5033c1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.76,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.37,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.65
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-51eac7fa6274",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.67,
+        "business_goals_alignment": 0.47,
+        "relevant_experience_declared": 0.82,
+        "digital_business_interest": 0.48,
+        "leadership_development_interest": 0.06
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-dab2fb529cde",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.82,
+        "business_goals_alignment": 0.37,
+        "relevant_experience_declared": 0.9,
+        "digital_business_interest": 0.3,
+        "leadership_development_interest": 0.3
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-27873d779fac",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.95,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.15,
+        "digital_business_interest": 0.36,
+        "leadership_development_interest": 0.91
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-1392c0d205c3",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.93,
+        "business_goals_alignment": 0.92,
+        "relevant_experience_declared": 0.2,
+        "digital_business_interest": 0.33,
+        "leadership_development_interest": 0.18
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-840c8794a915",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.81,
+        "business_goals_alignment": 0.89,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.01,
+        "leadership_development_interest": 0.56
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-deb8a202bdc1",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.99,
+        "business_goals_alignment": 0.19,
+        "relevant_experience_declared": 0.61,
+        "digital_business_interest": 0.96,
+        "leadership_development_interest": 0.81
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-c48c3b6f7457",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.19,
+        "education_preference": 0.76,
+        "declared_needs_goals": 0.47,
+        "engagement_relevance": 0.58,
+        "product_category_interest": 0.87
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-aa977f62ae52",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.54,
+        "education_preference": 0.97,
+        "declared_needs_goals": 0.37,
+        "engagement_relevance": 0.34,
+        "product_category_interest": 0.34
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-67bc551fb71f",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.94,
+        "education_preference": 0.39,
+        "declared_needs_goals": 0.19,
+        "engagement_relevance": 0.9,
+        "product_category_interest": 0.61
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-d63a73956267",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.41,
+        "business_goals_alignment": 0.82,
+        "relevant_experience_declared": 0.46,
+        "digital_business_interest": 0.15,
+        "leadership_development_interest": 0.67
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-88c9ef68ce99",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.85,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.16,
+        "digital_business_interest": 0.17,
+        "leadership_development_interest": 0.71
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-ffeb894e7908",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.55,
+        "business_goals_alignment": 0.68,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-8e5d3b6037b5",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.82,
+        "business_goals_alignment": 0.08,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": 1.0
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-00dfb9788cd6",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.63,
+        "education_preference": 0.59,
+        "declared_needs_goals": 0.67,
+        "engagement_relevance": 0.21,
+        "product_category_interest": 0.53
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-59eca1f84a47",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.46,
+        "business_goals_alignment": 1.0,
+        "relevant_experience_declared": 0.7,
+        "digital_business_interest": 0.59,
+        "leadership_development_interest": 0.94
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-14d8a24c4efe",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.7,
+        "business_goals_alignment": 0.65,
+        "relevant_experience_declared": 0.21,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.89
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-243a71159aa8",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.87,
+        "business_goals_alignment": 0.24,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.48
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-f3cbf3c6f1c7",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.45,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": 0.54,
+        "digital_business_interest": 0.63,
+        "leadership_development_interest": 0.38
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fec8e55783f9",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.24,
+        "education_preference": 0.78,
+        "declared_needs_goals": 0.92,
+        "engagement_relevance": 0.74,
+        "product_category_interest": 0.89
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fba6c383087b",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.88,
+        "education_preference": 0.06,
+        "declared_needs_goals": 0.64,
+        "engagement_relevance": 0.94,
+        "product_category_interest": 0.58
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-b29afc83b40a",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.71,
+        "business_goals_alignment": 0.91,
+        "relevant_experience_declared": 0.96,
+        "digital_business_interest": 0.45,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7d37a14068cf",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.36,
+        "business_goals_alignment": 0.77,
+        "relevant_experience_declared": 0.68,
+        "digital_business_interest": 0.78,
+        "leadership_development_interest": 0.16
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-480bfc1a09a5",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.73,
+        "education_preference": 0.42,
+        "declared_needs_goals": 0.73,
+        "engagement_relevance": 0.29,
+        "product_category_interest": 0.6
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-0e462822b1e6",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 1.0,
+        "education_preference": 0.07,
+        "declared_needs_goals": 0.72,
+        "engagement_relevance": 0.13,
+        "product_category_interest": 0.78
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-d0e69769cba3",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.74,
+        "education_preference": null,
+        "declared_needs_goals": 0.93,
+        "engagement_relevance": 0.41,
+        "product_category_interest": 0.25
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-2838440f486d",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.83,
+        "relevant_experience_declared": 0.38,
+        "digital_business_interest": 0.44,
+        "leadership_development_interest": 0.42
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-4b52a029c3f3",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.84,
+        "education_preference": 0.59,
+        "declared_needs_goals": 0.63,
+        "engagement_relevance": 0.92,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-12f1a65f2e97",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.93,
+        "business_goals_alignment": 0.12,
+        "relevant_experience_declared": 0.43,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.89
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-bc5eafbe7177",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.63,
+        "education_preference": 0.23,
+        "declared_needs_goals": 0.49,
+        "engagement_relevance": 0.48,
+        "product_category_interest": 0.28
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-0072a8e7133f",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.87,
+        "education_preference": 0.87,
+        "declared_needs_goals": 0.7,
+        "engagement_relevance": 0.99,
+        "product_category_interest": 0.28
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-ffa013c21587",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.71,
+        "education_preference": 0.98,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.83,
+        "product_category_interest": 0.85
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-92b23546ae68",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.95,
+        "education_preference": null,
+        "declared_needs_goals": 0.78,
+        "engagement_relevance": 0.01,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-a7b3249a6e28",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.96,
+        "education_preference": 0.36,
+        "declared_needs_goals": 0.34,
+        "engagement_relevance": 0.68,
+        "product_category_interest": 0.49
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-ea7030a38f24",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.56,
+        "education_preference": 0.76,
+        "declared_needs_goals": 0.34,
+        "engagement_relevance": 0.69,
+        "product_category_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-b7f021b99c2d",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.62,
+        "business_goals_alignment": 0.75,
+        "relevant_experience_declared": 0.05,
+        "digital_business_interest": 0.87,
+        "leadership_development_interest": 0.5
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-28db92aa32bb",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.56,
+        "business_goals_alignment": 0.08,
+        "relevant_experience_declared": 0.95,
+        "digital_business_interest": 0.91,
+        "leadership_development_interest": null
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-272e177dc7c4",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.79,
+        "education_preference": 0.18,
+        "declared_needs_goals": 0.54,
+        "engagement_relevance": 0.85,
+        "product_category_interest": 0.58
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-7f6966f2d385",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.02,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.83,
+        "digital_business_interest": 0.86,
+        "leadership_development_interest": 0.26
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-36da72f8a774",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.11,
+        "education_preference": 0.96,
+        "declared_needs_goals": 0.64,
+        "engagement_relevance": 0.4,
+        "product_category_interest": 0.88
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "eb-59c5fa7aaf42",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.94,
+        "business_goals_alignment": 0.35,
+        "relevant_experience_declared": 0.71,
+        "digital_business_interest": 0.54,
+        "leadership_development_interest": 0.58
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "item_id": "ec-fbb5b66dc9dc",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.85,
+        "education_preference": 0.15,
+        "declared_needs_goals": 0.68,
+        "engagement_relevance": 0.01,
+        "product_category_interest": 0.9
+      },
+      "human_label": null,
+      "reviewer_id": null,
+      "comment": null,
+      "reviewed_at": null
+    }
+  ]
+}
