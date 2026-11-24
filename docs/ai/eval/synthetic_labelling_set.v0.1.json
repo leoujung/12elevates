@@ -1,0 +1,21 @@
+{
+  "$comment": "SYNTHETIC labelling set. All candidates are FICTIONAL (ids syn-*). Labels are intentionally NULL: a human labeller must fill them. Model output or the assistant must NOT fill human_label. Any metric computed before human labels exist is invalid.",
+  "protocol": {
+    "label_values": ["RELEVANT", "NOT_RELEVANT", "UNKNOWN"],
+    "labeller_rule": "labeller must not see match_score or reasons while labelling (blind review), to avoid anchoring.",
+    "min_cases_per_engine": 100,
+    "blind_review_required": true,
+    "labellers_required": 2,
+    "agreement_metric": "Cohen kappa between 2 labellers; disagreements resolved by a third person"
+  },
+  "customer_cases": [
+    {"case_id": "syn-c-001", "profile": {"declared_wellness_interest": 0.9, "education_preference": 0.8, "engagement_relevance": 0.7}, "human_label": null, "labeller_ids": []},
+    {"case_id": "syn-c-002", "profile": {"declared_wellness_interest": 0.1, "education_preference": 0.2}, "human_label": null, "labeller_ids": []},
+    {"case_id": "syn-c-003", "profile": {"declared_wellness_interest": 0.6, "product_category_interest": 0.9}, "human_label": null, "labeller_ids": []}
+  ],
+  "business_cases": [
+    {"case_id": "syn-b-001", "profile": {"declared_entrepreneurship_interest": 0.9, "business_goals_alignment": 0.8}, "human_label": null, "labeller_ids": []},
+    {"case_id": "syn-b-002", "profile": {"declared_entrepreneurship_interest": 0.2}, "human_label": null, "labeller_ids": []}
+  ],
+  "status": "NOT_LABELLED. Only 5 example cases are present; this is far below the 100-per-engine minimum. Expand before any metric is reported."
+}
