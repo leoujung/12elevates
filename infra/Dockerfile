@@ -12,6 +12,7 @@ COPY infra/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 COPY backend/app /app/app
+COPY backend/ai /app/ai
 COPY backend/migrations /app/migrations
 COPY backend/alembic.ini /app/alembic.ini
 COPY dashboard /app/dashboard
