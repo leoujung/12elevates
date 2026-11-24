@@ -1,0 +1,3011 @@
+{
+  "$comment": "SYNTHETIC cases only (fictional ids syn-*). Label each case independently. Use RELEVANT, NOT_RELEVANT, or UNKNOWN. Do not look at any other evaluator's file. Fill reviewer_id (your name or code), comment (optional), reviewed_at (ISO-8601 with timezone).",
+  "evaluator": 2,
+  "label_values": [
+    "RELEVANT",
+    "NOT_RELEVANT",
+    "UNKNOWN"
+  ],
+  "cases": [
+    {
+      "case_id": "syn-c-001",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.68,
+        "education_preference": null,
+        "declared_needs_goals": 0.69,
+        "engagement_relevance": null,
+        "product_category_interest": 0.49
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-002",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.44,
+        "education_preference": 0.57,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.58,
+        "product_category_interest": 0.94
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-003",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.29,
+        "education_preference": null,
+        "declared_needs_goals": 0.98,
+        "engagement_relevance": 0.98,
+        "product_category_interest": 0.07
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-004",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.83,
+        "education_preference": 0.55,
+        "declared_needs_goals": 0.79,
+        "engagement_relevance": 0.26,
+        "product_category_interest": 0.58
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-005",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.03,
+        "education_preference": null,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.47,
+        "product_category_interest": 0.4
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-006",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.66,
+        "education_preference": 0.87,
+        "declared_needs_goals": 0.18,
+        "engagement_relevance": 0.84,
+        "product_category_interest": 0.19
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-007",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.42,
+        "education_preference": 0.93,
+        "declared_needs_goals": 0.11,
+        "engagement_relevance": null,
+        "product_category_interest": 0.41
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-008",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.87,
+        "education_preference": null,
+        "declared_needs_goals": 0.56,
+        "engagement_relevance": 0.67,
+        "product_category_interest": 0.47
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-009",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.03,
+        "education_preference": 0.39,
+        "declared_needs_goals": 0.64,
+        "engagement_relevance": 0.01,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-010",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.24,
+        "education_preference": 0.55,
+        "declared_needs_goals": 0.2,
+        "engagement_relevance": 0.06,
+        "product_category_interest": 0.28
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-011",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.2,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.78,
+        "engagement_relevance": 0.36,
+        "product_category_interest": 1.0
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-012",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.01,
+        "education_preference": 0.58,
+        "declared_needs_goals": 0.02,
+        "engagement_relevance": 0.63,
+        "product_category_interest": 0.22
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-013",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.14,
+        "education_preference": 0.57,
+        "declared_needs_goals": 0.63,
+        "engagement_relevance": null,
+        "product_category_interest": 0.48
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-014",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.98,
+        "education_preference": 0.88,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.27,
+        "product_category_interest": 0.73
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-015",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.97,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.43,
+        "product_category_interest": 0.68
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-016",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.51,
+        "education_preference": 0.99,
+        "declared_needs_goals": 0.52,
+        "engagement_relevance": 0.79,
+        "product_category_interest": 1.0
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-017",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.44,
+        "education_preference": 0.82,
+        "declared_needs_goals": 0.35,
+        "engagement_relevance": 0.82,
+        "product_category_interest": 0.59
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-018",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.28,
+        "education_preference": 0.03,
+        "declared_needs_goals": 0.48,
+        "engagement_relevance": 0.75,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-019",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.67,
+        "education_preference": 0.3,
+        "declared_needs_goals": 0.84,
+        "engagement_relevance": 0.9,
+        "product_category_interest": 0.98
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-020",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.64,
+        "education_preference": 0.04,
+        "declared_needs_goals": 0.28,
+        "engagement_relevance": 0.35,
+        "product_category_interest": 0.28
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-021",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.68,
+        "education_preference": null,
+        "declared_needs_goals": 0.18,
+        "engagement_relevance": null,
+        "product_category_interest": 0.27
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-022",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.28,
+        "education_preference": 0.54,
+        "declared_needs_goals": 0.52,
+        "engagement_relevance": 0.58,
+        "product_category_interest": 0.61
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-023",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.84,
+        "declared_needs_goals": 0.7,
+        "engagement_relevance": null,
+        "product_category_interest": 0.15
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-024",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.72,
+        "education_preference": 0.66,
+        "declared_needs_goals": 0.59,
+        "engagement_relevance": 0.83,
+        "product_category_interest": 0.36
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-025",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.42,
+        "education_preference": null,
+        "declared_needs_goals": 0.16,
+        "engagement_relevance": 0.62,
+        "product_category_interest": 0.38
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-026",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.94,
+        "education_preference": 0.3,
+        "declared_needs_goals": 0.21,
+        "engagement_relevance": 0.15,
+        "product_category_interest": 0.85
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-027",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.56,
+        "education_preference": 0.3,
+        "declared_needs_goals": 0.27,
+        "engagement_relevance": 0.2,
+        "product_category_interest": 0.74
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-028",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.59,
+        "education_preference": 0.86,
+        "declared_needs_goals": 0.21,
+        "engagement_relevance": 0.58,
+        "product_category_interest": 0.39
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-029",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.6,
+        "declared_needs_goals": 0.48,
+        "engagement_relevance": 0.37,
+        "product_category_interest": 0.32
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-030",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 1.0,
+        "education_preference": 0.15,
+        "declared_needs_goals": 0.57,
+        "engagement_relevance": null,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-031",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.16,
+        "education_preference": null,
+        "declared_needs_goals": 0.32,
+        "engagement_relevance": 0.23,
+        "product_category_interest": 0.32
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-032",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.28,
+        "education_preference": 0.89,
+        "declared_needs_goals": 0.3,
+        "engagement_relevance": 0.45,
+        "product_category_interest": 0.16
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-033",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.08,
+        "education_preference": 0.01,
+        "declared_needs_goals": 0.41,
+        "engagement_relevance": 0.27,
+        "product_category_interest": 0.56
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-034",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.51,
+        "education_preference": null,
+        "declared_needs_goals": 0.01,
+        "engagement_relevance": 0.04,
+        "product_category_interest": 0.48
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-035",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.23,
+        "education_preference": 0.37,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.04,
+        "product_category_interest": 0.95
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-036",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.16,
+        "education_preference": null,
+        "declared_needs_goals": 0.22,
+        "engagement_relevance": 0.31,
+        "product_category_interest": 0.68
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-037",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.07,
+        "education_preference": 0.96,
+        "declared_needs_goals": 0.45,
+        "engagement_relevance": null,
+        "product_category_interest": 0.32
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-038",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.63,
+        "education_preference": null,
+        "declared_needs_goals": 0.19,
+        "engagement_relevance": 0.35,
+        "product_category_interest": 0.06
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-039",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.61,
+        "education_preference": 0.32,
+        "declared_needs_goals": 0.35,
+        "engagement_relevance": 0.3,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-040",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.69,
+        "education_preference": 0.42,
+        "declared_needs_goals": 0.03,
+        "engagement_relevance": null,
+        "product_category_interest": 0.28
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-041",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.29,
+        "education_preference": 0.8,
+        "declared_needs_goals": 0.23,
+        "engagement_relevance": null,
+        "product_category_interest": 0.88
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-042",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.94,
+        "education_preference": 0.77,
+        "declared_needs_goals": 0.18,
+        "engagement_relevance": null,
+        "product_category_interest": 0.14
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-043",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.53,
+        "education_preference": 0.97,
+        "declared_needs_goals": 0.17,
+        "engagement_relevance": 0.68,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-044",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.25,
+        "declared_needs_goals": 0.03,
+        "engagement_relevance": null,
+        "product_category_interest": 0.26
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-045",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.13,
+        "declared_needs_goals": 0.05,
+        "engagement_relevance": 0.71,
+        "product_category_interest": 0.3
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-046",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.5,
+        "education_preference": 0.63,
+        "declared_needs_goals": 0.75,
+        "engagement_relevance": 0.89,
+        "product_category_interest": 0.88
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-047",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.06,
+        "declared_needs_goals": 0.42,
+        "engagement_relevance": 0.18,
+        "product_category_interest": 0.5
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-048",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.35,
+        "declared_needs_goals": 0.89,
+        "engagement_relevance": 0.64,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-049",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.49,
+        "education_preference": 0.21,
+        "declared_needs_goals": 0.52,
+        "engagement_relevance": 0.76,
+        "product_category_interest": 0.55
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-050",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.8,
+        "education_preference": null,
+        "declared_needs_goals": 0.48,
+        "engagement_relevance": null,
+        "product_category_interest": 0.07
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-051",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.97,
+        "education_preference": 0.83,
+        "declared_needs_goals": 0.44,
+        "engagement_relevance": 0.8,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-052",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.92,
+        "education_preference": 0.58,
+        "declared_needs_goals": 0.93,
+        "engagement_relevance": 0.33,
+        "product_category_interest": 0.18
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-053",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": null,
+        "declared_needs_goals": 0.57,
+        "engagement_relevance": 0.38,
+        "product_category_interest": 0.6
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-054",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.4,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.12,
+        "product_category_interest": 0.7
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-055",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 1.0,
+        "education_preference": 0.39,
+        "declared_needs_goals": 0.62,
+        "engagement_relevance": 0.53,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-056",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.68,
+        "education_preference": 0.82,
+        "declared_needs_goals": 0.4,
+        "engagement_relevance": 0.17,
+        "product_category_interest": 0.86
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-057",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.95,
+        "education_preference": 0.27,
+        "declared_needs_goals": 0.75,
+        "engagement_relevance": 0.05,
+        "product_category_interest": 0.07
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-058",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.47,
+        "education_preference": 0.55,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.61,
+        "product_category_interest": 0.71
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-059",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.99,
+        "education_preference": 0.7,
+        "declared_needs_goals": 0.42,
+        "engagement_relevance": 0.91,
+        "product_category_interest": 0.28
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-060",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.81,
+        "education_preference": 0.02,
+        "declared_needs_goals": 0.97,
+        "engagement_relevance": 0.67,
+        "product_category_interest": 0.36
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-061",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.3,
+        "education_preference": 0.58,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.93,
+        "product_category_interest": 0.71
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-062",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.47,
+        "education_preference": 0.71,
+        "declared_needs_goals": 0.73,
+        "engagement_relevance": 0.18,
+        "product_category_interest": 0.14
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-063",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.57,
+        "education_preference": 0.75,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.19,
+        "product_category_interest": 0.37
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-064",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.85,
+        "education_preference": 0.1,
+        "declared_needs_goals": 0.39,
+        "engagement_relevance": 0.5,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-065",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.24,
+        "education_preference": 0.64,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.93,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-066",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.87,
+        "education_preference": 0.16,
+        "declared_needs_goals": 0.68,
+        "engagement_relevance": 0.42,
+        "product_category_interest": 0.77
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-067",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.27,
+        "declared_needs_goals": 0.6,
+        "engagement_relevance": 0.21,
+        "product_category_interest": 0.14
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-068",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.58,
+        "education_preference": 0.89,
+        "declared_needs_goals": 0.61,
+        "engagement_relevance": 0.69,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-069",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.78,
+        "declared_needs_goals": 0.13,
+        "engagement_relevance": null,
+        "product_category_interest": 1.0
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-070",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.81,
+        "education_preference": 0.62,
+        "declared_needs_goals": 0.44,
+        "engagement_relevance": 0.27,
+        "product_category_interest": 0.25
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-071",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.81,
+        "education_preference": 0.16,
+        "declared_needs_goals": 0.94,
+        "engagement_relevance": null,
+        "product_category_interest": 0.1
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-072",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.91,
+        "education_preference": 0.45,
+        "declared_needs_goals": 0.26,
+        "engagement_relevance": 0.48,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-073",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.24,
+        "education_preference": 0.94,
+        "declared_needs_goals": 0.62,
+        "engagement_relevance": 0.85,
+        "product_category_interest": 0.23
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-074",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.77,
+        "declared_needs_goals": 0.81,
+        "engagement_relevance": 0.87,
+        "product_category_interest": 0.33
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-075",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.84,
+        "education_preference": 0.69,
+        "declared_needs_goals": 0.0,
+        "engagement_relevance": null,
+        "product_category_interest": 0.3
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-076",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.32,
+        "education_preference": 0.41,
+        "declared_needs_goals": 0.5,
+        "engagement_relevance": 0.51,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-077",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.64,
+        "education_preference": null,
+        "declared_needs_goals": 0.84,
+        "engagement_relevance": 0.93,
+        "product_category_interest": 0.89
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-078",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.67,
+        "education_preference": 0.3,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.91,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-079",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.95,
+        "education_preference": 0.19,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.66,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-080",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.49,
+        "education_preference": 0.91,
+        "declared_needs_goals": 0.73,
+        "engagement_relevance": 0.98,
+        "product_category_interest": 0.96
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-081",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.69,
+        "education_preference": 0.88,
+        "declared_needs_goals": 0.04,
+        "engagement_relevance": null,
+        "product_category_interest": 0.63
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-082",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.55,
+        "education_preference": 0.0,
+        "declared_needs_goals": 0.62,
+        "engagement_relevance": 0.88,
+        "product_category_interest": 0.89
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-083",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.21,
+        "education_preference": 0.18,
+        "declared_needs_goals": 0.82,
+        "engagement_relevance": null,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-084",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.82,
+        "education_preference": 0.96,
+        "declared_needs_goals": 0.61,
+        "engagement_relevance": 0.39,
+        "product_category_interest": 0.42
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-085",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.56,
+        "education_preference": 0.73,
+        "declared_needs_goals": 0.58,
+        "engagement_relevance": 0.36,
+        "product_category_interest": 0.77
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-086",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.99,
+        "education_preference": 0.82,
+        "declared_needs_goals": 0.69,
+        "engagement_relevance": 0.26,
+        "product_category_interest": 0.17
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-087",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.37,
+        "education_preference": null,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.16,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-088",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.09,
+        "education_preference": null,
+        "declared_needs_goals": 0.52,
+        "engagement_relevance": 0.72,
+        "product_category_interest": 0.3
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-089",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.26,
+        "education_preference": 0.29,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.17,
+        "product_category_interest": 0.55
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-090",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.37,
+        "education_preference": 0.28,
+        "declared_needs_goals": 0.58,
+        "engagement_relevance": 0.7,
+        "product_category_interest": 0.61
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-091",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.48,
+        "education_preference": 0.9,
+        "declared_needs_goals": 0.46,
+        "engagement_relevance": 0.79,
+        "product_category_interest": 0.18
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-092",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": null,
+        "education_preference": 0.57,
+        "declared_needs_goals": 1.0,
+        "engagement_relevance": 0.23,
+        "product_category_interest": 0.91
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-093",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.94,
+        "education_preference": 0.33,
+        "declared_needs_goals": 0.54,
+        "engagement_relevance": 0.02,
+        "product_category_interest": 0.26
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-094",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.52,
+        "education_preference": 0.64,
+        "declared_needs_goals": 0.94,
+        "engagement_relevance": 0.49,
+        "product_category_interest": 0.9
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-095",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.12,
+        "education_preference": 0.92,
+        "declared_needs_goals": null,
+        "engagement_relevance": null,
+        "product_category_interest": 0.34
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-096",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.75,
+        "education_preference": 0.12,
+        "declared_needs_goals": 0.01,
+        "engagement_relevance": 0.24,
+        "product_category_interest": 0.51
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-097",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.59,
+        "education_preference": 0.28,
+        "declared_needs_goals": 0.66,
+        "engagement_relevance": 0.73,
+        "product_category_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-098",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.57,
+        "education_preference": 0.7,
+        "declared_needs_goals": 0.25,
+        "engagement_relevance": 0.92,
+        "product_category_interest": 0.08
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-099",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.6,
+        "education_preference": 0.9,
+        "declared_needs_goals": null,
+        "engagement_relevance": 0.27,
+        "product_category_interest": 0.35
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-c-100",
+      "engine": "customer",
+      "profile": {
+        "declared_wellness_interest": 0.87,
+        "education_preference": 0.37,
+        "declared_needs_goals": 0.34,
+        "engagement_relevance": 1.0,
+        "product_category_interest": 0.69
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-001",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.62,
+        "business_goals_alignment": 0.46,
+        "relevant_experience_declared": 0.85,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.45
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-002",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.72,
+        "business_goals_alignment": 0.97,
+        "relevant_experience_declared": 0.55,
+        "digital_business_interest": 0.63,
+        "leadership_development_interest": 0.51
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-003",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.56,
+        "relevant_experience_declared": 0.65,
+        "digital_business_interest": 0.06,
+        "leadership_development_interest": 0.27
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-004",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": 0.48,
+        "relevant_experience_declared": 0.76,
+        "digital_business_interest": 0.78,
+        "leadership_development_interest": 0.02
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-005",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.58,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": 0.41,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.65
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-006",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.98,
+        "business_goals_alignment": 0.98,
+        "relevant_experience_declared": 0.32,
+        "digital_business_interest": 0.99,
+        "leadership_development_interest": 0.48
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-007",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": 0.22,
+        "relevant_experience_declared": 0.09,
+        "digital_business_interest": 0.9,
+        "leadership_development_interest": 0.17
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-008",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.42,
+        "business_goals_alignment": 0.62,
+        "relevant_experience_declared": 0.21,
+        "digital_business_interest": 0.4,
+        "leadership_development_interest": 0.9
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-009",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.44,
+        "business_goals_alignment": 0.29,
+        "relevant_experience_declared": 0.2,
+        "digital_business_interest": 0.2,
+        "leadership_development_interest": 0.5
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-010",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.07,
+        "digital_business_interest": 0.18,
+        "leadership_development_interest": 0.38
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-011",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.51,
+        "business_goals_alignment": 0.89,
+        "relevant_experience_declared": 0.86,
+        "digital_business_interest": 0.67,
+        "leadership_development_interest": 0.76
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-012",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.53,
+        "business_goals_alignment": 0.65,
+        "relevant_experience_declared": 0.08,
+        "digital_business_interest": 0.92,
+        "leadership_development_interest": 0.78
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-013",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.84,
+        "business_goals_alignment": 0.89,
+        "relevant_experience_declared": 0.31,
+        "digital_business_interest": 0.95,
+        "leadership_development_interest": 0.05
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-014",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.47,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.91,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.59
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-015",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.41,
+        "business_goals_alignment": 0.11,
+        "relevant_experience_declared": 0.32,
+        "digital_business_interest": 0.72,
+        "leadership_development_interest": 0.84
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-016",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": 0.83,
+        "relevant_experience_declared": 0.96,
+        "digital_business_interest": 0.21,
+        "leadership_development_interest": 0.16
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-017",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.89,
+        "business_goals_alignment": 0.27,
+        "relevant_experience_declared": 0.02,
+        "digital_business_interest": 0.28,
+        "leadership_development_interest": 0.76
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-018",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.48,
+        "business_goals_alignment": 0.73,
+        "relevant_experience_declared": 0.84,
+        "digital_business_interest": 0.63,
+        "leadership_development_interest": 0.16
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-019",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.17,
+        "business_goals_alignment": 0.32,
+        "relevant_experience_declared": 0.51,
+        "digital_business_interest": 0.31,
+        "leadership_development_interest": 0.34
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-020",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.9,
+        "business_goals_alignment": 0.91,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.46,
+        "leadership_development_interest": 0.91
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-021",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.92,
+        "business_goals_alignment": 0.53,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.94,
+        "leadership_development_interest": 0.58
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-022",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.12,
+        "business_goals_alignment": 0.05,
+        "relevant_experience_declared": 0.96,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.02
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-023",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.31,
+        "business_goals_alignment": 0.29,
+        "relevant_experience_declared": 0.44,
+        "digital_business_interest": 0.73,
+        "leadership_development_interest": 0.33
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-024",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": 0.74,
+        "relevant_experience_declared": 0.73,
+        "digital_business_interest": 0.02,
+        "leadership_development_interest": 0.13
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-025",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.66,
+        "business_goals_alignment": 0.43,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.21,
+        "leadership_development_interest": 0.25
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-026",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.86,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.08,
+        "digital_business_interest": 0.63,
+        "leadership_development_interest": 0.39
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-027",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.1,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.21,
+        "digital_business_interest": 0.89,
+        "leadership_development_interest": 0.54
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-028",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.14,
+        "business_goals_alignment": 0.05,
+        "relevant_experience_declared": 0.25,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.92
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-029",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.79,
+        "business_goals_alignment": 0.41,
+        "relevant_experience_declared": 0.09,
+        "digital_business_interest": 0.46,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-030",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.07,
+        "business_goals_alignment": 0.06,
+        "relevant_experience_declared": 0.21,
+        "digital_business_interest": 0.34,
+        "leadership_development_interest": 0.26
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-031",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.42,
+        "digital_business_interest": 0.97,
+        "leadership_development_interest": 0.5
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-032",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.1,
+        "relevant_experience_declared": 0.89,
+        "digital_business_interest": 0.77,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-033",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.33,
+        "business_goals_alignment": 0.07,
+        "relevant_experience_declared": 0.77,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.14
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-034",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.84,
+        "business_goals_alignment": 0.3,
+        "relevant_experience_declared": 0.83,
+        "digital_business_interest": 0.87,
+        "leadership_development_interest": 0.0
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-035",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.32,
+        "business_goals_alignment": 0.16,
+        "relevant_experience_declared": 0.09,
+        "digital_business_interest": 0.19,
+        "leadership_development_interest": 0.4
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-036",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.43,
+        "business_goals_alignment": 0.54,
+        "relevant_experience_declared": 0.49,
+        "digital_business_interest": 0.3,
+        "leadership_development_interest": 0.29
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-037",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.79,
+        "relevant_experience_declared": 0.11,
+        "digital_business_interest": 0.24,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-038",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.01,
+        "business_goals_alignment": 0.02,
+        "relevant_experience_declared": 0.34,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.79
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-039",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.4,
+        "business_goals_alignment": 0.7,
+        "relevant_experience_declared": 0.34,
+        "digital_business_interest": 0.11,
+        "leadership_development_interest": 0.06
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-040",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.24,
+        "business_goals_alignment": 0.99,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.91,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-041",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.95,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.88,
+        "leadership_development_interest": 0.39
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-042",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.68,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.55,
+        "digital_business_interest": 0.17,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-043",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.56,
+        "business_goals_alignment": 0.58,
+        "relevant_experience_declared": 0.6,
+        "digital_business_interest": 0.93,
+        "leadership_development_interest": 0.56
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-044",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.49,
+        "business_goals_alignment": 0.63,
+        "relevant_experience_declared": 0.29,
+        "digital_business_interest": 0.86,
+        "leadership_development_interest": 0.66
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-045",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.43,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.83,
+        "digital_business_interest": 1.0,
+        "leadership_development_interest": 0.03
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-046",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.23,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.8,
+        "digital_business_interest": 0.91,
+        "leadership_development_interest": 0.43
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-047",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.77,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.29,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.55
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-048",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.96,
+        "relevant_experience_declared": 0.86,
+        "digital_business_interest": 0.88,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-049",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.85,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.4,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.08
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-050",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.81,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-051",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.63,
+        "relevant_experience_declared": 0.8,
+        "digital_business_interest": 0.47,
+        "leadership_development_interest": 0.15
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-052",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.94,
+        "business_goals_alignment": 0.14,
+        "relevant_experience_declared": 0.94,
+        "digital_business_interest": 0.31,
+        "leadership_development_interest": 0.98
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-053",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.61,
+        "business_goals_alignment": 0.21,
+        "relevant_experience_declared": 0.0,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.01
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-054",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.0,
+        "relevant_experience_declared": 0.6,
+        "digital_business_interest": 0.05,
+        "leadership_development_interest": 0.0
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-055",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.87,
+        "business_goals_alignment": 0.34,
+        "relevant_experience_declared": 0.61,
+        "digital_business_interest": 0.27,
+        "leadership_development_interest": 0.3
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-056",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.96,
+        "business_goals_alignment": 0.31,
+        "relevant_experience_declared": 0.67,
+        "digital_business_interest": 0.48,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-057",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.51,
+        "business_goals_alignment": 0.49,
+        "relevant_experience_declared": 0.33,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.76
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-058",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.3,
+        "business_goals_alignment": 0.7,
+        "relevant_experience_declared": 0.52,
+        "digital_business_interest": 0.27,
+        "leadership_development_interest": 0.37
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-059",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.65,
+        "business_goals_alignment": 0.04,
+        "relevant_experience_declared": 0.02,
+        "digital_business_interest": 0.24,
+        "leadership_development_interest": 0.44
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-060",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.91,
+        "business_goals_alignment": 0.54,
+        "relevant_experience_declared": 0.92,
+        "digital_business_interest": 0.09,
+        "leadership_development_interest": 0.16
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-061",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.16,
+        "business_goals_alignment": 0.65,
+        "relevant_experience_declared": 0.91,
+        "digital_business_interest": 0.03,
+        "leadership_development_interest": 0.09
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-062",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.3,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.52,
+        "digital_business_interest": 0.24,
+        "leadership_development_interest": 0.79
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-063",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.22,
+        "business_goals_alignment": 0.69,
+        "relevant_experience_declared": 0.24,
+        "digital_business_interest": 0.43,
+        "leadership_development_interest": 0.9
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-064",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.08,
+        "leadership_development_interest": 0.39
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-065",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.83,
+        "business_goals_alignment": 0.54,
+        "relevant_experience_declared": 0.7,
+        "digital_business_interest": 0.56,
+        "leadership_development_interest": 0.45
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-066",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.7,
+        "business_goals_alignment": 0.87,
+        "relevant_experience_declared": 0.75,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.14
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-067",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.43,
+        "business_goals_alignment": 0.22,
+        "relevant_experience_declared": 0.67,
+        "digital_business_interest": 0.6,
+        "leadership_development_interest": 0.69
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-068",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.49,
+        "business_goals_alignment": 0.97,
+        "relevant_experience_declared": 0.4,
+        "digital_business_interest": 0.54,
+        "leadership_development_interest": 0.89
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-069",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.64,
+        "business_goals_alignment": 0.88,
+        "relevant_experience_declared": 0.35,
+        "digital_business_interest": 0.03,
+        "leadership_development_interest": 0.28
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-070",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.19,
+        "business_goals_alignment": 0.46,
+        "relevant_experience_declared": null,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.35
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-071",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.21,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.86,
+        "leadership_development_interest": 0.24
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-072",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.27,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.42,
+        "digital_business_interest": 0.11,
+        "leadership_development_interest": 0.93
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-073",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.84,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.95,
+        "digital_business_interest": 0.78,
+        "leadership_development_interest": 0.45
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-074",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.6,
+        "business_goals_alignment": 0.48,
+        "relevant_experience_declared": 0.9,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.47
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-075",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.6,
+        "relevant_experience_declared": 0.64,
+        "digital_business_interest": 0.18,
+        "leadership_development_interest": 0.12
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-076",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.75,
+        "business_goals_alignment": 0.21,
+        "relevant_experience_declared": 0.24,
+        "digital_business_interest": 0.45,
+        "leadership_development_interest": 0.95
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-077",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.66,
+        "business_goals_alignment": 0.95,
+        "relevant_experience_declared": 0.04,
+        "digital_business_interest": 0.18,
+        "leadership_development_interest": 0.94
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-078",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.6,
+        "business_goals_alignment": 0.38,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.01,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-079",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.97,
+        "business_goals_alignment": 0.54,
+        "relevant_experience_declared": 0.71,
+        "digital_business_interest": 0.84,
+        "leadership_development_interest": 0.48
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-080",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.8,
+        "business_goals_alignment": 0.44,
+        "relevant_experience_declared": 0.38,
+        "digital_business_interest": 0.73,
+        "leadership_development_interest": 0.72
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-081",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.79,
+        "relevant_experience_declared": 0.74,
+        "digital_business_interest": 0.28,
+        "leadership_development_interest": 0.77
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-082",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.56,
+        "business_goals_alignment": 0.18,
+        "relevant_experience_declared": 0.81,
+        "digital_business_interest": 0.87,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-083",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.16,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.43,
+        "digital_business_interest": 0.22,
+        "leadership_development_interest": 0.28
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-084",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.25,
+        "business_goals_alignment": 0.61,
+        "relevant_experience_declared": 0.33,
+        "digital_business_interest": 0.98,
+        "leadership_development_interest": 0.27
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-085",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.88,
+        "relevant_experience_declared": 0.82,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.04
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-086",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.76,
+        "business_goals_alignment": 0.85,
+        "relevant_experience_declared": 0.56,
+        "digital_business_interest": 0.98,
+        "leadership_development_interest": 0.51
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-087",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.36,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.78,
+        "digital_business_interest": 0.12,
+        "leadership_development_interest": 0.84
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-088",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.64,
+        "business_goals_alignment": 0.35,
+        "relevant_experience_declared": 0.0,
+        "digital_business_interest": 0.33,
+        "leadership_development_interest": 0.94
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-089",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": null,
+        "relevant_experience_declared": 0.88,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.96
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-090",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.3,
+        "business_goals_alignment": 0.02,
+        "relevant_experience_declared": null,
+        "digital_business_interest": 0.57,
+        "leadership_development_interest": 0.14
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-091",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.34,
+        "business_goals_alignment": 0.73,
+        "relevant_experience_declared": 0.54,
+        "digital_business_interest": 0.76,
+        "leadership_development_interest": 0.84
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-092",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.5,
+        "business_goals_alignment": 0.85,
+        "relevant_experience_declared": 0.7,
+        "digital_business_interest": 0.22,
+        "leadership_development_interest": 0.78
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-093",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.87,
+        "business_goals_alignment": 0.62,
+        "relevant_experience_declared": 0.31,
+        "digital_business_interest": 0.29,
+        "leadership_development_interest": 0.89
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-094",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.79,
+        "business_goals_alignment": 0.05,
+        "relevant_experience_declared": 0.54,
+        "digital_business_interest": 0.23,
+        "leadership_development_interest": 0.69
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-095",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.5,
+        "business_goals_alignment": 0.48,
+        "relevant_experience_declared": 0.6,
+        "digital_business_interest": 0.76,
+        "leadership_development_interest": 0.02
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-096",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.17,
+        "relevant_experience_declared": 0.98,
+        "digital_business_interest": null,
+        "leadership_development_interest": 0.18
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-097",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": null,
+        "business_goals_alignment": 0.51,
+        "relevant_experience_declared": 0.12,
+        "digital_business_interest": 0.35,
+        "leadership_development_interest": 0.96
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-098",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.74,
+        "business_goals_alignment": 0.88,
+        "relevant_experience_declared": 0.58,
+        "digital_business_interest": 0.02,
+        "leadership_development_interest": 0.23
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-099",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.28,
+        "business_goals_alignment": 0.44,
+        "relevant_experience_declared": 0.31,
+        "digital_business_interest": 0.51,
+        "leadership_development_interest": null
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    },
+    {
+      "case_id": "syn-b-100",
+      "engine": "business",
+      "profile": {
+        "declared_entrepreneurship_interest": 0.91,
+        "business_goals_alignment": 0.11,
+        "relevant_experience_declared": 0.5,
+        "digital_business_interest": 0.02,
+        "leadership_development_interest": 0.51
+      },
+      "reviewer_id": null,
+      "human_label": null,
+      "comment": null,
+      "reviewed_at": null
+    }
+  ]
+}
