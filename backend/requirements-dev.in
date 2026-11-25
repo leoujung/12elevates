@@ -1,0 +1,4 @@
+# Direct test dependencies for backend (pip-tools input).
+# Compile with: pip-compile --generate-hashes requirements-dev.in
+-r requirements.in
+pytest

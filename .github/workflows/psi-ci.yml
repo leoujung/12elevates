@@ -1,0 +1,200 @@
+# PSI CI — GitHub Actions workflow (local preparation only).
+# Decision (12E-PSI-CI-EXEC-001): GitHub-hosted runners, public repository (P1),
+# no production secrets, fork PRs run SQLite + secret scan with no secrets,
+# The privileged-trigger event is prohibited for this repository (policy item 6).
+# NOT pushed. NOT enabled. Validate locally with the commands in docs/ai/PSI_CI_LOCAL_RUN.md.
+name: psi-ci
+
+on:
+  push:
+    branches: [feature/psi-1-source-registry]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read  # least privilege; no write scopes
+
+concurrency:
+  group: psi-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lock-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+      - name: Install from hashed lock
+        working-directory: backend
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-dev.txt
+      - name: Dependency consistency
+        working-directory: backend
+        run: .venv/bin/python -m pip check
+
+  secret-scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: gitleaks (pinned binary, checksum verified)
+        env:
+          GL_VERSION: "8.30.1"
+          GL_SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+        run: |
+          curl -sSfL -o gl.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GL_VERSION}/gitleaks_${GL_VERSION}_linux_x64.tar.gz"
+          echo "${GL_SHA256}  gl.tgz" | sha256sum -c -
+          tar -xzf gl.tgz gitleaks
+          ./gitleaks detect --source . --config .gitleaks.toml --redact --no-banner -l warn
+
+  sqlite-fast:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: lock-check
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+      - working-directory: backend
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-dev.txt
+      - name: SQLite regression (APP_TEST_DATABASE_URL must be unset)
+        working-directory: backend
+        env:
+          APP_TEST_DATABASE_URL: ""
+        run: .venv/bin/python -m pytest -q -p no:cacheprovider -rs --junitxml=junit-sqlite.xml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: junit-sqlite
+          path: backend/junit-sqlite.xml
+          retention-days: 14
+
+  pg-required:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    needs: lock-check
+    services:
+      postgres:
+        image: postgres:17@sha256:87c8b42f423b45d5247e6aa8fdb2e7762fec164c68a50fe3eb07e7bfcaf4dbcf
+        env:
+          POSTGRES_USER: psi_ci
+          POSTGRES_PASSWORD: psi-ci-ephemeral-not-a-secret
+          POSTGRES_DB: psi_ci_test
+        ports: ["127.0.0.1:5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U psi_ci" --health-interval 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+      - working-directory: backend
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-dev.txt
+      - name: PostgreSQL regression — 0 skipped required
+        working-directory: backend
+        env:
+          APP_TEST_DATABASE_URL: postgresql+psycopg://psi_ci:psi-ci-ephemeral-not-a-secret@127.0.0.1:5432/psi_ci_test
+        run: |
+          .venv/bin/python -m pytest -q -p no:cacheprovider --junitxml=junit-pg.xml
+          # Fail closed on the JUnit report: any skip, failure, error, or inconsistent total fails.
+          .venv/bin/python scripts/ci_junit_gate.py junit-pg.xml --min-passed 159 --max-skipped 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: junit-pg
+          path: backend/junit-pg.xml
+          retention-days: 14
+
+  migration-gate:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: lock-check
+    services:
+      postgres:
+        image: postgres:17@sha256:87c8b42f423b45d5247e6aa8fdb2e7762fec164c68a50fe3eb07e7bfcaf4dbcf
+        env:
+          POSTGRES_USER: psi_ci
+          POSTGRES_PASSWORD: psi-ci-ephemeral-not-a-secret
+          POSTGRES_DB: psi_migrate
+        ports: ["127.0.0.1:5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U psi_ci" --health-interval 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+      - working-directory: backend
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-dev.txt
+      - name: upgrade head on empty DB
+        working-directory: backend
+        env:
+          APP_DATABASE_URL: postgresql+psycopg://psi_ci:psi-ci-ephemeral-not-a-secret@127.0.0.1:5432/psi_migrate
+        run: |
+          .venv/bin/python -m alembic upgrade head
+          .venv/bin/python -m alembic downgrade -1
+          .venv/bin/python -m alembic upgrade head
+
+  concurrency-regression:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: lock-check
+    services:
+      postgres:
+        image: postgres:17@sha256:87c8b42f423b45d5247e6aa8fdb2e7762fec164c68a50fe3eb07e7bfcaf4dbcf
+        env:
+          POSTGRES_USER: psi_ci
+          POSTGRES_PASSWORD: psi-ci-ephemeral-not-a-secret
+          POSTGRES_DB: psi_conc
+        ports: ["127.0.0.1:5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U psi_ci" --health-interval 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+      - working-directory: backend
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-dev.txt
+      - name: Deterministic barrier concurrency (PostgreSQL)
+        working-directory: backend
+        env:
+          APP_TEST_DATABASE_URL: postgresql+psycopg://psi_ci:psi-ci-ephemeral-not-a-secret@127.0.0.1:5432/psi_conc
+        run: |
+          .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_psi_concurrency_pg.py --junitxml=junit-conc.xml
+          .venv/bin/python scripts/ci_junit_gate.py junit-conc.xml --min-passed 4 --max-skipped 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: junit-concurrency
+          path: backend/junit-conc.xml
+          retention-days: 30
