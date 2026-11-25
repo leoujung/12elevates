@@ -1,0 +1,13 @@
+# Gitleaks configuration (PSI P0 Phase 1).
+# Policy (12E-PSI-P0-REVISION-001, D-Exposed):
+# - Allowlists are per fingerprint only. No path, directory, or regex-wide allowlists.
+# - Every allowlist entry needs: description (reason), owner, approver, expires (<= 90 days).
+# - Secrets listed as exposed (incl. 357240c strata key) must NEVER be allowlisted.
+#   Their finding stays OPEN until rotation/revocation is verified.
+# - Synthetic test keys are allowlisted by fingerprint only, so a real key in a test file is still detected.
+
+title = "12ELEVATE PSI gitleaks config"
+
+[extend]
+useDefault = true
+

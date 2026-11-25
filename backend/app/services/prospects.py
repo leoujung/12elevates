@@ -17,7 +17,8 @@ class ConsentRequired(Exception):
 
 def ingest_prospect(db: Session, *, owner_member_id: str, name: str, source: str,
                     consent_purpose: str | None, consent_granted: bool,
-                    whatsapp: str | None = None, email: str | None = None) -> Prospect:
+                    whatsapp: str | None = None, email: str | None = None,
+                    commit: bool = True) -> Prospect:
     if not consent_purpose or not consent_granted:
         raise ConsentRequired("prospect cannot be stored without recorded consent")
 
@@ -27,7 +28,8 @@ def ingest_prospect(db: Session, *, owner_member_id: str, name: str, source: str
     db.flush()
     db.add(ConsentRecord(prospect_id=prospect.id, purpose=consent_purpose, granted=True))
     db.add(AuditLog(actor_member_id=owner_member_id, action="prospect.created", target=prospect.id))
-    db.commit()
+    if commit:
+        db.commit()
     return prospect
 
 
