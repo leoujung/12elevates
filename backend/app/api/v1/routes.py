@@ -438,5 +438,7 @@ def create_app(session_factory) -> FastAPI:
     # Central Prospect inbound persistence (E1.2, staging branch).
     from app.api.v1.internal_inbound import register_inbound_routes
     register_inbound_routes(app, get_db)
+    from app.api.v1.nbi_read import register_nbi_read_routes
+    register_nbi_read_routes(app, get_db, current_member_id)
 
     return app
