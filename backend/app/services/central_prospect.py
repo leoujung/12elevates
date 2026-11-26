@@ -26,8 +26,12 @@ REQUIRED_PURPOSE = {
     "PARTNER_INQUIRY": "partner_contact",
     "BUSINESS_INTEREST": "business_interest_processing",
 }
-OPTIONAL_PURPOSES = {"marketing_optional"}
-ALL_PURPOSES = {"registration_processing", "assessment_processing", "partner_contact", "marketing_optional", "business_interest_processing"}
+# Extra purposes that must ALSO be granted for an event.
+REQUIRED_EXTRA = {
+    "BUSINESS_INTEREST": {"business_matching"},
+}
+OPTIONAL_PURPOSES = {"marketing_optional", "business_followup"}
+ALL_PURPOSES = {"registration_processing", "assessment_processing", "partner_contact", "marketing_optional", "business_interest_processing", "business_matching", "business_followup"}
 
 _EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _ID_MAX = 100
@@ -95,6 +99,9 @@ def validate_event(event):
     required = REQUIRED_PURPOSE[etype]
     if consents.get(required) is not True:
         raise InboundError("REJECTED_CONSENT", f"required purpose {required} not granted")
+    for extra in REQUIRED_EXTRA.get(etype, set()):
+        if consents.get(extra) is not True:
+            raise InboundError("REJECTED_CONSENT", f"required purpose {extra} not granted")
 
     notice_version = event.get("notice_version")
     if not isinstance(notice_version, str) or not notice_version.strip() or len(notice_version) > 40:

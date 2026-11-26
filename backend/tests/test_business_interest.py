@@ -12,7 +12,7 @@ def test_business_rejected_without_required_consent():
     assert e.value.code == "REJECTED_CONSENT"
 
 def test_business_accepted_with_business_purpose():
-    out = cp.validate_event(_ev({"business_interest_processing": True}))
+    out = cp.validate_event(_ev({"business_interest_processing": True, "business_matching": True}))
     assert out["event_type"] == "BUSINESS_INTEREST"
 
 def test_business_not_satisfied_by_partner_consent():

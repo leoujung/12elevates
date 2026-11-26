@@ -37,7 +37,7 @@ def client():
     return TestClient(app)
 
 BASE = {"referral_code": "REF-ANDI-01", "name": "Tester", "email": "tester@example.com",
-        "notice_version": "v-draft", "consent_business_interest": True, "event_id": "bi-http-1"}
+        "notice_version": "v-draft", "consent_business_interest": True, "consent_business_matching": True, "event_id": "bi-http-1"}
 
 def test_no_referral_rejected(client):
     body = dict(BASE); body["referral_code"] = ""

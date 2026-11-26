@@ -24,7 +24,8 @@ class BusinessInterestIn(BaseModel):
     whatsapp: str | None = None
     notice_version: str
     consent_business_interest: bool
-    consent_marketing_optional: bool = False
+    consent_business_matching: bool = False
+    consent_business_followup: bool = False
     event_id: str
 
 
@@ -45,7 +46,8 @@ def register_business_interest_routes(app, get_db):
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 {"success": False, "status": "INVALID_REFERRAL"})
         consents = {"business_interest_processing": body.consent_business_interest,
-                    "marketing_optional": body.consent_marketing_optional}
+                    "business_matching": body.consent_business_matching,
+                    "business_followup": body.consent_business_followup}
         raw = {
             "event_type": "BUSINESS_INTEREST",
             "event_id": body.event_id,
