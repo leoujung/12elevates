@@ -32,12 +32,10 @@ class BusinessInterestIn(BaseModel):
 
 
 def _resolve_referrer(db, code: str):
-    if not code or len(code) > 100:
-        return None
-    row = db.execute(
-        text("select id from members where sponsor_ref = :c limit 1"), {"c": code.strip()}
-    ).first()
-    return str(row[0]) if row else None
+    # Referral codes are issued per member in member_referral_codes.
+    # members.sponsor_ref is intentionally not used.
+    from app.services.referral_codes import resolve_code
+    return resolve_code(db, code)
 
 
 def business_intake_enabled() -> bool:

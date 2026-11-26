@@ -118,3 +118,13 @@ class VideoProgress(Base):
     owner_member_id: Mapped[str] = mapped_column(ForeignKey("members.id"), index=True)
     youtube_video_id: Mapped[str] = mapped_column(String(32), index=True)
     completed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class MemberReferralCode(Base):
+    # Mirrors migration h1i2refcodes01 (member_referral_codes). Codes are random,
+    # per member, revocable. members.sponsor_ref is not used for intake.
+    __tablename__ = "member_referral_codes"
+    code: Mapped[str] = mapped_column(String(40), primary_key=True)
+    member_id: Mapped[str] = mapped_column(String(64), index=True, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

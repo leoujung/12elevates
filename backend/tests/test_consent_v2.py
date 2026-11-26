@@ -46,6 +46,8 @@ def test_unknown_purpose_still_rejected():
                                "made_up": True}))
 
 
+_ANDI_CODE = [None]
+
 @pytest.fixture()
 def client(monkeypatch):
     monkeypatch.setenv("BUSINESS_INTAKE_ENABLED", "true")
@@ -69,7 +71,10 @@ def client(monkeypatch):
     s.add(org)
     s.flush()
     s.add(Member(id="member-andi", organization_id=org.id, email="andi@example.test",
-                 display_name="Andi", sponsor_ref="REF-ANDI-01"))
+                 display_name="Andi", sponsor_ref=None))
+    s.commit()
+    from app.services.referral_codes import issue_code
+    _ANDI_CODE[0] = issue_code(s, "member-andi")
     s.commit()
     s.close()
     app = FastAPI()
@@ -86,7 +91,7 @@ def client(monkeypatch):
 
 
 def test_http_requires_matching_checkbox(client):
-    body = {"referral_code": "REF-ANDI-01", "name": "T", "email": "t@example.com",
+    body = {"referral_code": _ANDI_CODE[0], "name": "T", "email": "t@example.com",
             "notice_version": "v1.0", "consent_business_interest": True,
             "consent_business_matching": False, "event_id": "h-1"}
     r = client.post("/v1/inbound/business-interest", json=body)
@@ -95,7 +100,7 @@ def test_http_requires_matching_checkbox(client):
 
 
 def test_http_success_with_matching_and_followup_optional(client):
-    body = {"referral_code": "REF-ANDI-01", "name": "T", "email": "t@example.com",
+    body = {"referral_code": _ANDI_CODE[0], "name": "T", "email": "t@example.com",
             "notice_version": "v1.0", "consent_business_interest": True,
             "consent_business_matching": True, "consent_business_followup": False, "event_id": "h-2"}
     r = client.post("/v1/inbound/business-interest", json=body)
