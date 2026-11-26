@@ -7,18 +7,25 @@
   <title>ONE Dashboard — 12ELEVATE</title>
   <style>
     :root {
-      --bg: #F8FAFC;
+      --bg: #FFFFFF;
+      --bg-off: #FAFAFA;
       --surface: #FFFFFF;
-      --ink: #1E293B;
-      --muted: #64748B;
-      --line: #E2E8F0;
+      --ink: #171717;
+      --muted: #6B7280;
+      --line: #E5E7EB;
       --gold-warm: #D4AF37;
-      --gold-deep: #B45309;
-      --gold-wash: #FBF3DE;
-      --green: #10B981;
+      --gold-deep: #8B5E1A;
+      --gold-wash: #FBF5E5;
+      --gold-pale: #FBF5E5;
+      --green: #159B68;
+      --green-light: #ECFDF5;
       --amber: #F59E0B;
+      --red: #EF4444;
       --gray-bar: #CBD5E1;
-      --radius: 14px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     * { box-sizing: border-box; }
     body {
@@ -54,29 +61,36 @@
     main { padding: 22px; max-width: 1040px; margin: 0 auto; padding-bottom: 90px; }
 
     .bottom-nav {
-      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
       background: var(--surface); border-top: 1px solid var(--line);
-      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
     }
-    .bottom-nav-row { display: flex; }
+    .bottom-nav-row { display: flex; max-width: 500px; margin: 0 auto; }
     .bottom-nav button {
       flex: 1; background: none; border: 0; display: flex; flex-direction: column; align-items: center;
-      gap: 2px; padding: 6px 2px; font-size: .68rem; font-weight: 700; color: var(--muted); cursor: pointer;
+      gap: 4px; padding: 8px 4px; font-size: 0.7rem; font-weight: 600; color: #9CA3AF; cursor: pointer;
       position: relative;
     }
-    .bottom-nav button .ic { font-size: 1.15rem; }
+    .bottom-nav button .ic { font-size: 1.25rem; line-height: 1; }
     .bottom-nav button.active { color: var(--gold-deep); }
-    .pill-badge {
-      position: absolute; top: -2px; right: 18%; background: #EF4444; color: #fff;
-      font-size: .62rem; font-weight: 800; border-radius: 999px; padding: 1px 5px; line-height: 1.2;
+    .bottom-nav button.active .ic { color: var(--gold-warm); }
+    .bottom-nav .pill-badge {
+      position: absolute; top: 2px; right: 50%; transform: translateX(16px);
+      background: var(--red); color: #fff; font-size: 0.6rem; font-weight: 800;
+      border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
     }
 
     @media (max-width: 860px) {
       .sidebar { display: none; }
+      .topbar { display: none; }
       .bottom-nav { display: block; }
-      main { padding: 16px; padding-bottom: 86px; }
-      .topbar { padding: 12px 16px; }
+      .mobile-header { display: flex; }
+      main { padding: 14px; padding-bottom: 90px; }
       .workspace-grid { grid-template-columns: 1fr !important; }
+      .kpi-grid { display: none; }
+      .kpi-grid-mobile { display: grid; }
+      #habit-card { display: none; }
+      .habit-card-mobile { display: block; }
     }
 
     .card {
@@ -192,12 +206,361 @@
     .bar-label { font-size: .68rem; color: var(--muted); margin-top: 4px; }
     .bar-shield { font-size: .7rem; position: absolute; top: -16px; }
 
+    /* ---------- Academy ---------- */
+    .academy-hero { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+    .academy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+    @media (max-width: 600px) { .academy-grid { grid-template-columns: 1fr; } }
+    .module-card {
+      border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+      display: flex; align-items: center; gap: 10px; background: var(--bg);
+    }
+    .module-icon { font-size: 1.1rem; width: 24px; text-align: center; flex-shrink: 0; }
+    .module-order { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; }
+    .module-title { font-size: .85rem; font-weight: 700; color: var(--muted); }
+
+    /* ---------- Academy: video courses ---------- */
+    .course-tabs { display: flex; gap: 6px; margin: 16px 0 10px; flex-wrap: wrap; }
+    .course-tabs button {
+      background: var(--bg); border: 1px solid var(--line); border-radius: 999px;
+      padding: 7px 14px; font-size: .8rem; font-weight: 700; color: var(--muted); cursor: pointer;
+    }
+    .course-tabs button.active { background: var(--gold-wash); color: var(--gold-deep); border-color: var(--gold-warm); }
+    .course-note { font-size: .78rem; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
+    .course-list { display: flex; flex-direction: column; gap: 8px; }
+    .course-row {
+      display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      padding: 8px 12px; cursor: pointer; font-family: inherit;
+    }
+    .course-row:hover:not(:disabled) { border-color: var(--gold-warm); background: var(--gold-wash); }
+    .course-row.is-disabled { opacity: .55; cursor: not-allowed; }
+    .course-num { font-size: .78rem; font-weight: 800; color: var(--gold-deep); min-width: 18px; }
+    .course-thumb { width: 84px; height: 48px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #0F172A; }
+    .course-thumb--empty { display: flex; align-items: center; justify-content: center; font-size: .9rem; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); }
+    .course-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .course-title { font-size: .88rem; font-weight: 700; color: var(--ink); }
+    .chip { font-size: .68rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; align-self: flex-start; }
+    .chip--done { background: #ECFDF5; color: #047857; }
+    .chip--todo, .chip--soon { background: var(--bg); color: var(--muted); }
+    .course-play { font-size: .9rem; color: var(--gold-deep); }
+
+    .player-modal { position: fixed; inset: 0; background: rgba(15, 23, 42, .72); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 60; }
+    .player-modal.hidden { display: none; }
+    .player-shell { background: var(--surface); border-radius: 16px; width: min(920px, 100%); max-height: 92vh; overflow: auto; }
+    .player-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 16px; }
+    .player-close { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; width: 32px; height: 32px; cursor: pointer; font-size: .9rem; color: var(--muted); flex-shrink: 0; }
+    .player-frame { aspect-ratio: 16 / 9; background: #0F172A; }
+    .player-frame iframe, .player-frame > div { width: 100%; height: 100%; border: 0; display: block; }
+    .player-foot { font-size: .78rem; color: var(--muted); padding: 10px 16px 14px; line-height: 1.5; }
+    @media (max-width: 600px) {
+      .course-thumb { width: 64px; height: 40px; }
+      .player-frame { aspect-ratio: 9 / 16; max-height: 68vh; }
+    }
+
     .hidden { display: none; }
+
+    /* ---------- Mobile Header ---------- */
+    .mobile-header {
+      display: none;
+      background: var(--surface);
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mobile-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+    .mobile-logo .gold { color: var(--gold-warm); }
+    .mobile-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-icon-btn {
+      position: relative;
+      background: none;
+      border: 0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--ink);
+    }
+    .header-icon-btn .notif-dot {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+    .streak-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .streak-indicator .flame { font-size: 1rem; }
+
+    /* ---------- Assessment Notification Card ---------- */
+    .assessment-card {
+      background: var(--surface);
+      border: 1.5px solid var(--gold-warm);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+    .assessment-headline {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .assessment-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--gold-warm) 0%, #C49C2E 100%);
+      color: #1E1203;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 0;
+    }
+
+    /* ---------- KPI Grid Mobile (2-column) ---------- */
+    .kpi-grid-mobile {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .kpi-card-mobile {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi-card-mobile .kpi-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .kpi-card-mobile .kpi-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .kpi-card-mobile .kpi-note {
+      font-size: 0.72rem;
+      margin-top: 4px;
+    }
+    .kpi-card-mobile .kpi-note.green {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ---------- Habit Card Mobile ---------- */
+    .habit-card-mobile {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .habit-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .habit-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0;
+    }
+    .habit-progress-text {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    /* CORE 4 Accordion */
+    .core4-accordion {
+      background: var(--gold-pale);
+      border-radius: 10px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .core4-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      width: 100%;
+      text-align: left;
+    }
+    .core4-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--gold-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .core4-chevron {
+      font-size: 0.9rem;
+      color: var(--gold-deep);
+      transition: transform 0.2s;
+    }
+    .core4-accordion.collapsed .core4-chevron {
+      transform: rotate(180deg);
+    }
+    .core4-body {
+      padding: 0 14px 14px;
+    }
+    .core4-accordion.collapsed .core4-body {
+      max-height: 0;
+      padding: 0 14px;
+      overflow: hidden;
+    }
+    .habit-item-mobile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .habit-item-mobile:last-child {
+      border-bottom: none;
+    }
+    .habit-check-mobile {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-warm);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: var(--surface);
+      font-size: 0.75rem;
+      color: transparent;
+      transition: all 0.15s;
+    }
+    .habit-check-mobile.done {
+      background: var(--gold-warm);
+      border-color: var(--gold-warm);
+      color: #fff;
+    }
+    .habit-text-mobile {
+      flex: 1;
+      min-width: 0;
+    }
+    .habit-title-mobile {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .habit-title-mobile.done {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+    .habit-actions-mobile {
+      display: flex;
+      gap: 6px;
+    }
+    .habit-action-btn-mobile {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    /* Power-Ups Accordion */
+    .powerups-accordion {
+      background: #E9EBEF;
+      border-radius: 8px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .powerups-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      width: 100%;
+      text-align: left;
+    }
+    .powerups-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .powerups-chevron {
+      font-size: 0.9rem;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+    .powerups-accordion.expanded .powerups-chevron {
+      transform: rotate(180deg);
+    }
+    .powerups-body-mobile {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: var(--surface);
+    }
+    .powerups-accordion.expanded .powerups-body-mobile {
+      max-height: 800px;
+    }
+    .powerups-inner {
+      padding: 12px 14px;
+    }
   </style>
 </head>
 <body>
 
-<div id="login-view" class="login-shell">
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <div class="mobile-logo"><span class="gold">●</span> 12ELEVATE</div>
+  <div class="mobile-header-actions">
+    <div class="streak-indicator"><span class="flame">🔥</span><span id="mobile-streak">0</span></div>
+    <button class="header-icon-btn" id="notif-btn">🔔<span class="notif-dot"></span></button>
+  </div>
+</header>
+
+<div id="login-view"  class="login-shell">
   <div class="card login-card">
     <h2>Masuk ke ONE Dashboard</h2>
     <p class="card-sub">Gunakan email dan password Wellness Partner kamu.</p>
@@ -230,6 +593,27 @@
 
     <main>
       <section data-panel="home">
+        <!-- Assessment Notification Card (Mobile) -->
+        <div class="assessment-card" id="assessment-card" style="display:none">
+          <div class="assessment-headline" id="assessment-headline">—</div>
+          <button class="assessment-cta" id="assessment-cta">Kirim Rapor via WhatsApp →</button>
+        </div>
+
+        <!-- KPI Grid Mobile (2-column) -->
+        <div class="kpi-grid-mobile">
+          <div class="kpi-card-mobile">
+            <div class="kpi-label">Target Pool</div>
+            <div class="kpi-value" id="kpi-target-mobile">—</div>
+            <div class="progress-track"><div class="progress-fill gold" id="kpi-target-bar-mobile" style="width:0%"></div></div>
+            <div class="kpi-note" id="kpi-target-note-mobile"></div>
+          </div>
+          <div class="kpi-card-mobile">
+            <div class="kpi-label">Leads Baru</div>
+            <div class="kpi-value" id="kpi-leads-mobile">—</div>
+            <div class="kpi-note green" id="kpi-leads-note-mobile"></div>
+          </div>
+        </div>
+
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-label">TARGET &amp; MILESTONE</div>
@@ -258,6 +642,38 @@
           <h2>Next Best Action</h2>
           <p class="card-sub">Prospek yang paling perlu kamu follow-up sekarang.</p>
           <div id="nba-list"><div class="empty">Memuat...</div></div>
+        </div>
+
+        <!-- Daily Habit Tracker Mobile -->
+        <div class="habit-card-mobile" id="habit-card-mobile">
+          <div class="habit-card-header">
+            <h2 class="habit-card-title">Daily Habit Tracker</h2>
+            <button class="rest-day-btn" id="rest-day-btn-mobile">🛡️ Rest Day</button>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill gold" id="habit-bar-mobile" style="width:0%"></div>
+          </div>
+          <div class="habit-progress-text" id="habit-progress-mobile">—</div>
+
+          <!-- CORE 4 Accordion (expanded by default) -->
+          <div class="core4-accordion" id="core4-accordion">
+            <button class="core4-header" type="button" id="core4-toggle">
+              <span class="core4-title">CORE 4 — Target Santai (<span id="core4-count-mobile">0/4</span>)</span>
+              <span class="core4-chevron">▲</span>
+            </button>
+            <div class="core4-body" id="core4-body-mobile"></div>
+          </div>
+
+          <!-- Power-Ups Accordion (collapsed by default) -->
+          <div class="powerups-accordion" id="powerups-accordion">
+            <button class="powerups-header" type="button" id="powerups-toggle-mobile">
+              <span class="powerups-title">Lihat 8 Power-Ups Bonus (<span id="powerups-count-mobile">0/8</span>)</span>
+              <span class="powerups-chevron">▼</span>
+            </button>
+            <div class="powerups-body-mobile" id="powerups-body-mobile">
+              <div class="powerups-inner" id="powerups-inner-mobile"></div>
+            </div>
+          </div>
         </div>
 
         <div class="workspace-grid" style="display:grid;grid-template-columns:7fr 5fr;gap:16px;align-items:start;">
@@ -304,9 +720,9 @@
               <div class="muted" style="font-size:.78rem;margin-top:6px;" id="monthly-qualify-text">Kualifikasi Reward Bulan Ini: — / 80% Minimum</div>
             </div>
 
-            <div class="card empty" style="margin-top:0;">
+            <div class="card empty" style="margin-top:0;" id="academy-home-card">
               <strong style="color:var(--ink);">ONE Academy</strong><br>
-              Belum ada data progres modul. Fitur Academy belum aktif di Phase 1.
+              <span id="academy-home-text">Memuat...</span>
             </div>
           </div>
         </div>
@@ -343,18 +759,54 @@
       </section>
 
       <section data-panel="academy" class="hidden">
-        <div class="card empty">Materi belajar belum tersedia di dashboard ini.</div>
+        <div class="card">
+          <div class="academy-hero">
+            <div>
+              <h2 style="margin:0;">ONE Academy</h2>
+              <p class="card-sub" id="academy-progress-text" style="margin:2px 0 0;">Memuat...</p>
+            </div>
+            <span class="chip chip--todo" id="course-ready-badge">—</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill gold" id="academy-bar" style="width:0%"></div></div>
+
+          <div class="course-tabs" id="course-tabs">
+            <button type="button" data-cat="edukasi_produk" class="active">Edukasi Produk</button>
+            <button type="button" data-cat="keuntungan_mitra">Keuntungan Mitra</button>
+          </div>
+          <div class="course-note" id="course-note"></div>
+          <div class="course-list" id="course-list"></div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 4px;">Modul Terstruktur</h2>
+          <div class="muted" style="font-size:.85rem;" id="academy-message"></div>
+          <div class="academy-grid" id="academy-grid"></div>
+        </div>
       </section>
     </main>
   </div>
 </div>
 
+<div class="player-modal hidden" id="player-modal" role="dialog" aria-modal="true" aria-labelledby="player-title">
+  <div class="player-shell">
+    <div class="player-head">
+      <div>
+        <div class="module-order" id="player-cat"></div>
+        <strong id="player-title"></strong>
+      </div>
+      <button class="player-close" id="player-close" type="button" aria-label="Tutup pemutar">✕</button>
+    </div>
+    <div class="player-frame" id="player-frame"></div>
+    <div class="player-foot" id="player-foot"></div>
+  </div>
+</div>
+
 <nav class="bottom-nav hidden" id="bottom-nav">
   <div class="bottom-nav-row">
-    <button data-view="home" class="active"><span class="ic">🏠</span>Home</button>
-    <button data-view="prospects"><span class="ic">👥</span>Leads &amp; AI</button>
-    <button data-view="assistant"><span class="ic">✨</span>AI Studio</button>
-    <button data-view="academy"><span class="ic">🎓</span>Academy</button>
+    <button data-view="home" class="active"><span class="ic">🏠</span><span>Home</span></button>
+    <button data-view="prospects"><span class="ic">👥</span><span>Leads & AI</span><span class="pill-badge" id="leads-badge" style="display:none">0</span></button>
+    <button data-view="assistant"><span class="ic">✨</span><span>AI Studio</span></button>
+    <button data-view="academy"><span class="ic">🎓</span><span>Academy</span></button>
   </div>
 </nav>
 
@@ -401,9 +853,11 @@
     loadLp();
     loadHabit();
     loadConsistency();
+    loadAcademy();
   });
 
   function logout() {
+    closePlayer();
     token = null;
     document.getElementById('app').classList.add('hidden');
     document.getElementById('bottom-nav').classList.add('hidden');
@@ -412,6 +866,7 @@
 
   function renderHome() {
     const leads = prospectsCache.filter(p => p.status === 'new');
+    renderHomeMobile();
     document.getElementById('kpi-leads').textContent = String(leads.length);
     document.getElementById('kpi-leads-note').textContent = leads.length > 0
       ? 'Prospek baru belum di-follow-up.'
@@ -564,6 +1019,131 @@
     }
   });
 
+  function renderHomeMobile() {
+    var leads = prospectsCache.filter(p => p.status === 'new');
+    
+    // KPI Target Pool
+    document.getElementById('kpi-target-mobile').textContent = document.getElementById('kpi-target').textContent;
+    document.getElementById('kpi-target-bar-mobile').style.width = document.getElementById('kpi-target-bar').style.width;
+    document.getElementById('kpi-target-note-mobile').textContent = document.getElementById('kpi-target-note').textContent;
+    
+    // KPI Leads
+    document.getElementById('kpi-leads-mobile').textContent = String(leads.length);
+    document.getElementById('kpi-leads-note-mobile').textContent = leads.length > 0 ? '+' + leads.length + ' baru' : 'Tidak ada lead baru';
+    
+    // Assessment Card
+    var assessCard = document.getElementById('assessment-card');
+    if (leads.length > 0) {
+      var first = leads[0];
+      document.getElementById('assessment-headline').textContent = first.name + ' selesai asesmen';
+      var waNumber = (first.whatsapp || '').replace(/[^0-9]/g, '');
+      document.getElementById('assessment-cta').onclick = function() {
+        if (waNumber) {
+          window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent('Halo ' + first.name + ', terima kasih sudah mengisi asesmen wellness. Boleh saya bantu jelaskan hasilnya?'), '_blank');
+        }
+      };
+      assessCard.style.display = 'block';
+    } else {
+      assessCard.style.display = 'none';
+    }
+    
+    // Streak
+    var streak = document.getElementById('streak-badge');
+    if (streak) {
+      document.getElementById('mobile-streak').textContent = streak.textContent.replace(/[^0-9]/g, '');
+    }
+    
+    // Leads badge
+    var badge = document.getElementById('leads-badge');
+    if (badge && leads.length > 0) {
+      badge.textContent = leads.length;
+      badge.style.display = 'block';
+    } else if (badge) {
+      badge.style.display = 'none';
+    }
+  }
+
+  function renderHabitMobile(data) {
+    var bar = document.getElementById('habit-bar-mobile');
+    var progress = document.getElementById('habit-progress-mobile');
+    var core4Count = document.getElementById('core4-count-mobile');
+    var powerupsCount = document.getElementById('powerups-count-mobile');
+    
+    if (!data || !data.items) return;
+    
+    var core4 = data.items.filter(i => i.level === 'core4');
+    var powerups = data.items.filter(i => i.level === 'powerup');
+    var doneCore4 = core4.filter(i => i.done).length;
+    var donePowerups = powerups.filter(i => i.done).length;
+    var pct = Math.round((doneCore4 + donePowerups) / 12 * 100);
+    
+    bar.style.width = pct + '%';
+    bar.className = 'progress-fill ' + (pct >= 33 ? 'gold' : '');
+    
+    if (pct >= 33) {
+      progress.textContent = pct + '% • Daily Win Tercapai!';
+    } else {
+      progress.textContent = pct + '% • Yuk lanjutkan!';
+    }
+    
+    core4Count.textContent = doneCore4 + '/4';
+    powerupsCount.textContent = donePowerups + '/8';
+    
+    // Render CORE 4 items
+    var core4Body = document.getElementById('core4-body-mobile');
+    if (core4Body) {
+      core4Body.innerHTML = core4.map(function(item) {
+        return '<div class="habit-item-mobile" data-id="' + item.id + '">' +
+          '<div class="habit-check-mobile ' + (item.done ? 'done' : '') + '">' + (item.done ? '✓' : '') + '</div>' +
+          '<div class="habit-text-mobile"><div class="habit-title-mobile ' + (item.done ? 'done' : '') + '">' + esc(item.title) + '</div></div>' +
+          '<div class="habit-actions-mobile">' +
+            '<button class="habit-action-btn-mobile copy-btn" data-text="' + esc(item.title) + '">📋</button>' +
+            '<button class="habit-action-btn-mobile wa-btn" data-id="' + item.id + '">💬</button>' +
+          '</div></div>';
+      }).join('');
+    }
+    
+    // Render Power-Ups items
+    var powerupsInner = document.getElementById('powerups-inner-mobile');
+    if (powerupsInner) {
+      powerupsInner.innerHTML = powerups.map(function(item) {
+        return '<div class="habit-item-mobile" data-id="' + item.id + '">' +
+          '<div class="habit-check-mobile ' + (item.done ? 'done' : '') + '">' + (item.done ? '✓' : '') + '</div>' +
+          '<div class="habit-text-mobile"><div class="habit-title-mobile ' + (item.done ? 'done' : '') + '">' + esc(item.title) + '</div></div></div>';
+      }).join('');
+    }
+  }
+
+  // Mobile accordion toggles
+  document.addEventListener('click', function(e) {
+    var core4Toggle = e.target.closest('#core4-toggle');
+    if (core4Toggle) {
+      document.getElementById('core4-accordion').classList.toggle('collapsed');
+    }
+    
+    var powerupsToggle = e.target.closest('#powerups-toggle-mobile');
+    if (powerupsToggle) {
+      document.getElementById('powerups-accordion').classList.toggle('expanded');
+    }
+    
+    // Copy button
+    var copyBtn = e.target.closest('.copy-btn');
+    if (copyBtn) {
+      navigator.clipboard.writeText(copyBtn.dataset.text || '');
+      copyBtn.textContent = '✓';
+      setTimeout(function() { copyBtn.textContent = '📋'; }, 1000);
+    }
+    
+    // Toggle habit mobile
+    var checkMobile = e.target.closest('.habit-check-mobile');
+    if (checkMobile && !checkMobile.classList.contains('done')) {
+      var item = checkMobile.closest('.habit-item-mobile');
+      if (item && item.dataset.id) {
+        toggleHabit(item.dataset.id, true);
+      }
+    }
+  });
+
   async function loadConsistency() {
     try {
       const c = await api('/v1/habit/consistency');
@@ -600,6 +1180,173 @@
     } catch (err) { /* silently ignore; KPI stays at last known value */ }
   });
 
+  /* ---------- ONE Academy: video courses (Edukasi Produk / Keuntungan Mitra) ---------- */
+  var COURSE_LABELS = { edukasi_produk: 'Edukasi Produk', keuntungan_mitra: 'Keuntungan Mitra' };
+  var courseCat = 'edukasi_produk';
+  var courseCache = {};
+  var ytApiPromise = null, ytPlayer = null, ytCurrent = null;
+
+  function loadYouTubeApi() {
+    if (window.YT && window.YT.Player) return Promise.resolve();
+    if (ytApiPromise) return ytApiPromise;
+    ytApiPromise = new Promise(function (resolve) {
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () { if (prev) prev(); resolve(); };
+      var s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.onerror = function () { ytApiPromise = null; };
+      document.head.appendChild(s);
+    });
+    return ytApiPromise;
+  }
+
+  function courseStateChip(v) {
+    if (!v.ready) return '<span class="chip chip--soon">Segera hadir</span>';
+    if (v.watched) return '<span class="chip chip--done">✓ Selesai</span>';
+    return '<span class="chip chip--todo">Belum ditonton</span>';
+  }
+
+  function renderCourse(data) {
+    var notReady = data.total - data.total_ready;
+    document.getElementById('course-ready-badge').textContent =
+      data.total_ready + ' dari ' + data.total + ' video tersedia';
+    document.getElementById('academy-progress-text').textContent =
+      COURSE_LABELS[data.category] + ' · ' + data.completed + '/' + data.total_ready + ' tonton · ' + data.percent + '%';
+    document.getElementById('academy-bar').style.width = data.percent + '%';
+    document.getElementById('course-note').textContent = notReady > 0
+      ? notReady + ' video lain di kategori ini belum punya tautan YouTube, jadi belum bisa ditonton dan tidak dihitung dalam progres.'
+      : 'Semua video di kategori ini sudah tersedia.';
+    var list = document.getElementById('course-list');
+    if (!data.videos.length) {
+      list.innerHTML = '<div class="empty">Belum ada video di kategori ini.</div>';
+      return;
+    }
+    list.innerHTML = data.videos.map(function (v, i) {
+      var thumb = v.ready
+        ? '<img class="course-thumb" loading="lazy" width="84" height="48" alt="" src="https://i.ytimg.com/vi/' + encodeURIComponent(v.youtube_id) + '/hqdefault.jpg">'
+        : '<span class="course-thumb course-thumb--empty">🔒</span>';
+      return '<button type="button" class="course-row' + (v.ready ? '' : ' is-disabled') + '"' +
+        ' data-idx="' + i + '"' + (v.ready ? '' : ' disabled') + '>' +
+        '<span class="course-num">' + v.order + '</span>' + thumb +
+        '<span class="course-body"><span class="course-title">' + esc(v.title) + '</span>' + courseStateChip(v) + '</span>' +
+        '<span class="course-play">' + (v.ready ? '▶' : '') + '</span></button>';
+    }).join('');
+    updateAcademyHome();
+  }
+
+  function updateAcademyHome() {
+    var d = courseCache.edukasi_produk;
+    if (!d) return;
+    document.getElementById('academy-home-text').textContent =
+      'Edukasi Produk: ' + d.completed + '/' + d.total_ready + ' video ditonton (' + d.percent + '%).';
+  }
+
+  function loadCourse(cat) {
+    document.getElementById('course-list').innerHTML = '<div class="muted" style="padding:14px 0;">Memuat video...</div>';
+    return api('/v1/courses/' + encodeURIComponent(cat)).then(function (data) {
+      courseCache[cat] = data;
+      if (cat === courseCat) renderCourse(data);
+      return data;
+    }).catch(function () {
+      document.getElementById('course-list').innerHTML =
+        '<div class="empty">Gagal memuat daftar video. Coba muat ulang halaman.</div>';
+    });
+  }
+
+  function openPlayer(idx) {
+    var data = courseCache[courseCat];
+    var v = data && data.videos[idx];
+    if (!v || !v.ready) return;
+    ytCurrent = { cat: courseCat, video: v };
+    document.getElementById('player-cat').textContent = COURSE_LABELS[courseCat] + ' · Video ' + v.order;
+    document.getElementById('player-title').textContent = v.title;
+    document.getElementById('player-foot').textContent =
+      'Progres tercatat otomatis saat video diputar sampai selesai.';
+    document.getElementById('player-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    var frame = document.getElementById('player-frame');
+    frame.innerHTML = '<div id="yt-host"></div>';
+    loadYouTubeApi().then(function () {
+      if (!window.YT || !window.YT.Player) {
+        document.getElementById('player-foot').textContent =
+          'Pemutar YouTube gagal dimuat. Buka videonya langsung: https://youtu.be/' + v.youtube_id;
+        return;
+      }
+      ytPlayer = new window.YT.Player('yt-host', {
+        videoId: v.youtube_id,
+        playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+        events: {
+          onStateChange: function (e) { if (e.data === 0) onVideoEnded(); },
+          onError: function () {
+            document.getElementById('player-foot').textContent =
+              'Video ini tidak bisa diputar di sini. Buka langsung di YouTube: https://youtu.be/' + v.youtube_id;
+          }
+        }
+      });
+    });
+  }
+
+  async function onVideoEnded() {
+    if (!ytCurrent) return;
+    var cat = ytCurrent.cat, v = ytCurrent.video;
+    var foot = document.getElementById('player-foot');
+    if (v.watched) { foot.textContent = 'Video selesai. Progres sudah tercatat sebelumnya.'; return; }
+    // v4 s.7.2: members cannot self-record completion. Admin verifies and records it.
+    foot.textContent = 'Menunggu verifikasi admin. Progres akan dicatat setelah diverifikasi.';
+  }
+
+  function closePlayer() {
+    if (ytPlayer && ytPlayer.destroy) { try { ytPlayer.destroy(); } catch (e) { /* already gone */ } }
+    ytPlayer = null; ytCurrent = null;
+    document.getElementById('player-frame').innerHTML = '';
+    document.getElementById('player-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('course-tabs').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-cat]');
+    if (!btn) return;
+    courseCat = btn.dataset.cat;
+    document.querySelectorAll('#course-tabs button').forEach(function (b) {
+      b.classList.toggle('active', b === btn);
+    });
+    if (courseCache[courseCat]) renderCourse(courseCache[courseCat]);
+    else loadCourse(courseCat);
+  });
+
+  document.getElementById('course-list').addEventListener('click', function (e) {
+    var row = e.target.closest('.course-row');
+    if (!row || row.disabled) return;
+    openPlayer(parseInt(row.dataset.idx, 10));
+  });
+
+  document.getElementById('player-close').addEventListener('click', closePlayer);
+  document.getElementById('player-modal').addEventListener('click', function (e) {
+    if (e.target === document.getElementById('player-modal')) closePlayer();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !document.getElementById('player-modal').classList.contains('hidden')) closePlayer();
+  });
+
+  function renderAcademy(data) {
+    document.getElementById('academy-message').textContent = data.message;
+    document.getElementById('academy-grid').innerHTML = data.modules.map(function (m) {
+      return '<div class="module-card"><div class="module-icon">🔒</div><div>' +
+        '<div class="module-order">Babak #' + m.order + '</div>' +
+        '<div class="module-title">' + esc(m.title) + '</div></div></div>';
+    }).join('');
+  }
+
+  async function loadAcademy() {
+    loadCourse(courseCat);
+    try {
+      const data = await api('/v1/academy/overview');
+      renderAcademy(data);
+    } catch (err) {
+      document.getElementById('academy-message').textContent = 'Gagal memuat modul.';
+    }
+  }
+
   function switchView(view) {
     document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(b => {
       b.classList.toggle('active', b.dataset.view === view);
@@ -608,6 +1355,7 @@
     const titles = { home: 'Home', prospects: 'Prospects', assistant: 'AI Co-Pilot', business: 'My Business', academy: 'Academy' };
     document.getElementById('topbar-title').textContent = titles[view] || view;
     if (view === 'prospects') loadProspects();
+    if (view === 'academy') loadAcademy();
   }
 
   document.querySelectorAll('.side-nav button, .bottom-nav button').forEach(btn => {

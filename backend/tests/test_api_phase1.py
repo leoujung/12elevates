@@ -35,6 +35,29 @@ def client():
     return TestClient(create_app(Session))
 
 
+def _admin_seed_lp(client, member_email, points):
+    """Seed LP through the admin path. Member self-entry (POST /v1/lp) is disabled (410).
+
+    Creates an admin in the same DB as the client, then records one verified transaction.
+    Uses the module-level SQLite session the client was built with.
+    """
+    from app.models.core import Member
+    from app.services import gold_pool_issuance as iss
+    import uuid
+    session = client.app.state.session_factory()
+    try:
+        if session.query(Member).filter(Member.email == "seed-admin@example.test").first() is None:
+            m = session.query(Member).filter(Member.email == member_email).first()
+            session.add(Member(id=str(uuid.uuid4()), organization_id=m.organization_id,
+                               email="seed-admin@example.test", display_name="Seed Admin", is_admin=True))
+            session.commit()
+        iss.record_manual(session, actor_id="seed", member_email=member_email,
+                          transaction_id=f"SEED-{member_email}-{points}-{uuid.uuid4()}",
+                          tx_type="LOYALTY_ORDER", lp=points, verified_at="2026-11-20T10:00:00+07:00")
+    finally:
+        session.close()
+
+
 def login(client, email, password):
     r = client.post("/v1/auth/login", json={"email": email, "password": password})
     assert r.status_code == 200, r.text
@@ -112,8 +135,11 @@ def test_lp_summary_starts_at_zero_and_accumulates(client):
     summary = client.get("/v1/lp/summary", headers=andi).json()
     assert summary == {"total_lp": 0, "target_lp": 150, "percent": 0, "qualified": False, "entry_count": 0}
 
-    assert client.post("/v1/lp", headers=andi, json={"points": 50, "note": "pack A"}).status_code == 201
-    assert client.post("/v1/lp", headers=andi, json={"points": 100}).status_code == 201
+    assert client.post("/v1/lp", headers=andi, json={"points": 50, "note": "pack A"}).status_code == 410
+    assert client.post("/v1/lp", headers=andi, json={"points": 100}).status_code == 410
+    # Verified LP arrives only through the administrator path.
+    _admin_seed_lp(client, "andi@example.test", 50)
+    _admin_seed_lp(client, "andi@example.test", 100)
     summary = client.get("/v1/lp/summary", headers=andi).json()
     assert summary["total_lp"] == 150
     assert summary["percent"] == 100
@@ -123,14 +149,14 @@ def test_lp_summary_starts_at_zero_and_accumulates(client):
 
 def test_lp_rejects_non_positive_points(client):
     andi = login(client, "andi@example.test", "andi-pass-123")
-    assert client.post("/v1/lp", headers=andi, json={"points": 0}).status_code == 422
-    assert client.post("/v1/lp", headers=andi, json={"points": -5}).status_code == 422
+    assert client.post("/v1/lp", headers=andi, json={"points": 0}).status_code == 410
+    assert client.post("/v1/lp", headers=andi, json={"points": -5}).status_code == 410
 
 
 def test_lp_is_isolated_between_members(client):
     andi = login(client, "andi@example.test", "andi-pass-123")
     budi = login(client, "budi@example.test", "budi-pass-456")
-    client.post("/v1/lp", headers=andi, json={"points": 150})
+    _admin_seed_lp(client, "andi@example.test", 150)
     andi_summary = client.get("/v1/lp/summary", headers=andi).json()
     budi_summary = client.get("/v1/lp/summary", headers=budi).json()
     assert andi_summary["total_lp"] == 150
@@ -199,3 +225,34 @@ def test_consistency_score_returns_7_days(client):
     assert len(score["days"]) == 7
     assert score["days"][-1]["completed_count"] == 4  # today is the last entry
     assert 0 <= score["average_percent"] <= 100
+
+
+# ---- Phase 3 HTTP contract ----
+def test_member_lp_post_is_410_gone(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    assert client.post("/v1/lp", headers=andi, json={"points": 150}).status_code == 410
+
+
+def test_non_admin_cannot_use_admin_routes(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.post("/v1/admin/transactions", headers=andi, json={
+        "member_email": "andi@example.test", "transaction_id": "H1", "tx_type": "NEW_PARTNER",
+        "lp": 150, "verified_at": "2026-11-20T10:00:00+07:00"})
+    assert r.status_code == 403
+
+
+def test_admin_seed_path_visible_in_member_summary(client):
+    _admin_seed_lp(client, "andi@example.test", 150)
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    assert client.get("/v1/lp/summary", headers=andi).json()["total_lp"] == 150
+
+
+def test_admin_route_requires_token(client):
+    assert client.post("/v1/admin/transactions/import-csv", json={"csv": "x"}).status_code == 401
+
+
+def test_gep_eligibility_uses_three_new_videos_rule(client):
+    andi = login(client, "andi@example.test", "andi-pass-123")
+    r = client.get("/v1/gep/eligibility", headers=andi).json()
+    assert r["rule"] == "3_new_completed_videos_per_cycle"
+    assert r["required_total"] == 3 and r["eligible"] is False
