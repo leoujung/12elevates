@@ -19,6 +19,12 @@ def db():
             code varchar(40) primary key, member_id varchar(64) not null,
             created_at datetime default current_timestamp, revoked_at datetime)"""))
     s = sessionmaker(bind=engine)()
+    from app.models.core import Organization, Member
+    org = Organization(name="t")
+    s.add(org); s.flush()
+    for mid in ["member-a", "member-b"]:
+        s.add(Member(id=mid, organization_id=org.id, email=f"{mid}@example.test", display_name=mid))
+    s.commit()
     yield s
     s.close()
 

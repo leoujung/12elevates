@@ -19,8 +19,8 @@ def issue_code(db, member_id: str) -> str:
     db.execute(text("update member_referral_codes set revoked_at = :t "
                     "where member_id = :m and revoked_at is null"), {"m": member_id, "t": _now()})
     code = secrets.token_urlsafe(8)
-    db.execute(text("insert into member_referral_codes (code, member_id) values (:c, :m)"),
-               {"c": code, "m": member_id})
+    db.execute(text("insert into member_referral_codes (code, member_id, created_at) values (:c, :m, :t)"),
+               {"c": code, "m": member_id, "t": _now()})
     return code
 
 
