@@ -42,32 +42,33 @@ def client(monkeypatch):
     register_business_interest_routes(app, get_db)
     return TestClient(app)
 
-BASE = {"referral_code": _ANDI_CODE[0], "name": "Tester", "email": "tester@example.com",
+def _base():
+    return {"referral_code": _ANDI_CODE[0], "name": "Tester", "email": "tester@example.com",
         "notice_version": "v-draft", "consent_business_interest": True, "consent_business_matching": True, "event_id": "bi-http-1"}
 
 def test_no_referral_rejected(client):
-    body = dict(BASE); body["referral_code"] = ""
+    body = _base(); body["referral_code"] = ""
     r = client.post("/v1/inbound/business-interest", json=body)
     assert r.status_code == 422
 
 def test_unknown_referral_rejected(client):
-    body = dict(BASE); body["referral_code"] = "REF-FAKE"
+    body = _base(); body["referral_code"] = "REF-FAKE"
     r = client.post("/v1/inbound/business-interest", json=body)
     assert r.status_code == 422
     assert r.json()["detail"]["status"] == "INVALID_REFERRAL"
 
 def test_missing_consent_rejected(client):
-    body = dict(BASE); body["consent_business_interest"] = False
+    body = _base(); body["consent_business_interest"] = False
     r = client.post("/v1/inbound/business-interest", json=body)
     assert r.status_code == 422
     assert r.json()["detail"]["status"] == "REJECTED_CONSENT"
 
 def test_valid_referral_persists_to_referrer(client):
-    r = client.post("/v1/inbound/business-interest", json=BASE)
+    r = client.post("/v1/inbound/business-interest", json=_base())
     assert r.status_code == 200, r.text
     assert r.json()["status"] == "PERSISTED"
 
 def test_unknown_field_rejected(client):
-    body = dict(BASE); body["owner"] = "someone"
+    body = _base(); body["owner"] = "someone"
     r = client.post("/v1/inbound/business-interest", json=body)
     assert r.status_code == 422
