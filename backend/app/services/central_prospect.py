@@ -15,7 +15,7 @@ from sqlalchemy import text
 
 from app.services import suppression as sup
 
-EVENT_TYPES = {"LEAD_SUBMITTED", "ASSESSMENT_COMPLETED", "WEBINAR_REGISTERED", "PARTNER_INQUIRY"}
+EVENT_TYPES = {"LEAD_SUBMITTED", "ASSESSMENT_COMPLETED", "WEBINAR_REGISTERED", "PARTNER_INQUIRY", "BUSINESS_INTEREST"}
 
 # Which consent purpose each event REQUIRES (granted must be true) and which it may OPTIONALLY record.
 # Do not assume one purpose covers all events.
@@ -24,9 +24,10 @@ REQUIRED_PURPOSE = {
     "ASSESSMENT_COMPLETED": "assessment_processing",
     "WEBINAR_REGISTERED": "registration_processing",
     "PARTNER_INQUIRY": "partner_contact",
+    "BUSINESS_INTEREST": "business_interest_processing",
 }
 OPTIONAL_PURPOSES = {"marketing_optional"}
-ALL_PURPOSES = {"registration_processing", "assessment_processing", "partner_contact", "marketing_optional"}
+ALL_PURPOSES = {"registration_processing", "assessment_processing", "partner_contact", "marketing_optional", "business_interest_processing"}
 
 _EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _ID_MAX = 100
@@ -228,4 +229,4 @@ def persist_inbound(db, raw_event, *, now=None):
 
 
 def _prospect_type(event_type):
-    return {"PARTNER_INQUIRY": "partner", "LEAD_SUBMITTED": "lead"}.get(event_type, "customer")
+    return {"PARTNER_INQUIRY": "partner", "LEAD_SUBMITTED": "lead", "BUSINESS_INTEREST": "business"}.get(event_type, "customer")
