@@ -47,7 +47,8 @@ def test_unknown_purpose_still_rejected():
 
 
 @pytest.fixture()
-def client():
+def client(monkeypatch):
+    monkeypatch.setenv("BUSINESS_INTAKE_ENABLED", "true")
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     Base.metadata.create_all(engine)
     with engine.begin() as c:
