@@ -9,6 +9,8 @@
 - Member ownership = the referring member (never a default account).
 - Rate limit / CORS: CORS is already limited to 12elevates.com origins in routes.py.
 """
+import os
+
 from fastapi import Depends, HTTPException, status
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import text
@@ -38,9 +40,19 @@ def _resolve_referrer(db, code: str):
     return str(row[0]) if row else None
 
 
+def business_intake_enabled() -> bool:
+    # Default OFF. Public intake stays closed until consent text, retention,
+    # privacy contact and referral source are approved. Read once per request.
+    return os.environ.get("BUSINESS_INTAKE_ENABLED", "").strip().lower() in ("1", "true", "yes")
+
+
 def register_business_interest_routes(app, get_db):
     @app.post("/v1/inbound/business-interest", status_code=200)
     def business_interest(body: BusinessInterestIn, db=Depends(get_db)):
+        if not business_intake_enabled():
+            # Closed: nothing is read or written.
+            raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE,
+                                {"success": False, "status": "INTAKE_DISABLED"})
         referrer = _resolve_referrer(db, body.referral_code)
         if referrer is None:
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT,
