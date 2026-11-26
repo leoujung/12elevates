@@ -8,6 +8,8 @@ from sqlalchemy.orm import sessionmaker
 from app.models.core import Base, Member, Organization
 from app.api.v1.business_interest import register_business_interest_routes
 
+_ANDI_CODE = [None]
+
 @pytest.fixture()
 def client(monkeypatch):
     monkeypatch.setenv("BUSINESS_INTAKE_ENABLED", "true")
@@ -27,7 +29,10 @@ def client(monkeypatch):
     org = Organization(name="t")
     s.add(org); s.flush()
     s.add(Member(id="member-andi", organization_id=org.id, email="andi@example.test",
-                 display_name="Andi", sponsor_ref="REF-ANDI-01"))
+                 display_name="Andi", sponsor_ref=None))
+    s.commit()
+    from app.services.referral_codes import issue_code
+    _ANDI_CODE[0] = issue_code(s, "member-andi")
     s.commit(); s.close()
     app = FastAPI()
     def get_db():
@@ -37,7 +42,7 @@ def client(monkeypatch):
     register_business_interest_routes(app, get_db)
     return TestClient(app)
 
-BASE = {"referral_code": "REF-ANDI-01", "name": "Tester", "email": "tester@example.com",
+BASE = {"referral_code": _ANDI_CODE[0], "name": "Tester", "email": "tester@example.com",
         "notice_version": "v-draft", "consent_business_interest": True, "consent_business_matching": True, "event_id": "bi-http-1"}
 
 def test_no_referral_rejected(client):

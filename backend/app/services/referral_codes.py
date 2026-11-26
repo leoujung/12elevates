@@ -5,14 +5,19 @@
 - Intake resolves a code to exactly one active (not revoked) member.
 """
 import secrets
+from datetime import datetime, timezone
 
 from sqlalchemy import text
 
 
+def _now():
+    return datetime.now(timezone.utc)
+
+
 def issue_code(db, member_id: str) -> str:
     # One active code per member: revoke old, issue new.
-    db.execute(text("update member_referral_codes set revoked_at = now() "
-                    "where member_id = :m and revoked_at is null"), {"m": member_id})
+    db.execute(text("update member_referral_codes set revoked_at = :t "
+                    "where member_id = :m and revoked_at is null"), {"m": member_id, "t": _now()})
     code = secrets.token_urlsafe(8)
     db.execute(text("insert into member_referral_codes (code, member_id) values (:c, :m)"),
                {"c": code, "m": member_id})
