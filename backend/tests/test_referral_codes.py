@@ -63,7 +63,7 @@ def test_codes_are_per_member(db):
 def test_sponsor_ref_not_used_for_intake(db, monkeypatch):
     # members.sponsor_ref must NOT act as a referral source anymore.
     from app.api.v1 import business_interest as bi
-    db.execute(text("create table if not exists members (id varchar(64) primary key, organization_id varchar(64) not null, sponsor_ref varchar(100))"))
-    db.execute(text("insert into members (id, organization_id, sponsor_ref) values ('m1', 'org1', 'OLD-SPONSOR')"))
+    db.execute(text("create table if not exists members (id varchar(64) primary key, organization_id varchar(64) not null, email varchar(255) not null, sponsor_ref varchar(100))"))
+    db.execute(text("insert into members (id, organization_id, email, sponsor_ref) values ('m1', 'org1', 'm1@example.test', 'OLD-SPONSOR')"))
     db.commit()
     assert bi._resolve_referrer(db, "OLD-SPONSOR") is None
