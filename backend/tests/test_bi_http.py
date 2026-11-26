@@ -9,7 +9,8 @@ from app.models.core import Base, Member, Organization
 from app.api.v1.business_interest import register_business_interest_routes
 
 @pytest.fixture()
-def client():
+def client(monkeypatch):
+    monkeypatch.setenv("BUSINESS_INTAKE_ENABLED", "true")
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     Base.metadata.create_all(engine)
     with engine.begin() as c:
