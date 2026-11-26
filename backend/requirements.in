@@ -1,0 +1,12 @@
+# Direct runtime dependencies for backend (pip-tools input).
+# Compile with: pip-compile --generate-hashes requirements.in
+alembic
+bcrypt
+fastapi
+httpx
+psycopg[binary]
+pydantic
+pydantic-settings
+pyjwt
+sqlalchemy
+uvicorn
