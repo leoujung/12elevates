@@ -23,6 +23,7 @@ def register_nbi_read_routes(app, get_db, current_member_id):
                        data_confidence, reason, rules_version, is_synthetic, created_at
                 FROM nbi_matching_results
                 WHERE member_id = :member_id
+                  AND is_synthetic = false
                 ORDER BY created_at DESC, id
                 LIMIT :limit
                 """
@@ -35,7 +36,7 @@ def register_nbi_read_routes(app, get_db, current_member_id):
             "items": [
                 {
                     **dict(r),
-                    "created_at": r["created_at"].isoformat() if r["created_at"] else None,
+                    "created_at": (r["created_at"].isoformat() if hasattr(r["created_at"], "isoformat") else r["created_at"]),
                     "prospect_id": str(r["prospect_id"]) if r["prospect_id"] else None,
                 }
                 for r in rows
