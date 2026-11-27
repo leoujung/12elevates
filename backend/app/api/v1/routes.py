@@ -440,6 +440,8 @@ def create_app(session_factory) -> FastAPI:
     register_inbound_routes(app, get_db)
     from app.api.v1.nbi_read import register_nbi_read_routes
     register_nbi_read_routes(app, get_db, current_member_id)
+    from app.api.v1.target_tags import register_target_tag_routes
+    register_target_tag_routes(app, get_db, current_member_id)
     from app.api.v1.business_interest import register_business_interest_routes
     register_business_interest_routes(app, get_db)
     from app.api.v1.referral_codes import register_referral_code_routes

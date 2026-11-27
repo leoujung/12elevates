@@ -49,9 +49,12 @@ def run_business_job(db, member_id):
         {"id": job_id, "m": member_id, "pw": PATHWAY, "sk": SOURCE_KEY},
     )
 
-    # member_target_tags does NOT exist yet (no migration, no decision). Until it does,
-    # every member has zero target tags, so fit is 0 with an explicit reason. Never invented.
-    target_tags = []
+    # Member-declared tags (closed list). Empty list -> fit 0 with explicit reason. Never invented.
+    target_tags = [
+        r[0] for r in db.execute(
+            text("select tag from member_target_tags where member_id = :m"), {"m": member_id}
+        ).all()
+    ]
 
     prospects = db.execute(
         text(
