@@ -107,6 +107,13 @@ def validate_event(event):
     if not isinstance(notice_version, str) or not notice_version.strip() or len(notice_version) > 40:
         raise InboundError("INVALID_NOTICE_VERSION")
 
+    # Contact gate (Business consent doc, Appendix A): contact details are kept
+    # only when the optional follow-up consent is granted. Without it, the
+    # email/WhatsApp are dropped, so no outreach channel is stored or shown.
+    if etype == "BUSINESS_INTEREST" and consents.get("business_followup") is not True:
+        phone = None
+        email = None
+
     return {
         "event_id": event_id.strip(),
         "event_type": etype,
