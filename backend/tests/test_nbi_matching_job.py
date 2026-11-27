@@ -23,6 +23,7 @@ def db():
         c.execute(text("create table cp_provenance (prospect_id text primary key, member_id text, referral_code text, first_seen_at text)"))
         c.execute(text("create table cp_consent_ledger (id integer primary key autoincrement, prospect_id text, member_id text, purpose text, granted integer, recorded_at text)"))
         c.execute(text("create table member_target_tags (member_id text, tag text, created_at text, primary key (member_id, tag))"))
+        c.execute(text("create table cp_prospect_tags (prospect_id text, member_id text, tag text, created_at text, primary key (prospect_id, tag))"))
         c.execute(text("create table nbi_discovery_jobs (id text primary key, member_id text, pathway text, source_key text, is_synthetic integer, status text, created_at text, finished_at text)"))
         c.execute(text("create table nbi_matching_results (id text primary key, job_id text, member_id text, prospect_id text, fit_score integer, intent_confidence integer, data_confidence integer, reason text, rules_version text, is_synthetic integer, created_at text)"))
     s = sessionmaker(bind=eng)()

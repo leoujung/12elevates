@@ -18,6 +18,7 @@ def db():
 
     with eng.begin() as c:
         c.execute(text("create table member_target_tags (member_id text, tag text, created_at text, primary key (member_id, tag))"))
+        c.execute(text("create table cp_prospect_tags (prospect_id text, member_id text, tag text, created_at text, primary key (prospect_id, tag))"))
         c.execute(text("create table cp_prospects (prospect_id text primary key, member_id text, prospect_type text, display_name text, status text)"))
         c.execute(text("create table cp_provenance (prospect_id text primary key, member_id text, referral_code text, first_seen_at text)"))
         c.execute(text("create table cp_consent_ledger (id integer primary key autoincrement, prospect_id text, member_id text, purpose text, granted integer, recorded_at text)"))

@@ -29,6 +29,8 @@ class BusinessInterestIn(BaseModel):
     consent_business_matching: bool = False
     consent_business_followup: bool = False
     event_id: str
+    # Prospect interest tags: closed list (member_target_tags.ALLOWED_TAGS). Optional.
+    interest_tags: list[str] = []
 
 
 def _resolve_referrer(db, code: str):
@@ -66,6 +68,7 @@ def register_business_interest_routes(app, get_db):
             "consents": consents,
             "notice_version": body.notice_version,
             "attribution": {"source": "business_form", "referral_code": body.referral_code},
+            "interest_tags": body.interest_tags,
         }
         try:
             result = cp.persist_inbound(db, raw)

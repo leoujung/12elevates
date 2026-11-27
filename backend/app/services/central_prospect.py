@@ -37,6 +37,9 @@ _EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _ID_MAX = 100
 
 
+from app.services.member_target_tags import ALLOWED_TAGS as ALLOWED_INTEREST_TAGS
+
+
 class InboundError(Exception):
     def __init__(self, code, message=""):
         super().__init__(message or code)
@@ -107,6 +110,14 @@ def validate_event(event):
     if not isinstance(notice_version, str) or not notice_version.strip() or len(notice_version) > 40:
         raise InboundError("INVALID_NOTICE_VERSION")
 
+    # Interest tags: closed list only, validated before any write.
+    raw_tags = event.get("interest_tags") or []
+    if not isinstance(raw_tags, list) or len(raw_tags) > 10:
+        raise InboundError("INVALID_INTEREST_TAG")
+    interest_tags = sorted({str(t).strip().lower() for t in raw_tags if str(t).strip()})
+    if any(t not in ALLOWED_INTEREST_TAGS for t in interest_tags):
+        raise InboundError("INVALID_INTEREST_TAG")
+
     # Contact gate (Business consent doc, Appendix A): contact details are kept
     # only when the optional follow-up consent is granted. Without it, the
     # email/WhatsApp are dropped, so no outreach channel is stored or shown.
@@ -124,6 +135,7 @@ def validate_event(event):
         "notice_version": notice_version.strip(),
         "source": str((event.get("attribution") or {}).get("source") or "direct")[:100],
         "campaign": (str((event.get("attribution") or {}).get("campaign") or "")[:100]) or None,
+        "interest_tags": interest_tags,
         "referral_code": (str((event.get("attribution") or {}).get("referral_code") or "")[:50]) or None,
         "source_page": (str((event.get("attribution") or {}).get("landing_page") or "")[:200]) or None,
         "name": (str(lead.get("name") or "").strip()[:200]) or None,
@@ -213,6 +225,16 @@ def persist_inbound(db, raw_event, *, now=None):
                 {"p": prospect_id, "m": ev["member_id"], "pu": purpose, "g": granted,
                  "nv": ev["notice_version"], "s": ev["source"], "e": ev["event_id"], "now": now},
             )
+
+        # Interest tags: same transaction, closed list, replace on re-submit of the same prospect.
+        if ev["interest_tags"]:
+            db.execute(text("delete from cp_prospect_tags where prospect_id = :p"), {"p": prospect_id})
+            for tag in ev["interest_tags"]:
+                db.execute(
+                    text("insert into cp_prospect_tags (prospect_id, member_id, tag, created_at) "
+                         "values (:p, :m, :t, :now)"),
+                    {"p": prospect_id, "m": ev["member_id"], "t": tag, "now": now},
+                )
 
         if not db.execute(text("select 1 from cp_provenance where prospect_id = :p"), {"p": prospect_id}).first():
             db.execute(

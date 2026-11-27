@@ -26,6 +26,15 @@ def _iso(value):
     return value.isoformat() if hasattr(value, "isoformat") else str(value)
 
 
+def _prospect_tags(db, prospect_id):
+    """Interest tags stored for this prospect (closed list, written by intake). Empty if none."""
+    rows = db.execute(
+        text("select tag from cp_prospect_tags where prospect_id = :p order by tag"),
+        {"p": prospect_id},
+    ).all()
+    return [r[0] for r in rows]
+
+
 def _latest_consent(db, prospect_id, purpose):
     row = db.execute(
         text(
@@ -77,7 +86,7 @@ def run_business_job(db, member_id):
             "captured_at": _iso(p["first_seen_at"]),
             "consent_record_id": consent_id,
             "consent_granted": granted,
-            "tags": [],
+            "tags": _prospect_tags(db, p["prospect_id"]),
             "signals": {"explicit_inquiry": True},
             "duplicate_of": None,
         }
